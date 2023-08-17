@@ -1,7 +1,7 @@
 import React from "react";
-import { View, Text, StyleSheet, Button, TextInput, Keyboard, TouchableOpacity } from "react-native";
+import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 
-const VisitorMain = () => {
+const StudentMain = () => {
     return (
         <View style={styles.screen}>
             <View style={styles.card}>
@@ -48,4 +48,4 @@ const styles = StyleSheet.create({
     },
 });
 
-export default VisitorMain;
+export default StudentMain;
