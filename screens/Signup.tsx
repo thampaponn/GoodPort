@@ -2,26 +2,28 @@ import React from "react";
 import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 import { ButtonUi } from "../components/ui/Button";
 import { InputForm } from "../components/ui/InputForm";
-import { NavigationContainer } from '@react-navigation/native';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { useNavigation } from '@react-navigation/native';
 
-const SignIn = () => {
+const SignUp = () => {
+  const navigation = useNavigation(); // Get the navigation object
+
+  const navigateToSignIn = () => {
+    // navigation.navigate(); // Navigate to the SignIn screen
+  };
+
   return (
     <View style={styles.screen}>
       <View style={styles.card}>
-        {/* <Text style={{ alignItems: "center", fontSize: 24, fontWeight: "800" }}>
-          Sign In
-        </Text> */}
-        <InputForm title={"Username"} />
-        <InputForm title={"Password"} />
-        <ButtonUi title={"Sign In"} />
+        <InputForm title={"username"} />
+        <InputForm title={"password"} />
+        <ButtonUi title={"Sign Up"} />
 
         <View
           style={{ flexDirection: "row", alignItems: "center", marginTop: 23 }}
         >
           <Text style={{ fontSize: 14 }}>don't have an account? </Text>
-          <TouchableOpacity>
-            <Text style={{ fontSize: 14 }}>Sign Up</Text>
+          <TouchableOpacity onPress={navigateToSignIn}>
+            <Text style={{ fontSize: 14 }}>Sign In</Text>
           </TouchableOpacity>
         </View>
       </View>
@@ -39,12 +41,11 @@ const styles = StyleSheet.create({
     padding: 20,
   },
   buttonContainer: {
-    justifyContent: "flex-end", 
+    justifyContent: "flex-end",
     marginTop: 20,
     width: 300,
     maxWidth: 300,
   },
-
   textInput: {
     width: 307,
     height: 42,
@@ -65,4 +66,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default SignIn;
+export default SignUp;
