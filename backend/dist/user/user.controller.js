@@ -17,7 +17,7 @@ let UserController = class UserController {
         this.userService = userService;
     }
     async getAllUsers() {
-        const users = await this.userService.getUsers();
+        const users = await this.userService.getAllUsers();
         return users;
     }
 };

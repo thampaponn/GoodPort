@@ -19,16 +19,15 @@ const mongoose_2 = require("mongoose");
 let UserService = class UserService {
     constructor(userModel) {
         this.userModel = userModel;
-        this.users = [];
     }
-    async inserUser(fname, lname) {
+    async insertUser(fname, lname) {
         const newUser = new this.userModel({ fname, lname });
         const result = await newUser.save();
         console.log(result);
-        return 'userId';
+        return result.id;
     }
-    async getUsers() {
-        return [...this.users];
+    async getAllUsers() {
+        return await this.userModel.find().exec();
     }
 };
 UserService = __decorate([
