@@ -1,22 +1,22 @@
-import { Injectable } from '@nestjs/common';
-import { User } from './user.model';
-import { InjectModel } from '@nestjs/mongoose';
-import { Model } from 'mongoose';
+import { Injectable } from "@nestjs/common";
+import { InjectModel } from "@nestjs/mongoose";
+import { Model } from "mongoose";
+import { User } from "./user.model"; // แก้ไขตรงนี้ให้สอดคล้อง
 
 @Injectable()
 export class UserService {
-  private users: User[] = [];
+  constructor(
+    @InjectModel('User') private readonly userModel: Model<User>
+  ) {}
 
-  constructor(@InjectModel('User') private readonly userModel: Model<User>) {}
-
-  async inserUser(fname: string, lname: string) {
+  async insertUser(fname: string, lname: string) {
     const newUser = new this.userModel({ fname, lname });
     const result = await newUser.save();
     console.log(result);
-    return 'userId';
+    return result.id;
   }
 
-  async getUsers() {
-    return [...this.users];
+  async getAllUsers() {
+    return await this.userModel.find().exec();
   }
 }
