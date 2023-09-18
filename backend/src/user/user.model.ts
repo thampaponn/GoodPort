@@ -22,7 +22,7 @@ export const UserSchema = new mongoose.Schema({
   sex: { type: String, enum: Object.values(UserSex), required: true },
   phone: { type: String, required: true },
   role: { type: String, enum: Object.values(UserRole), required: true },
-  preflex: { type: String },
+  prefix: { type: String },
   email: { type: String },
   job: {
     professorId: { type: String },
@@ -51,7 +51,7 @@ export interface User extends mongoose.Document {
   sex: UserSex;
   phone: string;
   role: UserRole;
-  preflex?: string;
+  prefix?: string;
   email?: string;
   job?: {
     professorId?: string;

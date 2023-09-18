@@ -12,7 +12,6 @@ export class UserService {
   async insertUser(fname: string, lname: string) {
     const newUser = new this.userModel({ fname, lname });
     const result = await newUser.save();
-    console.log(result);
     return result.id;
   }
 
