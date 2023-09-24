@@ -27,8 +27,13 @@ import { User } from "./user.model";
 export declare class UserService {
     private readonly userModel;
     constructor(userModel: Model<User>);
-    insertUser(fname: string, lname: string): Promise<any>;
+    createUser(user: User): Promise<User>;
     getAllUsers(): Promise<(import("mongoose").Document<unknown, {}, User> & User & {
         _id: import("mongoose").Types.ObjectId;
     })[]>;
+    getUserById(id: string): Promise<import("mongoose").Document<unknown, {}, User> & User & {
+        _id: import("mongoose").Types.ObjectId;
+    }>;
+    delUserById(id: string): Promise<import("mongodb").DeleteResult>;
+    updateUser(id: string, updatedData: Partial<User>): Promise<User | null>;
 }

@@ -5,18 +5,29 @@ import { User } from "./user.model"; // แก้ไขตรงนี้ให�
 
 @Injectable()
 export class UserService {
-  constructor(
-    @InjectModel('User') private readonly userModel: Model<User>
-  ) {}
+  constructor(@InjectModel("User") private readonly userModel: Model<User>) {}
 
-  async insertUser(fname: string, lname: string) {
-    const newUser = new this.userModel({ fname, lname });
-    const result = await newUser.save();
-    console.log(result);
-    return result.id;
+  async createUser(user: User): Promise<User> {
+    const createdUser = new this.userModel(user);
+    return createdUser.save();
   }
 
   async getAllUsers() {
     return await this.userModel.find().exec();
+  }
+
+  async getUserById(id: string) {
+    return await this.userModel.findById(id);
+  }
+
+  async delUserById(id: string) {
+    return await this.userModel.deleteOne({ _id: Object(id) });
+  }
+
+  async updateUser(id: string,updatedData: Partial<User>): Promise<User | null> {
+    const user = await this.userModel.findByIdAndUpdate(id, updatedData, {
+      new: true,
+    });
+    return user;
   }
 }

@@ -20,19 +20,29 @@ let UserService = class UserService {
     constructor(userModel) {
         this.userModel = userModel;
     }
-    async insertUser(fname, lname) {
-        const newUser = new this.userModel({ fname, lname });
-        const result = await newUser.save();
-        console.log(result);
-        return result.id;
+    async createUser(user) {
+        const createdUser = new this.userModel(user);
+        return createdUser.save();
     }
     async getAllUsers() {
         return await this.userModel.find().exec();
     }
+    async getUserById(id) {
+        return await this.userModel.findById(id);
+    }
+    async delUserById(id) {
+        return await this.userModel.deleteOne({ _id: Object(id) });
+    }
+    async updateUser(id, updatedData) {
+        const user = await this.userModel.findByIdAndUpdate(id, updatedData, {
+            new: true,
+        });
+        return user;
+    }
 };
 UserService = __decorate([
     (0, common_1.Injectable)(),
-    __param(0, (0, mongoose_1.InjectModel)('User')),
+    __param(0, (0, mongoose_1.InjectModel)("User")),
     __metadata("design:paramtypes", [mongoose_2.Model])
 ], UserService);
 exports.UserService = UserService;
