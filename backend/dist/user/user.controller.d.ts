@@ -23,11 +23,18 @@
 /// <reference types="mongoose/types/virtuals" />
 /// <reference types="mongoose" />
 /// <reference types="mongoose/types/inferschematype" />
-import { UserService } from './user.service';
+import { User } from "./user.model";
+import { UserService } from "./user.service";
 export declare class UserController {
     private readonly userService;
     constructor(userService: UserService);
-    getAllUsers(): Promise<(import("mongoose").Document<unknown, {}, import("./user.model").User> & import("./user.model").User & {
+    createUser(user: User): Promise<User>;
+    getAllUsers(): Promise<(import("mongoose").Document<unknown, {}, User> & User & {
         _id: import("mongoose").Types.ObjectId;
     })[]>;
+    getUserById(id: string): Promise<import("mongoose").Document<unknown, {}, User> & User & {
+        _id: import("mongoose").Types.ObjectId;
+    }>;
+    updateUser(id: string, updatedData: Partial<User>): Promise<User>;
+    delUserById(id: string): Promise<string>;
 }
