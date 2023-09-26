@@ -18,7 +18,7 @@
 **run frontend**
 ```npx expo start```
 
-    enter code here
+    npx expo start
 
 ## จัดทำโดย
 
