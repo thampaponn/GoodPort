@@ -4,9 +4,9 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import StudentMain from './screens/StudentMain';
 import TeacherMain from './screens/TeacherMain';
-import VisitSignUp from './screens/VisitSignUp';
-import ProfSignUp from './screens/ProfSignUp';
-import StudSignUp from './screens/StudSignUp';
+import VisitSignUp from './screens/visitor/VisitorSignUpScreen';
+import ProfSignUp from './screens/professor/ProfessorSignUpScreen';
+import StudSignUp from './screens/student/StudentSignUpScreen';
 
 
 const Stack = createNativeStackNavigator();
