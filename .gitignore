@@ -7,6 +7,8 @@ node_modules/
 .expo/
 dist/
 web-build/
+.env
+tsconfig.build.tsbuildinfo
 
 # Native
 *.orig.*
