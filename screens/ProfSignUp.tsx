@@ -8,7 +8,18 @@ import { useMemo, useState } from "react";
 
 
 const ProfSignUp = () => {
-
+  const namearray = [
+    {
+      name: "คำนำหน้าขื่อ *"
+    }, {
+      name: "อีเมล *"
+    }, {
+      name: "รหัสประจำตัวอาจารย์ *"
+    }, {
+      name: "มหาวิทยาลัยที่จบการศึกษา *"
+    }, {
+      name: "ประเทศที่จบการศึกษา *"
+    }]
   return (
     <View style={styles.screen}>
       <View style={styles.card}>
@@ -21,12 +32,7 @@ const ProfSignUp = () => {
             สมัครสมาชิก
           </Text>
         </View>
-        <InputForm title={"คำนำหน้าขื่อ *"} />
-        <InputForm title={"อีเมล *"} />
-        <InputForm title={"รหัสประจำตัวอาจารย์ *"} />
-        <InputForm title={"มหาวิทยาลัยที่จบการศึกษา *"} />
-        <InputForm title={"ประเทศที่จบการศึกษา"} />
-
+        {namearray.map((item, key) => <InputForm title={item.name} />)}
         <ButtonUi title={"สมัครสมาชิก"} />
         <View
           style={{ flexDirection: "row", alignItems: "center", marginTop: 15, justifyContent: 'center', paddingBottom: 50 }}

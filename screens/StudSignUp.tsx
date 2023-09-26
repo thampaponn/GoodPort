@@ -8,7 +8,14 @@ import { useMemo, useState } from "react";
 
 
 const StudSignUp = () => {
-
+  const namearray = [
+    {
+      name: "อีเมล *"
+    }, {
+      name: "รหัสประจำตัวนักศึกษา *"
+    }, {
+      name: "รูปบัตรประจำตัวศึกษา *"
+    }]
   return (
     <View style={styles.screen}>
       <View style={styles.card}>
@@ -21,10 +28,7 @@ const StudSignUp = () => {
             สมัครสมาชิก
           </Text>
         </View>
-        <InputForm title={"อีเมล *"} />
-        <InputForm title={"รหัสประจำตัวนักศึกษา *"} />
-        <InputForm title={"รูปบัตรประจำตัวศึกษา *"} />
-
+        {namearray.map((item, key) => <InputForm title={item.name} />)}
         <ButtonUi title={"สมัครสมาชิก"} />
         <View
           style={{ flexDirection: "row", alignItems: "center", marginTop: 15, justifyContent: 'center', paddingBottom: 50 }}
