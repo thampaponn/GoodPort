@@ -4,19 +4,22 @@
 
 # วิธีการรัน Project
 **ติดตั้ง package**
-```yarn```
+
+    yarn
 
 **เข้าโฟล์เดอร์ backend**
-```cd /backend```
+
+    cd /backend
 
 **run backend**
-```yarn start:dev```
+
+    yarn start:dev
 
 **ออกจาก backend**
-```cd ..```
+
+    cd ..
 
 **run frontend**
-```npx expo start```
 
     npx expo start
 
