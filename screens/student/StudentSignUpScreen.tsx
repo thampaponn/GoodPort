@@ -3,7 +3,7 @@ import { View, Text, StyleSheet, TouchableOpacity, Image } from "react-native";
 import { ButtonUi } from "../../components/ui/Button";
 import { InputForm } from "../../components/ui/InputForm";
 
-const StudSignUp = () => {
+const StudentSignUp = () => {
   const namearray = [
     {
       name: "อีเมล *"
@@ -93,4 +93,4 @@ const styles = StyleSheet.create({
   }
 });
 
-export default StudSignUp;
+export default StudentSignUp;
