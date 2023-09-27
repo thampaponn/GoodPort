@@ -30,7 +30,7 @@ const styles = StyleSheet.create({
   buttonContainer: {
     flexDirection: "row",
     alignItems: "center",
-    justifyContent: "center", // Align children to the right side
+    justifyContent: "center",
     marginTop: 20,
     backgroundColor: "#81ADC8",
     width: 302,
