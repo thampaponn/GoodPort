@@ -1,20 +1,16 @@
-import {
-  Text,
-  StyleSheet,
-  View,
-  TextInput,
-} from "react-native";
+import { Text, StyleSheet, View, TextInput } from "react-native";
 import React, { FC } from "react";
 
-export interface InputFormProps{
-    title?:string
+export interface InputFormProps {
+  title?: string;
+  password?: boolean;
 }
 
-export const InputForm: FC<InputFormProps> = ({title}) => {
+export const InputForm: FC<InputFormProps> = ({ title, password }) => {
   return (
     <View style={{ marginTop: 16 }}>
       <Text style={styles.formText}>{title}</Text>
-      <TextInput style={styles.textInput} />
+      <TextInput secureTextEntry={password ?? false} style={styles.textInput} />
     </View>
   );
 };

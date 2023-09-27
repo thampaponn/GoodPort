@@ -17,7 +17,7 @@ export const ButtonUi:FC<ButtonUiProps> = ({title, callback}) => {
 
 const styles = StyleSheet.create({
   submitButton: {
-    marginTop: 52,
+    marginTop: 42,
     justifyContent: "center",
     fontSize: 12,
     backgroundColor: "#81ADC8",
