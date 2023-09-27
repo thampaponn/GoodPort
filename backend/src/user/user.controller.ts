@@ -1,4 +1,14 @@
-import { Body, Controller, Delete, Get, NotFoundException, Param, Post, Put } from "@nestjs/common";
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  NotFoundException,
+  Param,
+  Post,
+  Put,
+  Query,
+} from "@nestjs/common";
 import { User } from "./user.model";
 import { UserService } from "./user.service";
 
@@ -24,8 +34,11 @@ export class UserController {
     return user;
   }
 
-  @Put(':id')
-  async updateUser(@Param('id') id: string, @Body() updatedData: Partial<User>) {
+  @Put(":id")
+  async updateUser(
+    @Param("id") id: string,
+    @Body() updatedData: Partial<User>
+  ) {
     const updatedUser = await this.userService.updateUser(id, updatedData);
     if (!updatedUser) {
       throw new NotFoundException(`ไม่พบ ${id}`);
@@ -33,10 +46,15 @@ export class UserController {
     return updatedUser;
   }
 
-
   @Delete(":id")
-  async delUserById(@Param("id") id: string){
+  async delUserById(@Param("id") id: string) {
     const user = await this.userService.delUserById(id);
-    return "delete success"
+    return "delete success";
+  }
+
+  @Get("search")
+  async searchUsers(@Query("q") query: string) {
+    const users = await this.userService.searchUsers(query);
+    return users;
   }
 }
