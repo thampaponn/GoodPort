@@ -9,7 +9,7 @@ dist/
 web-build/
 .env
 tsconfig.build.tsbuildinfo
-
+dist
 # Native
 *.orig.*
 *.jks

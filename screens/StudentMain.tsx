@@ -27,8 +27,8 @@ const styles = StyleSheet.create({
         padding: 20,
     },
     buttonContainer: {
-        flexDirection: "row", // Arrange children horizontally
-        justifyContent: "flex-end", // Align children to the right side
+        flexDirection: "row",
+        justifyContent: "flex-end", 
         marginTop: 20,
         width: 300,
         maxWidth: 300,
@@ -41,9 +41,9 @@ const styles = StyleSheet.create({
         borderRadius: 5,
     },
     buttonText: {
-        fontSize: 16, // Adjust the font size as needed
-        color: "#F8F2DC", // Text color
-        lineHeight: 30, // Vertical alignment
+        fontSize: 16,
+        color: "#F8F2DC",
+        lineHeight: 30,
         textAlign: 'center'
     },
 });

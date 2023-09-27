@@ -1,32 +1,38 @@
 import React from "react";
-import { View, Text, StyleSheet, TouchableOpacity, ScrollView, Image } from "react-native";
+import {
+  View,
+  Text,
+  StyleSheet,
+  TouchableOpacity,
+  ScrollView,
+  Image,
+} from "react-native";
 import { ButtonUi } from "../components/ui/Button";
 import { InputForm } from "../components/ui/InputForm";
-import { useNavigation } from '@react-navigation/native';
-import RadioGroup from 'react-native-radio-buttons-group';
+import RadioGroup from "react-native-radio-buttons-group";
 import { useMemo, useState } from "react";
 
-
 const SignUp = () => {
-
-  const radioButtons = useMemo(() => ([
-    {
-      id: '1', // acts as primary key, should be unique and non-empty string
-      label: 'อาจารย์ (@KMITL)',
-      value: 'professor'
-    },
-    {
-      id: '2',
-      label: 'นักเรียน (@KMITL)',
-      value: 'student'
-    },
-    {
-      id: '3',
-      label: 'ผู้เยี่ยมชม',
-      value: 'visitor'
-    }
-
-  ]), []);
+  const radioButtons = useMemo(
+    () => [
+      {
+        id: "1",
+        label: "อาจารย์ (@KMITL)",
+        value: "professor",
+      },
+      {
+        id: "2",
+        label: "นักเรียน (@KMITL)",
+        value: "student",
+      },
+      {
+        id: "3",
+        label: "ผู้เยี่ยมชม",
+        value: "visitor",
+      },
+    ],
+    []
+  );
   const [selectedId, setSelectedId] = useState<string | undefined>();
   return (
     <View style={styles.screen}>
@@ -34,19 +40,15 @@ const SignUp = () => {
         <View style={styles.centeredContainer}>
           <Image
             style={{ marginBottom: 30 }}
-            source={require('../assets/Logo.png')}
+            source={require("../assets/Logo.png")}
           />
-          <Text style={styles.signUpText}>
-            สมัครสมาชิก
-          </Text>
+          <Text style={styles.signUpText}>สมัครสมาชิก</Text>
         </View>
-        {/* <View style={{ justifyContent: 'center', flexDirection: 'row'}}> */}
-          <InputForm title={"ชื่อ *"} />
-          <InputForm title={"นามสกุล *"} />
-        {/* </View> */}
+        <InputForm title={"ชื่อ *"} />
+        <InputForm title={"นามสกุล *"} />
         <InputForm title={"ชื่อบัญชีผู้ใช้ *"} />
         <InputForm title={"เพศ *"} />
-        <InputForm title={"รหัสผ่าน *"} />
+        <InputForm title={"รหัสผ่าน *"} password={true} />
         <InputForm title={"ยืนยันรหัสผ่าน *"} />
         <InputForm title={"หมายเลขโทรศัพท์ *"} />
 
@@ -54,16 +56,22 @@ const SignUp = () => {
           radioButtons={radioButtons}
           onPress={setSelectedId}
           selectedId={selectedId}
-          layout='column'
-          containerStyle={{ alignItems: 'flex-start', marginTop: 20 }}
+          layout="column"
+          containerStyle={{ alignItems: "flex-start", marginTop: 20 }}
         />
         <ButtonUi title={"ถัดไป"} />
         <View
-          style={{ flexDirection: "row", alignItems: "center", marginTop: 15, justifyContent: 'center', paddingBottom: 50 }}
+          style={{
+            flexDirection: "row",
+            alignItems: "center",
+            marginTop: 15,
+            justifyContent: "center",
+            paddingBottom: 50,
+          }}
         >
-          <Text style={{ fontSize: 14 }}>สมัครสมาชิกแล้ว? </Text>
+          <Text style={styles.fontSm}>สมัครสมาชิกแล้ว? </Text>
           <TouchableOpacity>
-            <Text style={{ fontSize: 14 }}>เข้าสู่ระบบ</Text>
+            <Text style={styles.fontSm}>เข้าสู่ระบบ</Text>
           </TouchableOpacity>
         </View>
       </ScrollView>
@@ -76,12 +84,14 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: "center",
   },
+  fontSm: {
+    fontSize: 14,
+  },
   card: {
-    // alignItems: "center",
     paddingBottom: 20,
     marginTop: 100,
     paddingLeft: 40,
-    paddingRight: 40
+    paddingRight: 40,
   },
   buttonContainer: {
     justifyContent: "flex-end",
@@ -114,7 +124,7 @@ const styles = StyleSheet.create({
   signUpText: {
     fontSize: 24,
     fontWeight: "800",
-    marginTop: 20, // Adjust the marginTop as needed
+    marginTop: 20,
   },
 });
 

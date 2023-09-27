@@ -4,18 +4,15 @@ import { ButtonUi } from "../../components/ui/Button";
 import { InputForm } from "../../components/ui/InputForm";
 
 const ProfSignUp = () => {
+  
   const namearray = [
-    {
-      name: "คำนำหน้าขื่อ *"
-    }, {
-      name: "อีเมล *"
-    }, {
-      name: "รหัสประจำตัวอาจารย์ *"
-    }, {
-      name: "มหาวิทยาลัยที่จบการศึกษา *"
-    }, {
-      name: "ประเทศที่จบการศึกษา *"
-    }]
+    "คำนำหน้าขื่อ *",
+    "อีเมล *",
+    "รหัสประจำตัวอาจารย์ *",
+    "มหาวิทยาลัยที่จบการศึกษา *",
+    "ประเทศที่จบการศึกษา *",
+  ];
+
   return (
     <View style={styles.screen}>
       <View style={styles.card}>
@@ -24,11 +21,11 @@ const ProfSignUp = () => {
             style={{ marginBottom: 30 }}
             source={require('../../assets/Logo.png')}
           />
-          <Text style={styles.signUpText}>
-            สมัครสมาชิก
-          </Text>
+          <Text style={styles.signUpText}>สมัครสมาชิก</Text>
         </View>
-        {namearray.map((item, key) => <InputForm title={item.name} />)}
+        {namearray.map((name) => (
+          <InputForm title={name} />
+        ))}
         <ButtonUi title={"สมัครสมาชิก"} />
         <View style={styles.flexContainer}>
           <Text style={styles.fontSm}>สมัครสมาชิกแล้ว? </Text>
@@ -50,14 +47,14 @@ const styles = StyleSheet.create({
     paddingBottom: 20,
     marginTop: 100,
     paddingLeft: 40,
-    paddingRight: 40
+    paddingRight: 40,
   },
   flexContainer: {
     flexDirection: "row",
     alignItems: "center",
     marginTop: 15,
-    justifyContent: 'center',
-    paddingBottom: 50
+    justifyContent: "center",
+    paddingBottom: 50,
   },
   buttonContainer: {
     justifyContent: "flex-end",
@@ -93,8 +90,8 @@ const styles = StyleSheet.create({
     marginTop: 20,
   },
   fontSm: {
-    fontSize: 14
-  }
+    fontSize: 14,
+  },
 });
 
 export default ProfSignUp;

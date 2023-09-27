@@ -2,30 +2,35 @@ import React from "react";
 import { View, Text, StyleSheet, TouchableOpacity, Image } from "react-native";
 import { ButtonUi } from "../components/ui/Button";
 import { InputForm } from "../components/ui/InputForm";
-import { NavigationContainer } from '@react-navigation/native';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 const SignIn = () => {
   return (
     <View style={styles.screen}>
       <View style={styles.card}>
         <Image
-          style={{marginBottom: 50}}
-          source={require('../assets/Logo.png')}
+          style={{ marginBottom: 50 }}
+          source={require("../assets/Logo.png")}
         />
-        <Text style={{ alignItems: "center", fontSize: 24, fontWeight: "800", marginBottom: 30 }}>
+        <Text
+          style={{
+            alignItems: "center",
+            fontSize: 24,
+            fontWeight: "800",
+            marginBottom: 30,
+          }}
+        >
           เข้าสู่ระบบ
         </Text>
         <InputForm title={"ชื่อบัญชีผู้ใช้"} />
-        <InputForm title={"รหัสผ่าน"} />
+        <InputForm title={"รหัสผ่าน"} password={true} />
         <ButtonUi title={"เข้าสู่ระบบ"} />
 
         <View
           style={{ flexDirection: "row", alignItems: "center", marginTop: 23 }}
         >
-          <Text style={{ fontSize: 14 }}>ยังไม่มีบัญชีผู้ใช้ ? </Text>
+          <Text style={styles.fontSm}>ยังไม่มีบัญชีผู้ใช้ ? </Text>
           <TouchableOpacity>
-            <Text style={{ fontSize: 14 }}> สมัครบัญชีผู้ใช้</Text>
+            <Text style={styles.fontSm}> สมัครบัญชีผู้ใช้</Text>
           </TouchableOpacity>
         </View>
       </View>
@@ -38,10 +43,13 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: "center",
   },
+  fontSm: {
+    fontSize: 14,
+  },
   card: {
     alignItems: "center",
     padding: 20,
-    marginTop: 80
+    marginTop: 80,
   },
   buttonContainer: {
     justifyContent: "flex-end",
