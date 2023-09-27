@@ -39,6 +39,10 @@ let UserService = class UserService {
         });
         return user;
     }
+    async searchUsers(query) {
+        const users = await this.userModel.find({ fname: { $regex: `.*${query}.*` } }).exec();
+        return users;
+    }
 };
 UserService = __decorate([
     (0, common_1.Injectable)(),
