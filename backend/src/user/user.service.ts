@@ -30,4 +30,9 @@ export class UserService {
     });
     return user;
   }
+
+  async searchUsers(query: string): Promise<User[]> {
+    const users = await this.userModel.find({ fname: { $regex: `.*${query}.*` } }).exec();
+    return users;
+  }
 }

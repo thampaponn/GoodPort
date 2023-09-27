@@ -42,6 +42,10 @@ let UserController = class UserController {
         const user = await this.userService.delUserById(id);
         return "delete success";
     }
+    async searchUsers(query) {
+        const users = await this.userService.searchUsers(query);
+        return users;
+    }
 };
 __decorate([
     (0, common_1.Post)(),
@@ -64,8 +68,8 @@ __decorate([
     __metadata("design:returntype", Promise)
 ], UserController.prototype, "getUserById", null);
 __decorate([
-    (0, common_1.Put)(':id'),
-    __param(0, (0, common_1.Param)('id')),
+    (0, common_1.Put)(":id"),
+    __param(0, (0, common_1.Param)("id")),
     __param(1, (0, common_1.Body)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [String, Object]),
@@ -78,6 +82,13 @@ __decorate([
     __metadata("design:paramtypes", [String]),
     __metadata("design:returntype", Promise)
 ], UserController.prototype, "delUserById", null);
+__decorate([
+    (0, common_1.Get)("search"),
+    __param(0, (0, common_1.Query)("q")),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String]),
+    __metadata("design:returntype", Promise)
+], UserController.prototype, "searchUsers", null);
 UserController = __decorate([
     (0, common_1.Controller)("user"),
     __metadata("design:paramtypes", [user_service_1.UserService])

@@ -37,4 +37,5 @@ export declare class UserController {
     }>;
     updateUser(id: string, updatedData: Partial<User>): Promise<User>;
     delUserById(id: string): Promise<string>;
+    searchUsers(query: string): Promise<User[]>;
 }
