@@ -22,7 +22,7 @@ const ProfSignUp = () => {
         <View style={styles.centeredContainer}>
           <Image
             style={{ marginBottom: 30 }}
-            source={require('../assets/Logo.png')}
+            source={require('../../assets/Logo.png')}
           />
           <Text style={styles.signUpText}>
             สมัครสมาชิก
