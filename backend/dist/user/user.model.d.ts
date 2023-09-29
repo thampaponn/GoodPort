@@ -90,7 +90,7 @@ export declare const UserSchema: mongoose.Schema<any, mongoose.Model<any, any, a
 } & {
     _id: mongoose.Types.ObjectId;
 }>;
-export interface User extends mongoose.Document {
+export declare class User extends mongoose.Document {
     id: string;
     fname: string;
     lname: string;
