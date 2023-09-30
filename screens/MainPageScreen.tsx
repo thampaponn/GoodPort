@@ -3,20 +3,35 @@ import { View, Text, StyleSheet, TouchableOpacity, Image, ScrollView } from "rea
 import { ButtonUi } from "../components/ui/Button";
 import { InputForm } from "../components/ui/InputForm";
 
-const StudentMain = () => {
+const MainPage = () => {
 
     const namearray = [
         {
-            name: "คำนำหน้าขื่อ *"
-        }, {
-            name: "อีเมล *"
-        }, {
-            name: "อาชีพ *"
-        }, {
-            name: "บริษัท / สถานศึกษา *"
-        }, {
-            name: "หมายเลขติดต่อบริษัท *"
-        }]
+            img: '../assets/icon.png',
+            name: 'Project #1',
+            category: 'การเรียน',
+            owner: 'ธนาธิป สิงหานนท์',
+            professor: 'จารย์เก่ง'
+        },
+        {
+            name: 'Project #2',
+            category: 'การเรียน',
+            owner: 'ธนาธิป สิงหานนท์',
+            professor: 'จารย์เก่ง'
+        },
+        {
+            name: 'Project #3',
+            category: 'การเรียน',
+            owner: 'ธนาธิป สิงหานนท์',
+            professor: 'จารย์เก่ง'
+        },
+        {
+            name: 'Project #4',
+            category: 'การเรียน',
+            owner: 'ธนาธิป สิงหานนท์',
+            professor: 'จารย์เก่ง'
+        },
+    ]
 
     return (
         <View style={styles.screen}>
@@ -27,12 +42,20 @@ const StudentMain = () => {
                         source={require('../assets/Logo.png')}
                     />
                 </View>
-                <ScrollView contentContainerStyle={{ justifyContent: 'center'}}>
+                <ScrollView contentContainerStyle={{ justifyContent: 'center' }}>
                     {namearray.map((item, key) => <View style={styles.leftContainer}>
-                        {/* <Image /> */}
-                        <Text style={styles.fontSm}>ประเภทของโครงงาน : </Text>
-                        <Text style={styles.fontSm}>เจ้าของโครงงาน : </Text>
-                        <Text style={styles.fontSm}>อาจารย์ที่ปรึกษา : </Text>
+                        <View style={styles.flexContainer}>
+                            <Image
+                                style={{ marginBottom: 30 }}
+                                source={require('../assets/Logo.png')}
+                            />
+                        </View>
+                        <View style={styles.flexContainer}>
+                            <Text style={styles.projectName}>{item.name}</Text>
+                        </View>
+                        <Text style={styles.fontSm}>ประเภทของโครงงาน : {item.category}</Text>
+                        <Text style={styles.fontSm}>เจ้าของโครงงาน : {item.owner}</Text>
+                        <Text style={styles.fontSm}>อาจารย์ที่ปรึกษา : {item.professor}</Text>
                         <ButtonUi title={"แสดงรายละเอียด"} />
                     </View>)}
                 </ScrollView>
@@ -99,13 +122,18 @@ const styles = StyleSheet.create({
     },
     signUpText: {
         fontSize: 24,
-        fontWeight: "800",
+        fontWeight: 'normal',
         marginTop: 20,
     },
     fontSm: {
         fontSize: 14,
         marginTop: 15
+    },
+    projectName: {
+        fontSize: 16,
+        fontWeight: 'bold',
+        color: '#0098DA'
     }
 });
 
-export default StudentMain;
+export default MainPage;

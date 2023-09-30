@@ -6,7 +6,7 @@ import { InputForm } from "../../components/ui/InputForm";
 const ProfSignUp = () => {
   
   const namearray = [
-    "คำนำหน้าขื่อ *",
+    "คำนำหน้าชื่อ *",
     "อีเมล *",
     "รหัสประจำตัวอาจารย์ *",
     "มหาวิทยาลัยที่จบการศึกษา *",
