@@ -1,3 +1,4 @@
+import { ApiProperty } from '@nestjs/swagger';
 import * as mongoose from 'mongoose';
 
 // Enum สำหรับ Role
@@ -42,7 +43,7 @@ export const UserSchema = new mongoose.Schema({
   createdAt: { type: Date, default: Date.now },
 });
 
-export interface User extends mongoose.Document {
+export class User extends mongoose.Document {
   id: string;
   fname: string;
   lname: string;
