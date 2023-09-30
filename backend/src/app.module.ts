@@ -6,11 +6,8 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { UserModule } from './user/user.module';
 import { PostModule } from './post/post.module';
 import { AlertModule } from './alert/alert.module';
-import { CommentController } from './comment/comment.controller';
-import { CommentService } from './comment/comment.service';
-import { CommentModule } from './comment/comment.module';
 import { PostAdvisorModule } from './post-advisor/post-advisor.module';
-
+import { CommentModule } from './comments/comments.module';
 
 @Module({
   imports: [
@@ -19,10 +16,10 @@ import { PostAdvisorModule } from './post-advisor/post-advisor.module';
     UserModule,
     PostModule,
     AlertModule,
-    CommentModule,
     PostAdvisorModule,
+    CommentModule
   ],
-  controllers: [AppController, CommentController],
-  providers: [AppService, CommentService],
+  controllers: [AppController],
+  providers: [AppService],
 })
 export class AppModule {}
