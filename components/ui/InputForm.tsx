@@ -24,6 +24,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderRadius: 5,
     marginTop: 6,
+    paddingHorizontal: 15
   },
   formText: {
     fontSize: 16,
