@@ -5,7 +5,7 @@ import { InputForm } from "../../components/ui/InputForm";
 
 const VisitSignUp = () => {
   const namearray = [
-    "คำนำหน้าขื่อ *",
+    "คำนำหน้าชื่อ *",
     "อีเมล *",
     "อาชีพ *",
     "บริษัท / สถานศึกษา *",

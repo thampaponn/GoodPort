@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.UserSchema = void 0;
+exports.User = exports.UserSchema = void 0;
 const mongoose = require("mongoose");
 var UserRole;
 (function (UserRole) {
@@ -41,4 +41,7 @@ exports.UserSchema = new mongoose.Schema({
     },
     createdAt: { type: Date, default: Date.now },
 });
+class User extends mongoose.Document {
+}
+exports.User = User;
 //# sourceMappingURL=user.model.js.map
