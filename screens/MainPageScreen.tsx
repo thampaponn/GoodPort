@@ -2,10 +2,11 @@ import React from "react";
 import { View, Text, StyleSheet, TouchableOpacity, Image, ScrollView } from "react-native";
 import { ButtonUi } from "../components/ui/Button";
 import { InputForm } from "../components/ui/InputForm";
+import { useState } from "react";
 
 const MainPage = () => {
-
-    const namearray = [
+    const [selectedCategories, setSelectedCategories] = useState([]);
+    const postArray = [
         {
             img: '../assets/icon.png',
             name: 'Project #1',
@@ -32,18 +33,62 @@ const MainPage = () => {
             professor: 'จารย์เก่ง'
         },
     ]
-
+    const categoryArray = [
+        {
+            name: "การเรียน"
+        },
+        {
+            name: "กีฬา"
+        },
+        {
+            name: "สหกิจ"
+        },
+        {
+            name: "จิตอาสา"
+        },
+        {
+            name: "อื่น ๆ"
+        },
+    ]
+    const toggleCategory = (category) => {
+        if (selectedCategories.includes(category)) {
+            // Category is already selected, so remove it
+            setSelectedCategories((prevSelected) =>
+                prevSelected.filter((item) => item !== category)
+            );
+        } else {
+            // Category is not selected, so add it
+            setSelectedCategories((prevSelected) => [...prevSelected, category]);
+        }
+    };
     return (
         <View style={styles.screen}>
             <View style={styles.card}>
-                <View style={styles.centeredContainer}>
+                {/* <View style={styles.centeredContainer}>
                     <Image
                         style={{ marginBottom: 30 }}
                         source={require('../assets/Logo.png')}
                     />
-                </View>
+                </View> */}
                 <ScrollView contentContainerStyle={{ justifyContent: 'center' }}>
-                    {namearray.map((item, key) => <View style={styles.leftContainer}>
+                    <View style={styles.leftContainer}>
+                        {categoryArray.map((item, key) => <TouchableOpacity
+                            key={key}
+                            onPress={() => toggleCategory(item.name)}
+                            style={styles.checkboxContainer}
+                        >
+                            <View style={styles.checkbox}>
+                                {selectedCategories.includes(item.name) && (
+                                    <Image
+                                        source={require("../assets/checkmark.png")}
+                                        style={styles.checkmark}
+                                    />
+                                )}
+                            </View>
+                            <Text>{item.name}</Text>
+                        </TouchableOpacity>)}
+                    </View>
+                    {postArray.map((item, key) => <View style={styles.leftContainer}>
                         <View style={styles.flexContainer}>
                             <Image
                                 style={{ marginBottom: 30 }}
@@ -59,8 +104,6 @@ const MainPage = () => {
                         <ButtonUi title={"แสดงรายละเอียด"} />
                     </View>)}
                 </ScrollView>
-
-
             </View>
         </View>
     );
@@ -72,10 +115,9 @@ const styles = StyleSheet.create({
         alignItems: "center",
     },
     card: {
-        paddingBottom: 20,
-        marginTop: 100,
+        marginTop: 50,
         paddingLeft: 40,
-        paddingRight: 40
+        paddingRight: 40,
     },
     flexContainer: {
         flexDirection: "row",
@@ -85,6 +127,7 @@ const styles = StyleSheet.create({
     },
     leftContainer: {
         marginTop: 15,
+        marginBottom: 5,
         justifyContent: 'center',
         borderWidth: 1, // Border width
         borderColor: '#AEAEAE', // Border color
@@ -133,7 +176,26 @@ const styles = StyleSheet.create({
         fontSize: 16,
         fontWeight: 'bold',
         color: '#0098DA'
-    }
+    },
+    checkboxContainer: {
+        flexDirection: "row",
+        alignItems: "center",
+        marginTop: 15,
+      },
+      checkbox: {
+        width: 20,
+        height: 20,
+        borderColor: "#AEAEAE",
+        borderWidth: 1,
+        borderRadius: 5,
+        marginRight: 10,
+        alignItems: "center",
+        justifyContent: "center",
+      },
+      checkmark: {
+        width: 16,
+        height: 16,
+      },
 });
 
 export default MainPage;

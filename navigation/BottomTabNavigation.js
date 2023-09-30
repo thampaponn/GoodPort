@@ -4,8 +4,12 @@ import MainPage from "../screens/MainPageScreen";
 const Tab = createBottomTabNavigator();
 
 export default BottomTabNavigation = () => {
-    <Tab.Navigator initialRouteName="MainPage">
-      <Tab.Screen name="MainPage" component={MainPage} />
+  return (
+    <Tab.Navigator initialRouteName="Home" screenOptions= {{ 
+      headerShown: false
+    }}>
+      <Tab.Screen name="Home" component={MainPage} />
     </Tab.Navigator>
+  )
 }
 

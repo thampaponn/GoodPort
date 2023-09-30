@@ -12,7 +12,7 @@ import { InputForm } from "../components/ui/InputForm";
 import RadioGroup from "react-native-radio-buttons-group";
 import { useMemo, useState } from "react";
 
-const SignUp = () => {
+const SignUp = ({navigation}) => {
   const radioButtons = useMemo(
     () => [
       {
