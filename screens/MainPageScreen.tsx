@@ -64,12 +64,6 @@ const MainPage = () => {
     return (
         <View style={styles.screen}>
             <View style={styles.card}>
-                {/* <View style={styles.centeredContainer}>
-                    <Image
-                        style={{ marginBottom: 30 }}
-                        source={require('../assets/Logo.png')}
-                    />
-                </View> */}
                 <ScrollView contentContainerStyle={{ justifyContent: 'center' }}>
                     <View style={styles.leftContainer}>
                         {categoryArray.map((item, key) => <TouchableOpacity
@@ -129,14 +123,14 @@ const styles = StyleSheet.create({
         marginTop: 15,
         marginBottom: 5,
         justifyContent: 'center',
-        borderWidth: 1, // Border width
-        borderColor: '#AEAEAE', // Border color
-        borderRadius: 5, // Border radius
-        padding: 10, // Optional: Add padding to the content inside the container
+        borderWidth: 1,
+        borderColor: '#AEAEAE',
+        borderRadius: 5,
+        padding: 10
     },
     buttonContainer: {
         flexDirection: 'row',
-        justifyContent: "flex-end", // Align children to the right side
+        justifyContent: "flex-end",
         marginTop: 20,
         width: 300,
         maxWidth: 300,
