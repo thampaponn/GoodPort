@@ -14,6 +14,18 @@ import { InputForm } from "../../components/ui/InputForm";
 import SelectDropdown from "react-native-select-dropdown";
 
 const EditVisitorProfile = () => {
+  const data = [
+    "คำนำหน้าชื่อ",
+    "ชื่อ *",
+    "นามสกุล *",
+    "เพศ",
+    "อีเมล",
+    "รหัสผ่าน *",
+    "หมายเลขโทรศัพท์",
+    "อาชีพ",
+    "บริษัท / โรงเรียน",
+    "หมายเลขติดต่อกับสถานที่"
+  ];
   return (
     <ScrollView>
       <View style={styles.screen}>
@@ -23,16 +35,13 @@ const EditVisitorProfile = () => {
             <Text style={styles.text}>เปลี่ยนรูปโปรไฟล์</Text>
           </TouchableOpacity>
         </View>
-        <InputForm title={"คำนำหน้าชื่อ"} />
-        <InputForm title={"ชื่อ *"} />
-        <InputForm title={"นามสกุล *"} />
-        <InputForm title={"เพศ"} />
-        <InputForm title={"อีเมล"} />
-        <InputForm title={"รหัสผ่าน *"} password={true} />
-        <InputForm title={"หมายเลขโทรศัพท์"} />
-        <InputForm title={"อาชีพ"} />
-        <InputForm title={"บริษัท / โรงเรียน"} />
-        <InputForm title={"หมายเลขติดต่อกับสถานที่"} />
+        {data.map((name) =>
+          name !== "รหัสผ่าน *" ? (
+            <InputForm title={name} />
+          ) : (
+            <InputForm title={name} password={true} />
+          )
+        )}
         <ButtonUi title={"บันทึก"} />
       </View>
     </ScrollView>
