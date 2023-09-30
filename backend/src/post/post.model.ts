@@ -39,7 +39,7 @@ export const PostSchema = new mongoose.Schema({
   editAt: { type: Date, default: Date.now },
 });
 
-export interface Post extends mongoose.Document {
+export interface Posts extends mongoose.Document {
   id: string;
   nameTh: string;
   nameEn: string;

@@ -31,13 +31,13 @@ export class PostAdvisorService {
     id: string,
     updatedData: Partial<PostAdvisor>
   ): Promise<PostAdvisor | null> {
-    const user = await this.postAdvisorModel.findByIdAndUpdate(
+    const post = await this.postAdvisorModel.findByIdAndUpdate(
       id,
       updatedData,
       {
         new: true,
       }
     );
-    return user;
+    return post;
   }
 }

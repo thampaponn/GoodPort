@@ -1,7 +1,6 @@
 import * as mongoose from "mongoose";
 
-export const CommentSchema = new mongoose.Schema({
-  id: { type: String, required: true },
+export const CommentsSchema = new mongoose.Schema({
   owner: {
     userId: { type: String, required: true },
     fname: { type: String, required: true },
@@ -11,7 +10,7 @@ export const CommentSchema = new mongoose.Schema({
   createAt: { type: Date, default: Date.now },
 });
 
-export interface Comment extends mongoose.Document {
+export interface Comments extends mongoose.Document {
   id: string;
   owner: {
     userId: string;
