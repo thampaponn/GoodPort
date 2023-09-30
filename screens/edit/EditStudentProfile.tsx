@@ -37,7 +37,9 @@ const EditStudentProfile = () => {
             <InputForm title={name} password={true} />
           )
         )}
-        <ButtonUi title={"บันทึก"} />
+        <View style={{ marginBottom: 20 }}>
+          <ButtonUi title={"บันทึก"} />
+        </View>
       </View>
     </ScrollView>
   );
