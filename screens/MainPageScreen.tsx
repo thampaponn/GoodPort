@@ -1,195 +1,72 @@
 import React from "react";
-import { View, Text, StyleSheet, TouchableOpacity, Image, ScrollView } from "react-native";
-import { ButtonUi } from "../components/ui/Button";
-import { InputForm } from "../components/ui/InputForm";
-import { useState } from "react";
+import { View, ScrollView } from "react-native";
+import { ProductCard } from "../components/ProductCard";
+import { ProudctFilter } from "../components/ProductFilter";
 
-const MainPage = () => {
-    const [selectedCategories, setSelectedCategories] = useState([]);
-    const postArray = [
-        {
-            img: '../assets/icon.png',
-            name: 'Project #1',
-            category: 'การเรียน',
-            owner: 'ธนาธิป สิงหานนท์',
-            professor: 'จารย์เก่ง'
-        },
-        {
-            name: 'Project #2',
-            category: 'การเรียน',
-            owner: 'ธนาธิป สิงหานนท์',
-            professor: 'จารย์เก่ง'
-        },
-        {
-            name: 'Project #3',
-            category: 'การเรียน',
-            owner: 'ธนาธิป สิงหานนท์',
-            professor: 'จารย์เก่ง'
-        },
-        {
-            name: 'Project #4',
-            category: 'การเรียน',
-            owner: 'ธนาธิป สิงหานนท์',
-            professor: 'จารย์เก่ง'
-        },
-    ]
-    const categoryArray = [
-        {
-            name: "การเรียน"
-        },
-        {
-            name: "กีฬา"
-        },
-        {
-            name: "สหกิจ"
-        },
-        {
-            name: "จิตอาสา"
-        },
-        {
-            name: "อื่น ๆ"
-        },
-    ]
-    const toggleCategory = (category) => {
-        if (selectedCategories.includes(category)) {
-            // Category is already selected, so remove it
-            setSelectedCategories((prevSelected) =>
-                prevSelected.filter((item) => item !== category)
-            );
-        } else {
-            // Category is not selected, so add it
-            setSelectedCategories((prevSelected) => [...prevSelected, category]);
-        }
-    };
-    return (
-        <View style={styles.screen}>
-            <View style={styles.card}>
-                <ScrollView contentContainerStyle={{ justifyContent: 'center' }}>
-                    <View style={styles.leftContainer}>
-                        {categoryArray.map((item, key) => <TouchableOpacity
-                            key={key}
-                            onPress={() => toggleCategory(item.name)}
-                            style={styles.checkboxContainer}
-                        >
-                            <View style={styles.checkbox}>
-                                {selectedCategories.includes(item.name) && (
-                                    <Image
-                                        source={require("../assets/checkmark.png")}
-                                        style={styles.checkmark}
-                                    />
-                                )}
-                            </View>
-                            <Text>{item.name}</Text>
-                        </TouchableOpacity>)}
-                    </View>
-                    {postArray.map((item, key) => <View style={styles.leftContainer}>
-                        <View style={styles.flexContainer}>
-                            <Image
-                                style={{ marginBottom: 30 }}
-                                source={require('../assets/Logo.png')}
-                            />
-                        </View>
-                        <View style={styles.flexContainer}>
-                            <Text style={styles.projectName}>{item.name}</Text>
-                        </View>
-                        <Text style={styles.fontSm}>ประเภทของโครงงาน : {item.category}</Text>
-                        <Text style={styles.fontSm}>เจ้าของโครงงาน : {item.owner}</Text>
-                        <Text style={styles.fontSm}>อาจารย์ที่ปรึกษา : {item.professor}</Text>
-                        <ButtonUi title={"แสดงรายละเอียด"} />
-                    </View>)}
-                </ScrollView>
-            </View>
-        </View>
-    );
+const MainPageScreen = () => {
+  const PostMockup = [
+    {
+      img: "https://awildgeographer.files.wordpress.com/2015/02/john_muir_glacier.jpg",
+      name: "Project #1",
+      category: "การเรียน",
+      owner: "ธนาธิป สิงหานนท์",
+      professor: "จารย์เก่ง",
+    },
+    {
+      img: "https://awildgeographer.files.wordpress.com/2015/02/john_muir_glacier.jpg",
+      name: "Project #2",
+      category: "การเรียน",
+      owner: "ธนาธิป สิงหานนท์",
+      professor: "จารย์เก่ง",
+    },
+    {
+      img: "https://awildgeographer.files.wordpress.com/2015/02/john_muir_glacier.jpg",
+      name: "Project #3",
+      category: "การเรียน",
+      owner: "ธนาธิป สิงหานนท์",
+      professor: "จารย์เก่ง",
+    },
+    {
+      img: "https://awildgeographer.files.wordpress.com/2015/02/john_muir_glacier.jpg",
+      name: "Project #4",
+      category: "การเรียน",
+      owner: "ธนาธิป สิงหานนท์",
+      professor: "จารย์เก่ง",
+    },
+  ];
+  const categoryMockup = [
+    {
+      name: "การเรียน",
+    },
+    {
+      name: "กีฬา",
+    },
+    {
+      name: "สหกิจ",
+    },
+    {
+      name: "จิตอาสา",
+    },
+    {
+      name: "อื่น ๆ",
+    },
+  ];
+  return (
+    <View style={{ backgroundColor: "#FFFFFF", height: "100%" }}>
+      <ScrollView>
+        <ProudctFilter type={categoryMockup} />
+        {PostMockup.map((post) => (
+          <ProductCard
+            image={post.img}
+            name={post.name}
+            category={post.category}
+            owner={post.owner}
+            advisor={post.professor}
+          />
+        ))}
+      </ScrollView>
+    </View>
+  );
 };
 
-const styles = StyleSheet.create({
-    screen: {
-        flex: 1,
-        alignItems: "center",
-    },
-    card: {
-        marginTop: 50,
-        paddingLeft: 40,
-        paddingRight: 40,
-    },
-    flexContainer: {
-        flexDirection: "row",
-        alignItems: "center",
-        marginTop: 15,
-        justifyContent: 'center',
-    },
-    leftContainer: {
-        marginTop: 15,
-        marginBottom: 5,
-        justifyContent: 'center',
-        borderWidth: 1,
-        borderColor: '#AEAEAE',
-        borderRadius: 5,
-        padding: 10
-    },
-    buttonContainer: {
-        flexDirection: 'row',
-        justifyContent: "flex-end",
-        marginTop: 20,
-        width: 300,
-        maxWidth: 300,
-    },
-    textInput: {
-        width: 307,
-        height: 42,
-        backgroundColor: "#F0F0F0",
-        borderColor: "#AEAEAE",
-        borderWidth: 1,
-        borderRadius: 5,
-        marginTop: 6,
-    },
-    bigTextInput: {
-        width: 307,
-        height: 130,
-        backgroundColor: "#F0F0F0",
-        borderColor: "#AEAEAE",
-        borderWidth: 1,
-        borderRadius: 5,
-        marginTop: 6,
-    },
-    centeredContainer: {
-        alignItems: "center",
-        justifyContent: "center",
-    },
-    signUpText: {
-        fontSize: 24,
-        fontWeight: 'normal',
-        marginTop: 20,
-    },
-    fontSm: {
-        fontSize: 14,
-        marginTop: 15
-    },
-    projectName: {
-        fontSize: 16,
-        fontWeight: 'bold',
-        color: '#0098DA'
-    },
-    checkboxContainer: {
-        flexDirection: "row",
-        alignItems: "center",
-        marginTop: 15,
-      },
-      checkbox: {
-        width: 20,
-        height: 20,
-        borderColor: "#AEAEAE",
-        borderWidth: 1,
-        borderRadius: 5,
-        marginRight: 10,
-        alignItems: "center",
-        justifyContent: "center",
-      },
-      checkmark: {
-        width: 16,
-        height: 16,
-      },
-});
-
-export default MainPage;
+export default MainPageScreen;
