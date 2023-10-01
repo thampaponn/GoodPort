@@ -3,6 +3,7 @@ import MainPage from "../screens/MainPageScreen";
 import AddPortScreen from "../screens/AddPortScreen";
 import NotificationScreen from "../screens/NotificationScreen";
 import ProfileScreen from "../screens/ProfileScreen";
+import { Icon } from '@rneui/themed';
 
 const Tab = createBottomTabNavigator();
 
