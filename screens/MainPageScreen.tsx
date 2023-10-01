@@ -1,11 +1,9 @@
 import React from "react";
 import { View, ScrollView } from "react-native";
-import { useState } from "react";
 import { ProductCard } from "../components/ProductCard";
 import { ProudctFilter } from "../components/ProductFilter";
 
-const MainPage = () => {
-  const [selectedCategories, setSelectedCategories] = useState([]);
+const MainPageScreen = () => {
   const PostMockup = [
     {
       img: "https://awildgeographer.files.wordpress.com/2015/02/john_muir_glacier.jpg",
@@ -53,15 +51,6 @@ const MainPage = () => {
       name: "อื่น ๆ",
     },
   ];
-  const toggleCategory = (category: string) => {
-    if (selectedCategories.includes(category)) {
-      setSelectedCategories((prevSelected) =>
-        prevSelected.filter((item) => item !== category)
-      );
-    } else {
-      setSelectedCategories((prevSelected) => [...prevSelected, category]);
-    }
-  };
   return (
     <View style={{ backgroundColor: "#FFFFFF", height: "100%" }}>
       <ScrollView>
@@ -80,4 +69,4 @@ const MainPage = () => {
   );
 };
 
-export default MainPage;
+export default MainPageScreen;
