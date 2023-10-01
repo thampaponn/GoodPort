@@ -1,5 +1,7 @@
+import { useNavigation } from "@react-navigation/native";
 import { Button, Card, Chip } from "@rneui/themed";
 import { View, Text } from "react-native";
+import ProductDetail from "../screens/ProductDetail";
 
 type ProductCardProps = {
   image?: string;
@@ -16,6 +18,8 @@ export const ProductCard = ({
   owner,
   advisor,
 }: ProductCardProps) => {
+  const navigation: any = useNavigation();
+  const handleSubmit = () => {};
   return (
     <Card containerStyle={{ borderRadius: 20, padding: 25 }}>
       <View style={{ display: "flex", alignItems: "center" }}>
@@ -50,6 +54,7 @@ export const ProductCard = ({
       </View>
 
       <Button
+        onPress={() => navigation.navigate("detail")}
         title={"แสดงรายละเอียด"}
         buttonStyle={{
           marginTop: 20,
