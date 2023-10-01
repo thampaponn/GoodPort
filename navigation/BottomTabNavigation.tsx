@@ -9,13 +9,31 @@ const Tab = createBottomTabNavigator();
 
 const BottomTabNavigation = () => {
   return (
-    <Tab.Navigator initialRouteName="Home" screenOptions= {{ 
-      headerShown: false
+    <Tab.Navigator initialRouteName="Home" screenOptions={{
+      tabBarActiveTintColor: "#0098DA",
+      headerShown: false,
+      tabBarShowLabel: false,
     }}>
-      <Tab.Screen name="Home" component={MainPage} />
-      <Tab.Screen name="Add" component={AddPortScreen} />
-      <Tab.Screen name="Notification" component={NotificationScreen} />
-      <Tab.Screen name="Profile" component={ProfileScreen} />
+      <Tab.Screen name="Home" component={MainPage} options={{
+        tabBarIcon: ({ color, size }) => {
+          return <Icon name="home" size={30} color={color} />
+        },
+      }} />
+      <Tab.Screen name="Add" component={AddPortScreen} options={{
+        tabBarIcon: ({ color, size }) => {
+          return <Icon name="add-circle-outline" size={30} color={color} />
+        }
+      }} />
+      <Tab.Screen name="Notification" component={NotificationScreen} options={{
+        tabBarIcon: ({ color, size }) => {
+          return <Icon name="notifications" size={30} color={color} />
+        }
+      }} />
+      <Tab.Screen name="Profile" component={ProfileScreen} options={{
+        tabBarIcon: ({ color, size }) => {
+          return <Icon name="person" size={30} color={color} />
+        }
+      }} />
     </Tab.Navigator>
   )
 }
