@@ -3,7 +3,7 @@ import { View, Text, StyleSheet, TouchableOpacity, Image } from "react-native";
 import { ButtonUi } from "../components/ui/Button";
 import { InputForm } from "../components/ui/InputForm";
 
-const SignIn = () => {
+const SignIn = ({navigation}) => {
   return (
     <View style={styles.screen}>
       <View style={styles.card}>

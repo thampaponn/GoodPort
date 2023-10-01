@@ -1,31 +1,21 @@
 import SignIn from './screens/SignIn';
 import SignUp from './screens/Signup';
+import BottomTabNavigation from './navigation/BottomTabNavigation';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import StudentMain from './screens/StudentMain';
-import TeacherMain from './screens/TeacherMain';
-import VisitSignUp from './screens/visitor/VisitorSignUpScreen';
-import ProfSignUp from './screens/professor/ProfessorSignUpScreen';
-import StudSignUp from './screens/student/StudentSignUpScreen';
-
-
 const Stack = createNativeStackNavigator();
 
-const App = () =>{
+export default function App() {
   return (
-    <NavigationContainer>
-      <Stack.Navigator initialRouteName="StudentMain" screenOptions={{headerShown: false}}>
-        <Stack.Screen name="SignIn" component={SignIn} />
-        <Stack.Screen name="SignUp" component={SignUp} />
-        <Stack.Screen name="StudentMain" component={StudentMain} />
-        <Stack.Screen name="TeacherMain" component={TeacherMain} />
-        <Stack.Screen name="VisitSignUp" component={VisitSignUp} />
-        <Stack.Screen name="ProfSignUp" component={ProfSignUp} />
-        <Stack.Screen name="StudSignUp" component={StudSignUp} />
-      </Stack.Navigator>
-    </NavigationContainer>
-  );
+  <NavigationContainer>
+    <Stack.Navigator initialRouteName="main" screenOptions= {{ 
+          headerShown: false
+        }}>
+      <Stack.Screen name="signin" component={SignIn}/>
+      <Stack.Screen name="signup" component={SignUp}/>
+      <Stack.Screen name="main" component={BottomTabNavigation}/>
+    </Stack.Navigator>
+  </NavigationContainer>
+  )
 }
-
-export default App;
 

@@ -15,10 +15,8 @@ const mongoose_1 = require("@nestjs/mongoose");
 const user_module_1 = require("./user/user.module");
 const post_module_1 = require("./post/post.module");
 const alert_module_1 = require("./alert/alert.module");
-const comment_controller_1 = require("./comment/comment.controller");
-const comment_service_1 = require("./comment/comment.service");
-const comment_module_1 = require("./comment/comment.module");
 const post_advisor_module_1 = require("./post-advisor/post-advisor.module");
+const comments_module_1 = require("./comments/comments.module");
 let AppModule = class AppModule {
 };
 AppModule = __decorate([
@@ -29,11 +27,11 @@ AppModule = __decorate([
             user_module_1.UserModule,
             post_module_1.PostModule,
             alert_module_1.AlertModule,
-            comment_module_1.CommentModule,
             post_advisor_module_1.PostAdvisorModule,
+            comments_module_1.CommentModule
         ],
-        controllers: [app_controller_1.AppController, comment_controller_1.CommentController],
-        providers: [app_service_1.AppService, comment_service_1.CommentService],
+        controllers: [app_controller_1.AppController],
+        providers: [app_service_1.AppService],
     })
 ], AppModule);
 exports.AppModule = AppModule;

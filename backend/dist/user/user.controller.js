@@ -14,7 +14,9 @@ var __param = (this && this.__param) || function (paramIndex, decorator) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.UserController = void 0;
 const common_1 = require("@nestjs/common");
+const user_model_1 = require("./user.model");
 const user_service_1 = require("./user.service");
+const swagger_1 = require("@nestjs/swagger");
 let UserController = class UserController {
     constructor(userService) {
         this.userService = userService;
@@ -51,7 +53,7 @@ __decorate([
     (0, common_1.Post)(),
     __param(0, (0, common_1.Body)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Object]),
+    __metadata("design:paramtypes", [user_model_1.User]),
     __metadata("design:returntype", Promise)
 ], UserController.prototype, "createUser", null);
 __decorate([
@@ -90,6 +92,7 @@ __decorate([
     __metadata("design:returntype", Promise)
 ], UserController.prototype, "searchUsers", null);
 UserController = __decorate([
+    (0, swagger_1.ApiTags)('user'),
     (0, common_1.Controller)("user"),
     __metadata("design:paramtypes", [user_service_1.UserService])
 ], UserController);
