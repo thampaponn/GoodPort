@@ -1,7 +1,6 @@
 import * as mongoose from 'mongoose';
 
 export const AlertSchema = new mongoose.Schema({
-  id: { type: String, required: true },
   owner: {
     userId: { type: String, required: true },
     fname: { type: String, required: true },
