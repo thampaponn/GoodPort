@@ -33,12 +33,24 @@ const BottomTabNavigation = () => {
     }}>
       <Tab.Screen name="Home" component={HomeStack} options={{
         tabBarIcon: ({ color, size }) => {
-          return <Icon name="home" size={30} color={color} />
+          return <Icon name="home-filled" size={30} color={color} />
         },
       }} />
-      <Tab.Screen name="Add" component={AddPortScreen} />
-      <Tab.Screen name="Notification" component={NotificationScreen} />
-      <Tab.Screen name="Profile" component={ProfileScreen} />
+      <Tab.Screen name="Add" component={AddPortScreen} options={{
+        tabBarIcon: ({ color, size }) => {
+          return <Icon name="add-circle-outline" size={30} color={color} />
+        },
+      }} />
+      <Tab.Screen name="Notification" component={NotificationScreen} options={{
+        tabBarIcon: ({ color, size }) => {
+          return <Icon name="notifications-none" size={30} color={color} />
+        },
+      }} />
+      <Tab.Screen name="Profile" component={ProfileScreen} options={{
+        tabBarIcon: ({ color, size }) => {
+          return <Icon name="person" size={30} color={color} />
+        },
+      }} />
     </Tab.Navigator>
   )
 }

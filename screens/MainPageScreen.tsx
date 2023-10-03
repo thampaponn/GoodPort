@@ -1,5 +1,5 @@
 import React from "react";
-import { View, ScrollView } from "react-native";
+import { View, ScrollView, SafeAreaView } from "react-native";
 import { ProductCard } from "../components/ProductCard";
 import { ProudctFilter } from "../components/ProductFilter";
 
@@ -52,11 +52,11 @@ const MainPageScreen = () => {
     },
   ];
   return (
-    <View style={{ backgroundColor: "#FFFFFF", height: "100%" }}>
+    <SafeAreaView style={{ backgroundColor: "#FFFFFF", height: "100%" }}>
       <ScrollView>
         <ProudctFilter type={categoryMockup} />
-        {PostMockup.map((post) => (
-          <ProductCard
+        {PostMockup.map((post, key) => (
+          <ProductCard key={key}
             image={post.img}
             name={post.name}
             category={post.category}
@@ -65,7 +65,7 @@ const MainPageScreen = () => {
           />
         ))}
       </ScrollView>
-    </View>
+    </SafeAreaView>
   );
 };
 
