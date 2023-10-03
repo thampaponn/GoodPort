@@ -3,7 +3,7 @@ import { View, Text, StyleSheet, TouchableOpacity, Image } from "react-native";
 import { ButtonUi } from "../components/ui/Button";
 import { InputForm } from "../components/ui/InputForm";
 
-const SignIn = ({navigation}) => {
+const SignIn = ({ navigation }) => {
   return (
     <View style={styles.screen}>
       <View style={styles.card}>
@@ -23,7 +23,10 @@ const SignIn = ({navigation}) => {
         </Text>
         <InputForm title={"ชื่อบัญชีผู้ใช้"} />
         <InputForm title={"รหัสผ่าน"} password={true} />
+        <View style={styles.buttonContainer}>
         <ButtonUi title={"เข้าสู่ระบบ"} />
+
+        </View>
 
         <View
           style={{ flexDirection: "row", alignItems: "center", marginTop: 23 }}

@@ -90,8 +90,8 @@ const styles = StyleSheet.create({
   card: {
     paddingBottom: 20,
     marginTop: 100,
-    paddingLeft: 40,
-    paddingRight: 40,
+    // paddingLeft: 40,
+    // paddingRight: 40,
   },
   buttonContainer: {
     justifyContent: "flex-end",

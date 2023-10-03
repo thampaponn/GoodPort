@@ -13,16 +13,18 @@ const StudentSignUp = () => {
     <View style={styles.screen}>
       <View style={styles.card}>
         <View style={styles.centeredContainer}>
-          <Image
+          {/* <Image
             style={{ marginBottom: 30 }}
-            source={require('../../assets/Logo.png')}
-          />
+            source={require("../../assets/Logo.png")}
+          /> */}
           <Text style={styles.signUpText}>สมัครสมาชิก</Text>
         </View>
         {namearray.map((name) => (
           <InputForm title={name} />
         ))}
-        <ButtonUi title={"สมัครสมาชิก"} />
+        <View style={styles.buttonContainer}>
+          <ButtonUi title={"สมัครสมาชิก"} />
+        </View>
         <View style={styles.flexContainer}>
           <Text style={styles.fontSm}>สมัครสมาชิกแล้ว? </Text>
           <TouchableOpacity>
@@ -55,8 +57,8 @@ const styles = StyleSheet.create({
   buttonContainer: {
     justifyContent: "flex-end",
     marginTop: 20,
-    width: 300,
-    maxWidth: 300,
+    width: 307,
+    maxWidth: 307,
   },
   textInput: {
     width: 307,
