@@ -16,10 +16,6 @@ const ProfessorSignUp = () => {
     <View style={styles.screen}>
       <View style={styles.card}>
         <View style={styles.centeredContainer}>
-          {/* <Image
-            style={{ marginBottom: 30 }}
-            source={require("../../assets/Logo.png")}
-          /> */}
           <Text style={styles.signUpText}>สมัครสมาชิก</Text>
         </View>
         {namearray.map((name) => (
