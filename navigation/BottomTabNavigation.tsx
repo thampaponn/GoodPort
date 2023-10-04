@@ -5,6 +5,7 @@ import MainPageScreen from "../screens/MainPageScreen";
 import NotificationScreen from "../screens/NotificationScreen";
 import ProductDetail from "../screens/ProductDetail";
 import ProfileScreen from "../screens/ProfileScreen";
+import { SearchMenu } from "../screens/SearchMenu";
 
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
@@ -31,7 +32,7 @@ const BottomTabNavigation = () => {
       <Tab.Screen name="Home" component={HomeStack} />
       <Tab.Screen name="Add" component={AddPortScreen} />
       <Tab.Screen name="Notification" component={NotificationScreen} />
-      <Tab.Screen name="Profile" component={ProfileScreen} />
+      <Tab.Screen name="Profile" component={SearchMenu} />
     </Tab.Navigator>
   )
 }
