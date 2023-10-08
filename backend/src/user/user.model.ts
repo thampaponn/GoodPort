@@ -18,7 +18,7 @@ enum UserSex {
 export const UserSchema = new mongoose.Schema({
   fname: { type: String, required: true },
   lname: { type: String, required: true },
-  username: { type: String, required: true },
+  username: { type: String, required: true , unique:true},
   password: { type: String, required: true },
   sex: { type: String, enum: Object.values(UserSex), required: true },
   phone: { type: String, required: true },

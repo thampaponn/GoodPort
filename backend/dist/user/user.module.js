@@ -19,6 +19,7 @@ UserModule = __decorate([
         imports: [mongoose_1.MongooseModule.forFeature([{ name: 'User', schema: user_model_1.UserSchema }])],
         controllers: [user_controller_1.UserController],
         providers: [user_service_1.UserService],
+        exports: [user_service_1.UserService],
     })
 ], UserModule);
 exports.UserModule = UserModule;

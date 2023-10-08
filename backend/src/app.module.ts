@@ -8,6 +8,7 @@ import { PostModule } from './post/post.module';
 import { AlertModule } from './alert/alert.module';
 import { PostAdvisorModule } from './post-advisor/post-advisor.module';
 import { CommentModule } from './comments/comments.module';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [
@@ -17,7 +18,8 @@ import { CommentModule } from './comments/comments.module';
     PostModule,
     AlertModule,
     PostAdvisorModule,
-    CommentModule
+    CommentModule,
+    AuthModule
   ],
   controllers: [AppController],
   providers: [AppService],

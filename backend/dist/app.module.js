@@ -17,6 +17,7 @@ const post_module_1 = require("./post/post.module");
 const alert_module_1 = require("./alert/alert.module");
 const post_advisor_module_1 = require("./post-advisor/post-advisor.module");
 const comments_module_1 = require("./comments/comments.module");
+const auth_module_1 = require("./auth/auth.module");
 let AppModule = class AppModule {
 };
 AppModule = __decorate([
@@ -28,7 +29,8 @@ AppModule = __decorate([
             post_module_1.PostModule,
             alert_module_1.AlertModule,
             post_advisor_module_1.PostAdvisorModule,
-            comments_module_1.CommentModule
+            comments_module_1.CommentModule,
+            auth_module_1.AuthModule
         ],
         controllers: [app_controller_1.AppController],
         providers: [app_service_1.AppService],
