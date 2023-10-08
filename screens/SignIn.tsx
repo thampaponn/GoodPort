@@ -27,7 +27,7 @@ const SignIn = ({ navigation }) => {
     try {
       setLoading(true);
       const response = await axios.post(
-        "http://192.168.1.43:3000/auth/signin",
+        "http://192.168.1.42:3000/auth/signin",
         {
           username,
           password,
