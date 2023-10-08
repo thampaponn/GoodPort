@@ -13,8 +13,8 @@ const ProductDetail = () => {
     "https://awildgeographer.files.wordpress.com/2015/02/john_muir_glacier.jpg",
   ];
   const fileMockup = ["madara.pdf", "madara.pdf"];
-  
-  
+
+
   return (
     <ScrollView style={{ height: "100%", backgroundColor: "#FFFFFF" }}>
       <Card containerStyle={{ borderRadius: 15, padding: 30 }}>
@@ -69,8 +69,9 @@ const ProductDetail = () => {
           <Text style={{ fontSize: 16, fontWeight: "600" }}>
             รูปที่เกี่ยวข้อง
           </Text>
-          {ImageMockup.map((image) => (
+          {ImageMockup.map((image, key) => (
             <Card.Image
+              key={key}
               containerStyle={{ marginTop: 10, borderRadius: 5 }}
               source={{
                 uri: `${image}`,
@@ -82,8 +83,8 @@ const ProductDetail = () => {
           <Text style={{ fontSize: 16, fontWeight: "600" }}>
             ไฟล์ที่เกี่ยวข้อง
           </Text>
-          {fileMockup.map((file) => (
-            <Card containerStyle={{ borderRadius: 12 }}>
+          {fileMockup.map((file, key) => (
+            <Card key={key} containerStyle={{ borderRadius: 12 }}>
               <View style={{ display: "flex", flexDirection: "row" }}>
                 <Icon
                   name="picture-as-pdf"
