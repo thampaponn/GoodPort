@@ -27,7 +27,7 @@ const SignIn = ({ navigation }) => {
     try {
       setLoading(true);
       const response = await axios.post(
-        "http://172.20.10.6:3000/auth/signin",
+        "http://10.110.193.47:3000/auth/signin",
         {
           username,
           password,

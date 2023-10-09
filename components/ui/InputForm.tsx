@@ -9,7 +9,7 @@ export interface InputFormProps {
 
 export const InputForm: FC<InputFormProps> = ({ title, password }) => {
   return (
-    <View style={{ marginTop: 16 }}>
+    <View>
       <Text style={styles.formText}>{title}</Text>
       <Input secureTextEntry={password ?? false} style={styles.textInput}  inputContainerStyle={{ borderBottomWidth: 0 }}/>
     </View>
