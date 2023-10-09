@@ -11,17 +11,35 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var __param = (this && this.__param) || function (paramIndex, decorator) {
     return function (target, key) { decorator(target, key, paramIndex); }
 };
+var __rest = (this && this.__rest) || function (s, e) {
+    var t = {};
+    for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p) && e.indexOf(p) < 0)
+        t[p] = s[p];
+    if (s != null && typeof Object.getOwnPropertySymbols === "function")
+        for (var i = 0, p = Object.getOwnPropertySymbols(s); i < p.length; i++) {
+            if (e.indexOf(p[i]) < 0 && Object.prototype.propertyIsEnumerable.call(s, p[i]))
+                t[p[i]] = s[p[i]];
+        }
+    return t;
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.UserService = void 0;
 const common_1 = require("@nestjs/common");
 const mongoose_1 = require("@nestjs/mongoose");
 const mongoose_2 = require("mongoose");
+const bcrypt = require("bcrypt");
 let UserService = class UserService {
     constructor(userModel) {
         this.userModel = userModel;
     }
     async createUser(user) {
-        const createdUser = new this.userModel(user);
+        const { password, username } = user, result = __rest(user, ["password", "username"]);
+        const existingUser = await this.userModel.findOne({ username });
+        if (existingUser) {
+            throw new Error('Username already exists');
+        }
+        const hashPassword = await bcrypt.hashSync(password, 10);
+        const createdUser = new this.userModel(Object.assign({ password: hashPassword, username }, result));
         return createdUser.save();
     }
     async getAllUsers() {
@@ -42,6 +60,9 @@ let UserService = class UserService {
     async searchUsers(query) {
         const users = await this.userModel.find({ fname: { $regex: `.*${query}.*` } }).exec();
         return users;
+    }
+    async findOne(username) {
+        return this.userModel.findOne({ username }).exec();
     }
 };
 UserService = __decorate([

@@ -37,4 +37,5 @@ export declare class UserService {
     delUserById(id: string): Promise<import("mongodb").DeleteResult>;
     updateUser(id: string, updatedData: Partial<User>): Promise<User | null>;
     searchUsers(query: string): Promise<User[]>;
+    findOne(username: string): Promise<User | undefined>;
 }
