@@ -19,9 +19,9 @@ export const ProudctFilter = ({ type }: ProductFilterProps) => {
         ประเภทโครงงาน
       </Text>
       <View style={{ marginTop: 5 }}>
-        {type.map((type, key) => (
+        {type.map((type, index) => (
           <View
-            key={key}
+            key={index}
             style={{
               display: "flex",
               flexDirection: "row",

@@ -1,7 +1,6 @@
 import React from "react";
 import { View, Text, StyleSheet, TouchableOpacity, Image } from "react-native";
 import { ButtonUi } from "../../components/ui/Button";
-import { InputForm } from "../../components/ui/InputForm";
 
 const ProfessorSignUp = () => {
   const namearray = [
@@ -18,9 +17,9 @@ const ProfessorSignUp = () => {
         <View style={styles.centeredContainer}>
           <Text style={styles.signUpText}>สมัครสมาชิก</Text>
         </View>
-        {namearray.map((name) => (
+        {/* {namearray.map((name) => (
           <InputForm title={name} />
-        ))}
+        ))} */}
         <View style={styles.buttonContainer}>
           <ButtonUi title={"สมัครสมาชิก"} />
         </View>
