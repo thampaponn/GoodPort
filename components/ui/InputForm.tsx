@@ -1,4 +1,5 @@
 import { Text, StyleSheet, View, TextInput } from "react-native";
+import { Input } from "@rneui/themed";
 import React, { FC } from "react";
 
 export interface InputFormProps {
@@ -10,7 +11,7 @@ export const InputForm: FC<InputFormProps> = ({ title, password }) => {
   return (
     <View style={{ marginTop: 16 }}>
       <Text style={styles.formText}>{title}</Text>
-      <TextInput secureTextEntry={password ?? false} style={styles.textInput} />
+      <Input secureTextEntry={password ?? false} style={styles.textInput}  inputContainerStyle={{ borderBottomWidth: 0 }}/>
     </View>
   );
 };
@@ -29,5 +30,6 @@ const styles = StyleSheet.create({
   formText: {
     fontSize: 16,
     alignItems: "center",
+    marginLeft: 10
   },
 });
