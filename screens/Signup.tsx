@@ -8,11 +8,11 @@ import {
   Image,
 } from "react-native";
 import { ButtonUi } from "../components/ui/Button";
-import { InputForm } from "../components/ui/InputForm";
 import RadioGroup from "react-native-radio-buttons-group";
 import { useMemo, useState } from "react";
+import { Input } from "@rneui/base";
 
-const SignUp = ({navigation}) => {
+const SignUp = ({ navigation }) => {
   const radioButtons = useMemo(
     () => [
       {
@@ -44,14 +44,15 @@ const SignUp = ({navigation}) => {
           />
           <Text style={styles.signUpText}>สมัครสมาชิก</Text>
         </View>
-        <InputForm title={"ชื่อ *"} />
+        {/* <InputForm title={"ชื่อ *"} />
         <InputForm title={"นามสกุล *"} />
         <InputForm title={"ชื่อบัญชีผู้ใช้ *"} />
         <InputForm title={"เพศ *"} />
         <InputForm title={"รหัสผ่าน *"} password={true} />
         <InputForm title={"ยืนยันรหัสผ่าน *"} />
-        <InputForm title={"หมายเลขโทรศัพท์ *"} />
-
+        <InputForm title={"หมายเลขโทรศัพท์ *"} /> */}
+        <Text style={{ marginLeft: 10, fontSize: 16, alignItems: "center" }}>รายละเอียด</Text>
+        <Input style={{ borderRadius: 5, borderColor: "#AEAEAE", borderWidth: 1, marginTop: 6 }} inputContainerStyle={{ borderBottomWidth: 0 }} />
         <RadioGroup
           radioButtons={radioButtons}
           onPress={setSelectedId}

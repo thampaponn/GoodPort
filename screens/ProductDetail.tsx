@@ -69,9 +69,9 @@ const ProductDetail = () => {
           <Text style={{ fontSize: 16, fontWeight: "600" }}>
             รูปที่เกี่ยวข้อง
           </Text>
-          {ImageMockup.map((image, key) => (
+          {ImageMockup.map((image, index) => (
             <Card.Image
-              key={key}
+              key={index}
               containerStyle={{ marginTop: 10, borderRadius: 5 }}
               source={{
                 uri: `${image}`,
@@ -83,8 +83,8 @@ const ProductDetail = () => {
           <Text style={{ fontSize: 16, fontWeight: "600" }}>
             ไฟล์ที่เกี่ยวข้อง
           </Text>
-          {fileMockup.map((file, key) => (
-            <Card key={key} containerStyle={{ borderRadius: 12 }}>
+          {fileMockup.map((file, index) => (
+            <Card key={index} containerStyle={{ borderRadius: 12 }}>
               <View style={{ display: "flex", flexDirection: "row" }}>
                 <Icon
                   name="picture-as-pdf"

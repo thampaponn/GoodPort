@@ -55,9 +55,9 @@ const MainPageScreen = () => {
     <View style={{ backgroundColor: "#FFFFFF", height: "100%" }}>
       <ScrollView>
         <ProudctFilter type={categoryMockup} />
-        {PostMockup.map((post, key) => (
+        {PostMockup.map((post, index) => (
           <ProductCard
-            key={key}
+            key={index}
             image={post.img}
             name={post.name}
             category={post.category}

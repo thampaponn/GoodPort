@@ -48,8 +48,8 @@ export default function NotificationScreen() {
           }}
         >
           {mockupData &&
-            mockupData.map((data, key) => (
-              <View key={key} style={{ marginTop: 10 }}>
+            mockupData.map((data, index) => (
+              <View key={index} style={{ marginTop: 10 }}>
                 <ProductConfirmCardNotification
                   name={data.name}
                   owner={data.owner}
