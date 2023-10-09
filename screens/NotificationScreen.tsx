@@ -86,8 +86,8 @@ export default function NotificationScreen() {
           }}
         >
           {mockupData &&
-            mockupData.map((data) => (
-              <View style={{ marginTop: 1 }}>
+            mockupData.map((data, index) => (
+              <View key={index} style={{ marginTop: 1 }}>
                 <ProductNotificationCard text={data.name} />
               </View>
             ))}
