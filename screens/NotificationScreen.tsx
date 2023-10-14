@@ -1,4 +1,4 @@
-import { View, Text, ScrollView } from "react-native";
+import { View, Text, ScrollView, SafeAreaView } from "react-native";
 import React, { useState } from "react";
 import { Card, ListItem } from "@rneui/themed";
 import { ProductConfirmCardNotification } from "../components/ProductConfirmCardNotification";
@@ -22,7 +22,7 @@ export default function NotificationScreen() {
   ];
   const NodataComfirm = mockupData.length === 0;
   return (
-    <View style={{ backgroundColor: "#FFFFFF" }}>
+    <SafeAreaView style={{ backgroundColor: "#FFFFFF" }}>
       <ListItem.Accordion
         containerStyle={{ borderWidth: 1 }}
         content={
@@ -48,8 +48,8 @@ export default function NotificationScreen() {
           }}
         >
           {mockupData &&
-            mockupData.map((data) => (
-              <View style={{ marginTop: 10 }}>
+            mockupData.map((data, index) => (
+              <View key={index} style={{ marginTop: 10 }}>
                 <ProductConfirmCardNotification
                   name={data.name}
                   owner={data.owner}
@@ -86,15 +86,15 @@ export default function NotificationScreen() {
           }}
         >
           {mockupData &&
-            mockupData.map((data) => (
-              <View style={{ marginTop: 1 }}>
+            mockupData.map((data, index) => (
+              <View key={index} style={{ marginTop: 1 }}>
                 <ProductNotificationCard text={data.name} />
               </View>
             ))}
           {NodataComfirm && <NotificationEmpty text={"ไม่มีแจ้งเตือน"} />}
         </ScrollView>
       </ListItem.Accordion>
-    </View>
+    </SafeAreaView>
   );
 }
 
