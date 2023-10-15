@@ -30,7 +30,7 @@ export const SearchMenu = () => {
   return (
     <View
       style={{
-        paddingTop: 50,
+        paddingTop: 30,
         flex: 1,
         alignItems: "center",
         backgroundColor: "#FFFFFF",
