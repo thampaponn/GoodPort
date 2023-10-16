@@ -1,11 +1,28 @@
-import { Text, SafeAreaView, Alert, Image } from "react-native";
-import { Button, Card, Input } from "@rneui/themed";
+import {
+  Text,
+  SafeAreaView,
+  Alert,
+  Image,
+  ScrollView,
+  View,
+} from "react-native";
+import { Button, Card, Icon, Input } from "@rneui/themed";
 import * as ImagePicker from "expo-image-picker";
 import * as FileSystem from "expo-file-system";
 import { firebase } from "../config";
 import React, { useState } from "react";
+import { useForm, Controller, SubmitHandler } from "react-hook-form";
 
 const AddPortScreen = ({ navigation }) => {
+  const {
+    control,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<any>();
+
+  const onSubmit: SubmitHandler<FormData> = (data) => {
+    console.log(data);
+  };
   const [image, setImage] = useState<any>(null);
   const [uploading, setUploading] = useState<boolean>(false);
 
@@ -53,105 +70,212 @@ const AddPortScreen = ({ navigation }) => {
 
   return (
     <SafeAreaView style={{ backgroundColor: "#FFFFFF" }}>
-      <Card containerStyle={{ borderRadius: 20, padding: 25 }}>
-        <Text style={{ marginLeft: 10, fontSize: 16, alignItems: "center" }}>
-          ชื่อโครงงานภาษาไทย
-        </Text>
-        <Input
-          style={{
-            borderRadius: 5,
-            borderColor: "#AEAEAE",
-            borderWidth: 1,
-            marginTop: 6,
-          }}
-          inputContainerStyle={{ borderBottomWidth: 0 }}
-        />
-        <Text style={{ marginLeft: 10, fontSize: 16, alignItems: "center" }}>
-          ชื่อโครงงานภาษาอังกฤษ
-        </Text>
-        <Input
-          style={{
-            borderRadius: 5,
-            borderColor: "#AEAEAE",
-            borderWidth: 1,
-            marginTop: 6,
-          }}
-          inputContainerStyle={{ borderBottomWidth: 0 }}
-        />
-        <Text style={{ marginLeft: 10, fontSize: 16, alignItems: "center" }}>
-          ประเภทโครงงาน
-        </Text>
-        <Input
-          style={{
-            borderRadius: 5,
-            borderColor: "#AEAEAE",
-            borderWidth: 1,
-            marginTop: 6,
-          }}
-          inputContainerStyle={{ borderBottomWidth: 0 }}
-        />
-        <Text style={{ marginLeft: 10, fontSize: 16, alignItems: "center" }}>
-          จุดประสงค์
-        </Text>
-        <Input
-          style={{
-            borderRadius: 5,
-            borderColor: "#AEAEAE",
-            borderWidth: 1,
-            marginTop: 6,
-          }}
-          inputContainerStyle={{ borderBottomWidth: 0 }}
-        />
-        <Text style={{ marginLeft: 10, fontSize: 16, alignItems: "center" }}>
-          ที่มา
-        </Text>
-        <Input
-          style={{
-            borderRadius: 5,
-            borderColor: "#AEAEAE",
-            borderWidth: 1,
-            marginTop: 6,
-          }}
-          inputContainerStyle={{ borderBottomWidth: 0 }}
-        />
-        <Text style={{ marginLeft: 10, fontSize: 16, alignItems: "center" }}>
-          รายละเอียด
-        </Text>
-        <Input
-          style={{
-            borderRadius: 5,
-            borderColor: "#AEAEAE",
-            borderWidth: 1,
-            marginTop: 6,
-          }}
-          inputContainerStyle={{ borderBottomWidth: 0 }}
-        />
-        <Button
-          onPress={() => {
-            pickImage();
-          }}
-          title={"อัพโหลด"}
-          buttonStyle={{
-            marginTop: 20,
-            borderRadius: 8,
-            backgroundColor: "#81ADC8",
-          }}
-        />
-        {image && (
-          <Image source={{ uri: image }} style={{ width: 300, height: 300 }} />
-        )}
-        <Button
-          onPress={() => {
-            uploadMedia();
-          }}
-          title={"test"}
-          buttonStyle={{
-            marginTop: 20,
-            borderRadius: 8,
-            backgroundColor: "#81ADC8",
-          }}
-        />
-      </Card>
+      <ScrollView>
+        <Card
+          containerStyle={{ borderRadius: 20, padding: 25, marginBottom: 50 }}
+        >
+          <Text style={{ marginLeft: 10, fontSize: 16, alignItems: "center" }}>
+            ชื่อโครงงานภาษาไทย*
+          </Text>
+          <Controller
+            name="projectNameThai"
+            control={control}
+            defaultValue=""
+            render={({ field }) => (
+              <Input
+                style={{
+                  borderRadius: 5,
+                  borderColor: "#AEAEAE",
+                  borderWidth: 1,
+                  marginTop: 6,
+                }}
+                inputContainerStyle={{ borderBottomWidth: 0 }}
+                onBlur={field.onBlur}
+                onChangeText={field.onChange}
+                value={field.value}
+              />
+            )}
+          />
+          {errors.projectNameThai && (
+            <Text style={{ color: "red" }}>กรุณากรอกชื่อโครงงานภาษาไทย</Text>
+          )}
+          <Text style={{ marginLeft: 10, fontSize: 16, alignItems: "center" }}>
+            ชื่อโครงงานภาษาอังกฤษ*
+          </Text>
+          <Controller
+            name="projectNameEng"
+            control={control}
+            defaultValue=""
+            render={({ field }) => (
+              <Input
+                style={{
+                  borderRadius: 5,
+                  borderColor: "#AEAEAE",
+                  borderWidth: 1,
+                  marginTop: 6,
+                }}
+                inputContainerStyle={{ borderBottomWidth: 0 }}
+                onBlur={field.onBlur}
+                onChangeText={field.onChange}
+                value={field.value}
+              />
+            )}
+          />
+          <Text style={{ marginLeft: 10, fontSize: 16, alignItems: "center" }}>
+            ประเภทโครงงาน*
+          </Text>
+          <Controller
+            name="projectNameEng"
+            control={control}
+            defaultValue=""
+            render={({ field }) => (
+              <Input
+                style={{
+                  borderRadius: 5,
+                  borderColor: "#AEAEAE",
+                  borderWidth: 1,
+                  marginTop: 6,
+                }}
+                inputContainerStyle={{ borderBottomWidth: 0 }}
+                onBlur={field.onBlur}
+                onChangeText={field.onChange}
+                value={field.value}
+              />
+            )}
+          />
+          <Text style={{ marginLeft: 10, fontSize: 16, alignItems: "center" }}>
+            จุดประสงค์
+          </Text>
+          <Controller
+            name="bababa"
+            control={control}
+            defaultValue=""
+            render={({ field }) => (
+              <Input
+                style={{
+                  borderRadius: 5,
+                  borderColor: "#AEAEAE",
+                  borderWidth: 1,
+                  marginTop: 6,
+                  paddingHorizontal: 15,
+                }}
+                multiline={true}
+                numberOfLines={4}
+                inputContainerStyle={{ borderBottomWidth: 0 }}
+                onBlur={field.onBlur}
+                onChangeText={field.onChange}
+                value={field.value}
+              />
+            )}
+          />
+          <Text style={{ marginLeft: 10, fontSize: 16, alignItems: "center" }}>
+            ที่มา
+          </Text>
+          <Controller
+            name="source"
+            control={control}
+            defaultValue=""
+            render={({ field }) => (
+              <Input
+                style={{
+                  borderRadius: 5,
+                  borderColor: "#AEAEAE",
+                  borderWidth: 1,
+                  marginTop: 6,
+                  paddingHorizontal: 15,
+                }}
+                multiline={true}
+                numberOfLines={4}
+                inputContainerStyle={{ borderBottomWidth: 0 }}
+                onBlur={field.onBlur}
+                onChangeText={field.onChange}
+                value={field.value}
+              />
+            )}
+          />
+          <Text style={{ marginLeft: 10, fontSize: 16, alignItems: "center" }}>
+            รายละเอียด
+          </Text>
+          <Controller
+            name="description"
+            control={control}
+            defaultValue=""
+            render={({ field }) => (
+              <Input
+                style={{
+                  borderRadius: 5,
+                  borderColor: "#AEAEAE",
+                  borderWidth: 1,
+                  marginTop: 6,
+                  paddingHorizontal: 15,
+                }}
+                multiline={true}
+                numberOfLines={4}
+                inputContainerStyle={{ borderBottomWidth: 0 }}
+                onBlur={field.onBlur}
+                onChangeText={field.onChange}
+                value={field.value}
+              />
+            )}
+          />
+          <Button
+            onPress={() => {
+              pickImage();
+            }}
+            title={"อัพโหลด"}
+            buttonStyle={{
+              marginTop: 20,
+              borderRadius: 8,
+              backgroundColor: "#81ADC8",
+            }}
+            icon={
+              <Icon
+                name="cloud-upload"
+                color={"white"}
+                style={{ marginRight: 10, color: "white" }}
+              />
+            }
+          />
+          <Text style={{ textAlign: "right", marginTop: 10, marginRight: 10 }}>
+            รูปขนาดไม่เกิน 10 MB
+          </Text>
+          <View style={{ flex: 1, alignItems: "center", marginTop: 20 }}>
+            {image && (
+              <View>
+                <Image
+                  source={{ uri: image }}
+                  style={{ width: 200, height: 200 }}
+                />
+                <Text
+                  onPress={() => setImage(null)}
+                  style={{
+                    position: "absolute",
+                    right: 0,
+                    paddingHorizontal: 5,
+                    backgroundColor: "#BE2C35",
+                    color: "white",
+                    borderRadius: 100,
+                  }}
+                >
+                  X
+                </Text>
+              </View>
+            )}
+          </View>
+
+          <Button
+            onPress={() => {
+              uploadMedia();
+            }}
+            title={"test"}
+            buttonStyle={{
+              marginTop: 20,
+              borderRadius: 8,
+              backgroundColor: "#81ADC8",
+            }}
+          />
+        </Card>
+      </ScrollView>
     </SafeAreaView>
   );
 };

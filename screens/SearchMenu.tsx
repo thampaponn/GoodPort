@@ -8,7 +8,7 @@ export const SearchMenu = () => {
   const [filteredUsers, setFilteredUsers] = useState([]);
   useEffect(() => {
     axios
-      .get("http://192.168.1.45:3000/user")
+      .get("http://10.110.192.130:3000/user")
       .then((response) => {
         setOriginalUsers(response.data);
         setFilteredUsers(response.data);
