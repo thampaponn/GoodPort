@@ -12,19 +12,41 @@ import * as FileSystem from "expo-file-system";
 import { firebase } from "../config";
 import React, { useState } from "react";
 import { useForm, Controller, SubmitHandler } from "react-hook-form";
+import { post, PostStatus } from "../types/post";
+import axios from "axios";
 
 const AddPortScreen = ({ navigation }) => {
+  const [image, setImage] = useState<any>(null);
+  const [uploading, setUploading] = useState<boolean>(false);
+  const [filename, setFilename] = useState<string>("");
+  const owner = {
+    userId: "user123",
+    fname: "ชื่อเจ้าของโพสต์",
+    lname: "นามสกุลเจ้าของโพสต์",
+    email: "user@email.com",
+  };
+
   const {
     control,
     handleSubmit,
     formState: { errors },
-  } = useForm<any>();
+  } = useForm<post>({
+    defaultValues: {
+      status: PostStatus.submited,
+      owner: {
+        userId: "user123",
+        fname: "ชื่อเจ้าของโพสต์",
+        lname: "นามสกุลเจ้าของโพสต์",
+        email: "user@email.com",
+      },
+    },
+  });
 
-  const onSubmit: SubmitHandler<FormData> = (data) => {
-    console.log(data);
+  const onSubmit: SubmitHandler<FormData> = async (data) => {
+    await uploadMedia();
+    const bodyReq = {...data, image:filename}
+    await axios.post(`http://192.168.1.45:3000/post`, bodyReq);
   };
-  const [image, setImage] = useState<any>(null);
-  const [uploading, setUploading] = useState<boolean>(false);
 
   const pickImage = async () => {
     let result = await ImagePicker.launchImageLibraryAsync({
@@ -57,6 +79,9 @@ const AddPortScreen = ({ navigation }) => {
       });
 
       const filename = image.substring(image.lastIndexOf("/") + 1);
+      setFilename(
+        `https://firebasestorage.googleapis.com/v0/b/goodport-cb0e6.appspot.com/o/${filename}?alt=media`
+      );
       const ref = firebase.storage().ref().child(filename);
       await ref.put(blob);
       setUploading(false);
@@ -78,7 +103,7 @@ const AddPortScreen = ({ navigation }) => {
             ชื่อโครงงานภาษาไทย*
           </Text>
           <Controller
-            name="projectNameThai"
+            name="nameTh"
             control={control}
             defaultValue=""
             render={({ field }) => (
@@ -96,14 +121,14 @@ const AddPortScreen = ({ navigation }) => {
               />
             )}
           />
-          {errors.projectNameThai && (
+          {errors.nameTh && (
             <Text style={{ color: "red" }}>กรุณากรอกชื่อโครงงานภาษาไทย</Text>
           )}
           <Text style={{ marginLeft: 10, fontSize: 16, alignItems: "center" }}>
             ชื่อโครงงานภาษาอังกฤษ*
           </Text>
           <Controller
-            name="projectNameEng"
+            name="nameEn"
             control={control}
             defaultValue=""
             render={({ field }) => (
@@ -125,9 +150,8 @@ const AddPortScreen = ({ navigation }) => {
             ประเภทโครงงาน*
           </Text>
           <Controller
-            name="projectNameEng"
+            name="category"
             control={control}
-            defaultValue=""
             render={({ field }) => (
               <Input
                 style={{
@@ -147,7 +171,7 @@ const AddPortScreen = ({ navigation }) => {
             จุดประสงค์
           </Text>
           <Controller
-            name="bababa"
+            name="objective"
             control={control}
             defaultValue=""
             render={({ field }) => (
@@ -197,7 +221,7 @@ const AddPortScreen = ({ navigation }) => {
             รายละเอียด
           </Text>
           <Controller
-            name="description"
+            name="detail"
             control={control}
             defaultValue=""
             render={({ field }) => (
@@ -218,6 +242,7 @@ const AddPortScreen = ({ navigation }) => {
               />
             )}
           />
+        
           <Button
             onPress={() => {
               pickImage();
@@ -264,10 +289,8 @@ const AddPortScreen = ({ navigation }) => {
           </View>
 
           <Button
-            onPress={() => {
-              uploadMedia();
-            }}
-            title={"test"}
+            onPress={handleSubmit(onSubmit)}
+            title={"submit"}
             buttonStyle={{
               marginTop: 20,
               borderRadius: 8,

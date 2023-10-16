@@ -10,6 +10,7 @@ import {
   TextInput,
   useWindowDimensions,
 } from "react-native";
+import Config from 'react-native-config';
 
 const SignIn = ({ navigation }) => {
   const [username, setUsername] = useState<string>("");
@@ -27,7 +28,7 @@ const SignIn = ({ navigation }) => {
     try {
       setLoading(true);
       const response = await axios.post(
-        "http://10.110.192.130:3000/auth/signin",
+        `http://192.168.1.45:3000/auth/signin`,
         {
           username,
           password,
