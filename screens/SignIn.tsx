@@ -44,7 +44,7 @@ const SignIn = ({ navigation }) => {
 
   return (
     <View style={{ flex: 1, alignItems: "center" }}>
-      <View style={{ alignItems: "center", padding: 20, marginTop: 80 }}>
+      <View style={{ alignItems: "center", padding: 20, marginTop: 40 }}>
         <Dialog isVisible={isModalVisible} onBackdropPress={toggleModal}>
           <Dialog.Title title="รหัสผ่านไม่ถูกต้อง" />
           <Text style={{ fontFamily: "BaiJamjuree-Regular" }}>
@@ -56,14 +56,14 @@ const SignIn = ({ navigation }) => {
         </Dialog>
 
         <Image
-          style={{ marginBottom: 35, height: 66, width: width * 0.8 }}
+          style={{ marginBottom: 10, height: 66, width: width * 0.8 }}
           source={require("../assets/Logo2.png")}
         />
         <Text
           style={{
             alignItems: "center",
-            padding: 35,
-            fontSize: 35,
+            padding: 5,
+            fontSize: 30,
             fontWeight: "800",
           }}
         >
