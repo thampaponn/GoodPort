@@ -25,6 +25,20 @@ const HomeStack = () => {
   );
 };
 
+const ProfileStack = () => {
+  return (
+    <Stack.Navigator
+      initialRouteName="profilemain"
+      screenOptions={{
+        headerShown: true,
+      }}
+    >
+      <Stack.Screen name="Profile" component={ProfileScreen} />
+      <Stack.Screen name="Search" component={SearchMenu} />
+    </Stack.Navigator>
+  );
+};
+
 const BottomTabNavigation = () => {
   return (
     <Tab.Navigator
@@ -43,8 +57,8 @@ const BottomTabNavigation = () => {
         <Ionicons name="person-circle" size={size} color={color} />
       ),
     }}
-    name="Profile"
-    component={SearchMenu}
+    name="profilestack"
+    component={ProfileStack}
   />
     </Tab.Navigator>
   );
