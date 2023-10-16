@@ -5,6 +5,8 @@ import MainPageScreen from "../screens/MainPageScreen";
 import NotificationScreen from "../screens/NotificationScreen";
 import ProductDetail from "../screens/ProductDetail";
 import ProfileScreen from "../screens/ProfileScreen";
+import { SearchMenu } from "../screens/SearchMenu";
+import { Ionicons } from "@expo/vector-icons";
 
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
@@ -25,14 +27,26 @@ const HomeStack = () => {
 
 const BottomTabNavigation = () => {
   return (
-    <Tab.Navigator initialRouteName="Home" screenOptions= {{ 
-      headerShown: false
-    }}>
+    <Tab.Navigator
+      initialRouteName="Home"
+      screenOptions={{
+        headerShown: false,
+      }}
+    >
       <Tab.Screen name="Home" component={HomeStack} />
       <Tab.Screen name="Add" component={AddPortScreen} />
       <Tab.Screen name="Notification" component={NotificationScreen} />
-      <Tab.Screen name="Profile" component={ProfileScreen} />
+      <Tab.Screen
+    options={{
+      tabBarLabel: "Profile",
+      tabBarIcon: ({ color, size }) => (
+        <Ionicons name="person-circle" size={size} color={color} />
+      ),
+    }}
+    name="Profile"
+    component={SearchMenu}
+  />
     </Tab.Navigator>
-  )
-}
+  );
+};
 export default BottomTabNavigation;

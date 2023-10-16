@@ -10,12 +10,13 @@ import {
   TextInput,
   useWindowDimensions,
 } from "react-native";
+import Config from 'react-native-config';
 
 const SignIn = ({ navigation }) => {
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
-  const [isModalVisible, setModalVisible] = useState(false);
-  const [isLoading, setLoading] = useState(false);
+  const [username, setUsername] = useState<string>("");
+  const [password, setPassword] = useState<string>("");
+  const [isModalVisible, setModalVisible] = useState<boolean>(false);
+  const [isLoading, setLoading] = useState<boolean>(false);
 
   const toggleModal = () => {
     setModalVisible(!isModalVisible);
@@ -27,7 +28,7 @@ const SignIn = ({ navigation }) => {
     try {
       setLoading(true);
       const response = await axios.post(
-        "http://10.110.193.47:3000/auth/signin",
+        `http://192.168.1.45:3000/auth/signin`,
         {
           username,
           password,
@@ -44,31 +45,39 @@ const SignIn = ({ navigation }) => {
   return (
     <View style={{ flex: 1, alignItems: "center" }}>
       <View style={{ alignItems: "center", padding: 20, marginTop: 80 }}>
-        {/* Dialog */}
         <Dialog isVisible={isModalVisible} onBackdropPress={toggleModal}>
           <Dialog.Title title="รหัสผ่านไม่ถูกต้อง" />
-          <Text>กรุณาลองใหม่อีกครั้ง</Text>
+          <Text style={{ fontFamily: "BaiJamjuree-Regular" }}>
+            กรุณาลองใหม่อีกครั้ง
+          </Text>
         </Dialog>
         <Dialog isVisible={isLoading}>
           <Dialog.Loading />
         </Dialog>
 
         <Image
-          style={{ marginBottom: 50, height: 66, width: width * 0.8 }}
+          style={{ marginBottom: 35, height: 66, width: width * 0.8 }}
           source={require("../assets/Logo2.png")}
         />
         <Text
           style={{
             alignItems: "center",
+            padding: 35,
             fontSize: 35,
             fontWeight: "800",
-            marginBottom: 30,
           }}
         >
           เข้าสู่ระบบ
         </Text>
         <View style={{ marginTop: 16 }}>
-          <Text style={{ fontSize: 16 }}>{"ชื่อบัญชีผู้ใช้"}</Text>
+          <Text
+            style={{
+              fontSize: 16,
+              padding: 5,
+            }}
+          >
+            {"ชื่อบัญชีผู้ใช้"}
+          </Text>
           <TextInput
             style={styles.textInput}
             onChangeText={(data) => setUsername(data)}
@@ -121,9 +130,26 @@ const SignIn = ({ navigation }) => {
         <View
           style={{ flexDirection: "row", alignItems: "center", marginTop: 23 }}
         >
-          <Text style={{ fontSize: 14 }}>ยังไม่มีบัญชีผู้ใช้ ? </Text>
+          <Text
+            style={{
+              fontSize: 14,
+
+              paddingVertical: 5,
+            }}
+          >
+            ยังไม่มีบัญชีผู้ใช้ ?{" "}
+          </Text>
           <TouchableOpacity>
-            <Text style={{ fontSize: 14 }}> สมัครบัญชีผู้ใช้</Text>
+            <Text
+              style={{
+                fontSize: 14,
+
+                paddingVertical: 5,
+              }}
+            >
+              {" "}
+              สมัครบัญชีผู้ใช้
+            </Text>
           </TouchableOpacity>
         </View>
       </View>
