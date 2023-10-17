@@ -4,7 +4,8 @@ import { Chip } from '@rneui/themed';
 import { useState } from 'react';
 
 export default function ProfileScreen({ navigation }) {
-  const [select, useSelect] = useState(false);
+  const [select, setSelect] = useState(true);
+
   return (
     <View style={{flex: 1}}>
       <SafeAreaView style={{ alignItems: 'center', justifyContent: 'center' }}>
@@ -14,26 +15,27 @@ export default function ProfileScreen({ navigation }) {
         <Text style={{ fontSize: 18, marginBottom: 10 }}>ธรรมปพน ประทุม</Text>
         <Chip title={"Student"} type="outline" size="md" />
         <View style={styles.selector}>
-          <TouchableOpacity style={{ backgroundColor: "#F8F2DC", width: "47%", height: "75%", alignItems: "center", justifyContent: "center", borderRadius: 200 }}>
+          <TouchableOpacity style={{ backgroundColor: select ? "#F8F2DC" : '#81ADC8', width: "47%", height: "75%", alignItems: "center", justifyContent: "center", borderRadius: 200 }}
+            onPress={() => {
+              setSelect(true)
+            }}
+          >
             <Text style={{ fontSize: 18 }}>เนื้อหา</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={{ backgroundColor: "#F8F2DC", width: "47%", height: "75%", alignItems: "center", justifyContent: "center", borderRadius: 200 }}>
+          <TouchableOpacity style={{ backgroundColor: select ? "#81ADC8" : '#F8F2DC', width: "47%", height: "75%", alignItems: "center", justifyContent: "center", borderRadius: 200 }}onPress={() => {
+              setSelect(false)
+            }}
+          >
             <Text style={{ fontSize: 18 }}>ข้อมูลส่วนตัว</Text>
           </TouchableOpacity>
         </View>
-        <TouchableOpacity
-          onPress={() => navigation.navigate("Search")}
-          style={{
-            justifyContent: "center",
-            backgroundColor: "#81ADC8",
-            width: "80%",
-            height: 42,
-            borderRadius: 10,
-            marginTop: 10
-          }}
-        >
-          <Text style={{ textAlign: "center" }}>Search</Text>
-        </TouchableOpacity>
+        {
+          select ? (
+          <Text>1</Text>
+          ) : (
+          <Text>2</Text>
+          )
+        }
       </SafeAreaView>
     </View>
   )

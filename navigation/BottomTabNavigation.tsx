@@ -34,7 +34,7 @@ const ProfileStack = () => {
       }}
     >
       <Stack.Screen name="Profile" component={ProfileScreen} />
-      <Stack.Screen name="Search" component={SearchMenu} />
+      {/* <Stack.Screen name="Search" component={SearchMenu} /> */}
     </Stack.Navigator>
   );
 };
@@ -42,7 +42,7 @@ const ProfileStack = () => {
 const BottomTabNavigation = () => {
   return (
     <Tab.Navigator
-      initialRouteName="Home"
+      initialRouteName="Profile"
       screenOptions={{
         headerShown: false,
       }}
