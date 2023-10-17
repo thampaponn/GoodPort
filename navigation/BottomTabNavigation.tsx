@@ -47,19 +47,35 @@ const BottomTabNavigation = () => {
         headerShown: false,
       }}
     >
-      <Tab.Screen name="Home" component={HomeStack} />
-      <Tab.Screen name="Add" component={AddPortScreen} />
-      <Tab.Screen name="Notification" component={NotificationScreen} />
       <Tab.Screen
-    options={{
-      tabBarLabel: "Profile",
-      tabBarIcon: ({ color, size }) => (
-        <Ionicons name="person-circle" size={size} color={color} />
-      ),
-    }}
-    name="profilestack"
-    component={ProfileStack}
-  />
+        options={{
+          tabBarLabel: "Home",
+          tabBarIcon: ({ color, size }) => (
+            <Ionicons name="home" size={size} color={color} />
+          ),
+        }} name="Home" component={HomeStack} />
+      <Tab.Screen
+        options={{
+          tabBarLabel: "Upload",
+          tabBarIcon: ({ color, size }) => (
+            <Ionicons name="add-circle" size={size} color={color} />
+          ),
+        }} name="Add" component={AddPortScreen} />
+      <Tab.Screen
+        options={{
+          tabBarLabel: "Notifications",
+          tabBarIcon: ({ color, size }) => (
+            <Ionicons name="notifications" size={size} color={color} />
+          ),
+        }} name="Notification" component={NotificationScreen} />
+      <Tab.Screen
+        options={{
+          tabBarLabel: "Profile",
+          tabBarIcon: ({ color, size }) => (
+            <Ionicons name="person-circle" size={size} color={color} />
+          ),
+        }} name="profilestack" component={ProfileStack}
+      />
     </Tab.Navigator>
   );
 };
