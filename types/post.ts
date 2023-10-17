@@ -1,15 +1,7 @@
-export enum PostCategory {
-  learning = "learning",
-  activity = "activity",
-  internship = "internship",
-  volunteer = "volunteer",
-  other = "other",
-}
-
-export enum PostStatus {
-  submited = "submited",
-  accepted = "accepted",
-}
+import { advisor } from "./advisor";
+import { PostCategory } from "./postCategory";
+import { owner } from "./postOwner";
+import { PostStatus } from "./postStatus";
 
 export type post = {
   nameTh: string;
@@ -20,18 +12,8 @@ export type post = {
   detail?: string;
   image?: string;
   file?: string;
-  advisor?: {
-    fname?: string;
-    lname?: string;
-    email?: string;
-    professorId?: string;
-  };
-  owner: {
-    userId: string;
-    fname: string;
-    lname: string;
-    email: string;
-  };
+  advisor?: advisor;
+  owner: owner;
   status: PostStatus;
   createAt: Date;
   editAt: Date;
