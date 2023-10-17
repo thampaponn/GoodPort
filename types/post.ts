@@ -6,10 +6,25 @@ export enum PostCategory {
   other = "other",
 }
 
+
 export enum PostStatus {
   submited = "submited",
   accepted = "accepted",
 }
+
+export type owner = {
+  userId: string;
+  fname: string;
+  lname: string;
+  email: string;
+};
+
+export type advisor = {
+  fname?: string;
+  lname?: string;
+  email?: string;
+  professorId?: string;
+};
 
 export type post = {
   nameTh: string;
@@ -20,18 +35,8 @@ export type post = {
   detail?: string;
   image?: string;
   file?: string;
-  advisor?: {
-    fname?: string;
-    lname?: string;
-    email?: string;
-    professorId?: string;
-  };
-  owner: {
-    userId: string;
-    fname: string;
-    lname: string;
-    email: string;
-  };
+  advisor?:advisor;
+  owner: owner;
   status: PostStatus;
   createAt: Date;
   editAt: Date;

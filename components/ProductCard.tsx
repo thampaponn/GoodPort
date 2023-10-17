@@ -1,14 +1,21 @@
 import { useNavigation } from "@react-navigation/native";
 import { Button, Card, Chip } from "@rneui/themed";
 import { View, Text } from "react-native";
-import ProductDetail from "../screens/ProductDetail";
+import { advisor } from "../types/post";
+
+type owner = {
+  userId: string;
+  fname: string;
+  lname: string;
+  email: string;
+};
 
 type ProductCardProps = {
   image?: string;
   name: string;
   category: string;
-  owner: string;
-  advisor: string;
+  owner: owner;
+  advisor?: advisor;
 };
 
 export const ProductCard = ({
@@ -44,13 +51,26 @@ export const ProductCard = ({
         <Text style={{ fontSize: 16 }}>ประเภทของโครงงาน : </Text>
         <Chip title={category} type="outline" size="sm" />
       </View>
-      <View style={{ display: "flex", flexDirection: "row", marginTop: 5 }}>
+      <View
+        style={{
+          display: "flex",
+          flexDirection: "row",
+          marginTop: 5,
+          width: "50%",
+        }}
+      >
         <Text style={{ fontSize: 16 }}>เจ้าของโครงงาน : </Text>
-        <Text style={{ fontSize: 16 }}>{owner}</Text>
+        <Text style={{ fontSize: 16 }}>{owner.fname + " " + owner.lname}</Text>
       </View>
       <View style={{ display: "flex", flexDirection: "row", marginTop: 5 }}>
-        <Text style={{ fontSize: 16 }}>อาจารย์ที่ปรึกษา : </Text>
-        <Text style={{ fontSize: 16 }}>{advisor}</Text>
+        {advisor && (
+          <View style={{ width: "50%" }}>
+            <Text style={{ fontSize: 16 }}>อาจารย์ที่ปรึกษา : </Text>
+            <Text style={{ fontSize: 16 }}>
+              {advisor.fname + " " + advisor.lname}
+            </Text>
+          </View>
+        )}
       </View>
 
       <Button
