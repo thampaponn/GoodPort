@@ -2,6 +2,7 @@ import { View, Text, SafeAreaView, TouchableOpacity, Image, StyleSheet } from 'r
 import React from 'react'
 import { Chip } from '@rneui/themed';
 import { useState } from 'react';
+import { Ionicons } from "@expo/vector-icons";
 
 export default function ProfileScreen({ navigation }) {
   const [select, setSelect] = useState(true);
@@ -34,6 +35,7 @@ export default function ProfileScreen({ navigation }) {
             select ? (
               <View>
                 <TouchableOpacity>
+
                   <Text>หมวดการเรียน</Text>
                 </TouchableOpacity>
                 <TouchableOpacity>
@@ -52,6 +54,7 @@ export default function ProfileScreen({ navigation }) {
             ) : (
               <View>
                 <TouchableOpacity>
+                  <Ionicons name="home" size={20} color="red" />
                   <Text>ชื่อบัญชีผู้ใช้งาน</Text>
                 </TouchableOpacity>
                 <TouchableOpacity>
