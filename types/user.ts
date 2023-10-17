@@ -1,14 +1,5 @@
-enum UserRole {
-  Advisor = "advisor",
-  Student = "student",
-  Visitor = "visitor",
-}
-
-enum UserSex {
-  Male = "male",
-  Female = "female",
-  Other = "other",
-}
+import { UserRole } from "./role";
+import { UserSex } from "./userSex";
 
 export type User = {
   id: string;
