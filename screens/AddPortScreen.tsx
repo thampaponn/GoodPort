@@ -19,12 +19,6 @@ const AddPortScreen = ({ navigation }) => {
   const [image, setImage] = useState<any>(null);
   const [uploading, setUploading] = useState<boolean>(false);
   const [filename, setFilename] = useState<string>("");
-  const owner = {
-    userId: "user123",
-    fname: "ชื่อเจ้าของโพสต์",
-    lname: "นามสกุลเจ้าของโพสต์",
-    email: "user@email.com",
-  };
 
   const {
     control,
@@ -44,7 +38,7 @@ const AddPortScreen = ({ navigation }) => {
 
   const onSubmit: SubmitHandler<FormData> = async (data) => {
     await uploadMedia();
-    const bodyReq = {...data, image:filename}
+    const bodyReq = { ...data, image: filename };
     await axios.post(`http://192.168.1.45:3000/post`, bodyReq);
   };
 
@@ -59,6 +53,8 @@ const AddPortScreen = ({ navigation }) => {
     if (!result.canceled) {
       setImage(result.assets[0].uri);
     }
+    setFilename(`https://firebasestorage.googleapis.com/v0/b/goodport-cb0e6.appspot.com/o/${result.assets[0].uri.substring(result.assets[0].uri.lastIndexOf("/") + 1)}?alt=media`)
+    console.log("ลิ้งเป็น", filename)
   };
   const uploadMedia = async () => {
     setUploading(true);
@@ -79,9 +75,6 @@ const AddPortScreen = ({ navigation }) => {
       });
 
       const filename = image.substring(image.lastIndexOf("/") + 1);
-      setFilename(
-        `https://firebasestorage.googleapis.com/v0/b/goodport-cb0e6.appspot.com/o/${filename}?alt=media`
-      );
       const ref = firebase.storage().ref().child(filename);
       await ref.put(blob);
       setUploading(false);
@@ -242,7 +235,7 @@ const AddPortScreen = ({ navigation }) => {
               />
             )}
           />
-        
+
           <Button
             onPress={() => {
               pickImage();
