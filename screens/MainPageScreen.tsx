@@ -3,7 +3,8 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { View, ScrollView, Text } from "react-native";
 import { ProductCard } from "../components/ProductCard";
-import { post, PostCategory } from "../types/post";
+import { post } from "../types/post";
+import { PostCategory } from "../types/postCategory";
 
 type CategoryData = { [key: string]: boolean };
 
@@ -34,7 +35,7 @@ const MainPageScreen = () => {
   const objFilterData:CategoryData[] = categoryMockup.map((category, index) => {
     return { [category]: checkboxStates[index] };
   });
-  
+
   const toggleCheckbox = (index: number) => {
     const newCheckboxStates:boolean[] = [...checkboxStates];
     newCheckboxStates[index] = !newCheckboxStates[index];
