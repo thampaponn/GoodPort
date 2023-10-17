@@ -28,7 +28,7 @@ const HomeStack = () => {
 const ProfileStack = () => {
   return (
     <Stack.Navigator
-      initialRouteName="profilemain"
+      initialRouteName="Profile"
       screenOptions={{
         headerShown: true,
       }}

@@ -1,7 +1,6 @@
 import { useNavigation } from "@react-navigation/native";
 import { Button, Card, Chip } from "@rneui/themed";
 import { View, Text } from "react-native";
-import ProductDetail from "../screens/ProductDetail";
 
 type ProductCardProps = {
   image?: string;
