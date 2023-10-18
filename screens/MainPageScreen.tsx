@@ -12,7 +12,7 @@ const MainPageScreen = () => {
   const [originalPost, setOriginalPost] = useState<post[]>([]);
   useEffect(() => {
     axios
-      .get(`http://192.168.1.45:3000/post`)
+      .get(`http://10.72.7.37:3000/post`)
       .then((response) => {
         setOriginalPost(response.data);
       })
@@ -89,7 +89,7 @@ const MainPageScreen = () => {
         {filteredPosts.map((post: post, index: number) => (
           <ProductCard
             key={index}
-            image={post.image}
+            image={post.image || ""}
             name={post.nameTh}
             category={post.category}
             owner={post.owner}

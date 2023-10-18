@@ -12,8 +12,9 @@ import * as FileSystem from "expo-file-system";
 import { firebase } from "../config";
 import React, { useState } from "react";
 import { useForm, Controller, SubmitHandler } from "react-hook-form";
-import { post, PostStatus } from "../types/post";
+import { post } from "../types/post";
 import axios from "axios";
+import { PostStatus } from "../types/postStatus";
 
 const AddPortScreen = ({ navigation }) => {
   const [image, setImage] = useState<any>(null);
