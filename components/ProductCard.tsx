@@ -1,8 +1,7 @@
 import { useNavigation } from "@react-navigation/native";
 import { Button, Card, Chip } from "@rneui/themed";
-import { View, Text } from "react-native";
+import { View, Text, Image } from "react-native";
 import { advisor } from "../types/advisor";
-
 
 type owner = {
   userId: string;
@@ -31,12 +30,19 @@ export const ProductCard = ({
   return (
     <Card containerStyle={{ borderRadius: 20, padding: 25 }}>
       <View style={{ display: "flex", alignItems: "center" }}>
-        <Card.Image
-          style={{ width: 150, height: 150, borderRadius: 3 }}
-          source={{
-            uri: `${image}`,
-          }}
-        />
+        {image !== "" ? (
+          <Card.Image
+            style={{ width: 150, height: 150, borderRadius: 3 }}
+            source={{
+              uri: `${image}`,
+            }}
+          />
+        ) : (
+          <Image
+            style={{ width: 150, height: 150, borderRadius: 3 }}
+            source={require("../assets/placeholder.png")}
+          />
+        )}
       </View>
 
       <Card.Title style={{ color: "#0098DA", fontSize: 24, marginTop: 5 }}>
@@ -65,7 +71,7 @@ export const ProductCard = ({
       </View>
       <View style={{ display: "flex", flexDirection: "row", marginTop: 5 }}>
         {advisor && (
-          <View style={{width: "50%"}}>
+          <View style={{ width: "50%" }}>
             <Text style={{ fontSize: 16 }}>อาจารย์ที่ปรึกษา : </Text>
             <Text style={{ fontSize: 16 }}>
               {advisor.fname + " " + advisor.lname}
