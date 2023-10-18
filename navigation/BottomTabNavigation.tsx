@@ -34,7 +34,7 @@ const ProfileStack = () => {
       }}
     >
       <Stack.Screen name="Profile" component={ProfileScreen} />
-      {/* <Stack.Screen name="Search" component={SearchMenu} /> */}
+      <Stack.Screen name="Search" component={SearchMenu} />
     </Stack.Navigator>
   );
 };

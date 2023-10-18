@@ -56,14 +56,14 @@ const SignIn = ({ navigation }) => {
         </Dialog>
 
         <Image
-          style={{ marginBottom: 10, height: 66, width: width * 0.8 }}
+          style={{ marginTop: 20, marginBottom: 10, height: 66, width: width * 0.8 }}
           source={require("../assets/Logo2.png")}
         />
         <Text
           style={{
             alignItems: "center",
             padding: 5,
-            fontSize: 30,
+            fontSize: 26,
             fontWeight: "800",
           }}
         >

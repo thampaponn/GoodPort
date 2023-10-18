@@ -75,7 +75,7 @@ export default function ProfileScreen({ navigation }) {
       <SafeAreaView>
         <View style={styles.container}>
           <Image
-            style={{ marginBottom: 10, height: 170 }}
+            style={{ marginTop: 15, marginBottom: 10, height: 170 }}
             source={require("../assets/teletun.jpg")}
           />
           <Text style={{ fontSize: 18, marginBottom: 10 }}>ธรรมปพน ประทุม</Text>
@@ -87,7 +87,7 @@ export default function ProfileScreen({ navigation }) {
                 height: "75%",
                 alignItems: "center",
                 justifyContent: "center",
-                borderRadius: 200
+                borderRadius: 50
               }}
               onPress={() => {
                 setSelect(true);
@@ -102,7 +102,7 @@ export default function ProfileScreen({ navigation }) {
                 height: "75%",
                 alignItems: "center",
                 justifyContent: "center",
-                borderRadius: 200
+                borderRadius: 50
               }}
               onPress={() => {
                 setSelect(false);
@@ -112,7 +112,7 @@ export default function ProfileScreen({ navigation }) {
             </TouchableOpacity>
           </View>
           {select ? (
-            <View style={{ width: "100%", marginTop: 15 }}>
+            <View style={{ width: "100%", marginTop: 10 }}>
               {selectorArray.map((data, index) => (
                 <TouchableOpacity key={index} style={{ backgroundColor: "#FFFFFF", width: "100%", justifyContent: 'space-evenly', alignItems: "center", flexDirection: "row", marginTop: 10 }}>
                   <View style={{ alignItems: "center", justifyContent: "center", marginLeft: 20, marginRight: 10 }}>
@@ -126,7 +126,7 @@ export default function ProfileScreen({ navigation }) {
               ))}
             </View>
           ) : (
-            <View style={{ width: "100%", marginTop: 15 }}>
+            <View style={{ width: "100%", marginTop: 10 }}>
               {infoArray.map((data, index) => (
                 <TouchableOpacity key={index} style={{ backgroundColor: "#FFFFFF", width: "100%", justifyContent: 'space-evenly', alignItems: "center", flexDirection: "row", marginTop: 10 }}>
                   <View style={{ alignItems: "center", justifyContent: "center", marginLeft: 20, marginRight: 10 }}>
@@ -158,7 +158,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#81ADC8",
     width: "70%",
     height: "7%",
-    borderRadius: 100,
+    borderRadius: 50,
     marginTop: 15
   }
 });
