@@ -1,7 +1,8 @@
 import { useNavigation } from "@react-navigation/native";
 import { Button, Card, Chip } from "@rneui/themed";
 import { View, Text } from "react-native";
-import { advisor } from "../types/post";
+import { advisor } from "../types/advisor";
+
 
 type owner = {
   userId: string;
@@ -64,7 +65,7 @@ export const ProductCard = ({
       </View>
       <View style={{ display: "flex", flexDirection: "row", marginTop: 5 }}>
         {advisor && (
-          <View style={{ width: "50%" }}>
+          <View style={{width: "50%"}}>
             <Text style={{ fontSize: 16 }}>อาจารย์ที่ปรึกษา : </Text>
             <Text style={{ fontSize: 16 }}>
               {advisor.fname + " " + advisor.lname}
