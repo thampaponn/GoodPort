@@ -27,17 +27,51 @@ export default function ProfileScreen({ navigation }) {
     },
   ];
 
-  // Define a mapping of your data.icon values to actual icon names
   const iconMapping = {
-    "book-outline": "ios-book",
-    "medal-outline": "ios-medal",
-    "school-outline": "ios-school",
-    "people-outline": "ios-people",
-    "ellipsis-horizontal": "ios-ellipsis-horizontal",
+    "book-outline": "book-outline",
+    "medal-outline": "medal-outline",
+    "school-outline": "school-outline",
+    "people-outline": "people-outline",
+    "ellipsis-horizontal": "ellipsis-horizontal",
+  };
+  const infoArray = [
+    {
+      icon: "person-outline",
+      title: "ชื่อบัญชีผู้ใช้งาน",
+      info: "tunatun"
+    },
+    {
+      icon: "mail-outline",
+      title: "อีเมล",
+      info: "64070046@kmitl.ac.th"
+    },
+    {
+      icon: "phone-portrait-sharp",
+      title: "เบอร์โทรศัพท์",
+      info: "0864159979"
+    },
+    {
+      icon: "briefcase-outline",
+      title: "รหัสประจำตัวนักศึกษา",
+      info: "64070046"
+    },
+    {
+      icon: "location-outline",
+      title: "มหาวิทยาลัย",
+      info: "KMITL"
+    },
+  ];
+
+  const infoIcon = {
+    "person-outline": "person-outline",
+    "mail-outline": "mail-outline",
+    "phone-portrait-sharp": "phone-portrait-sharp",
+    "briefcase-outline": "briefcase-outline",
+    "location-outline": "location-outline",
   };
 
   return (
-    <ScrollView style={{ flex: 1 }}>
+    <ScrollView style={{ flex: 1, backgroundColor: "#FFFFFF" }}>
       <SafeAreaView>
         <View style={styles.container}>
           <Image
@@ -78,26 +112,30 @@ export default function ProfileScreen({ navigation }) {
             </TouchableOpacity>
           </View>
           {select ? (
-            <View style={{ width: "100%", marginTop: 5 }}>
+            <View style={{ width: "100%", marginTop: 15 }}>
               {selectorArray.map((data, index) => (
-                <TouchableOpacity key={index} style={{ backgroundColor: "#e3e3e3", width: "100%", justifyContent: 'space-evenly', alignItems: "center", flexDirection: "row", marginTop: 10 }}>
-                  <View style={{ alignItems: "center", justifyContent: "center" }}>
+                <TouchableOpacity key={index} style={{ backgroundColor: "#FFFFFF", width: "100%", justifyContent: 'space-evenly', alignItems: "center", flexDirection: "row", marginTop: 10 }}>
+                  <View style={{ alignItems: "center", justifyContent: "center", marginLeft: 20, marginRight: 10 }}>
                     <Ionicons style={{ textAlign: "center", padding: 15 }} name={iconMapping[data.icon]} size={30} color="black" />
                   </View>
-                  <Text style={{fontSize: 20}}>{data.category}</Text>
-                  <Ionicons name="chevron-forward" size={30} color="black" />
+                  <View style={{ flex: 1 }}>
+                    <Text style={{ fontSize: 18, textAlign: 'left' }}>{data.category}</Text>
+                  </View>
+                  <Ionicons style={{marginRight: 30}} name="chevron-forward" size={30} color="black" />
                 </TouchableOpacity>
               ))}
             </View>
           ) : (
-            <View style={{ width: "100%", marginTop: 5 }}>
-              {selectorArray.map((data, index) => (
-                <TouchableOpacity key={index} style={{ backgroundColor: "#e3e3e3", width: "100%", justifyContent: 'space-evenly', alignItems: "center", flexDirection: "row", marginTop: 10 }}>
-                  <View style={{ alignItems: "center", justifyContent: "center" }}>
-                    <Ionicons style={{ textAlign: "center", padding: 15 }} name={iconMapping[data.icon]} size={30} color="black" />
+            <View style={{ width: "100%", marginTop: 15 }}>
+              {infoArray.map((data, index) => (
+                <TouchableOpacity key={index} style={{ backgroundColor: "#FFFFFF", width: "100%", justifyContent: 'space-evenly', alignItems: "center", flexDirection: "row", marginTop: 10 }}>
+                  <View style={{ alignItems: "center", justifyContent: "center", marginLeft: 20, marginRight: 10 }}>
+                    <Ionicons style={{ textAlign: "center", padding: 15 }} name={infoIcon[data.icon]} size={30} color="black" />
                   </View>
-                  <Text>{data.category}</Text>
-                  <Ionicons name="chevron-forward" size={30} color="black" />
+                  <View style={{ flex: 1 }}>
+                    <Text style={{ color: "#AAA4A4", fontSize: 14, textAlign: 'left', margin: 3 }}>{data.title}</Text>
+                    <Text style={{ fontSize: 14, textAlign: 'left', margin: 3 }}>{data.info}</Text>
+                  </View>
                 </TouchableOpacity>
               ))}
             </View>
