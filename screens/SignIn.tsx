@@ -10,7 +10,7 @@ import {
   TextInput,
   useWindowDimensions,
 } from "react-native";
-import Config from 'react-native-config';
+
 
 const SignIn = ({ navigation }) => {
   const [username, setUsername] = useState<string>("");
@@ -139,7 +139,7 @@ const SignIn = ({ navigation }) => {
           >
             ยังไม่มีบัญชีผู้ใช้ ?{" "}
           </Text>
-          <TouchableOpacity>
+          <TouchableOpacity onPress={() => navigation.navigate("signup")}>
             <Text
               style={{
                 fontSize: 14,
