@@ -22,6 +22,7 @@ import { firebase } from "../config";
 import { transformRole } from "../hook/transformRole";
 import axios from "axios";
 import { UserRole } from "../types/role";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 type UserType = {
   id: string;
@@ -53,7 +54,7 @@ const SignUp = ({ navigation }) => {
   };
 
   const { width } = useWindowDimensions();
-  const typeUserRegister:UserType[] = typeOfRegisterScreen();
+  const typeUserRegister: UserType[] = typeOfRegisterScreen();
   const [selectedId, setSelectedId] = useState<string | undefined>();
   const [selectedValue, setSelectedValue] = useState<string>("male");
 
@@ -105,696 +106,700 @@ const SignUp = ({ navigation }) => {
   };
   return (
     <ScrollView style={styles.card}>
-      <View style={styles.screen}>
-        <View style={styles.centeredContainer}>
-          <Image
-            style={{ marginBottom: 10, height: 66, width: width * 0.8 }}
-            source={require("../assets/Logo2.png")}
-          />
-          <Text style={styles.signUpText}>สมัครสมาชิก</Text>
-        </View>
-        <View style={{ marginTop: 16, width: 340 }}>
-          <Text
-            style={{
-              fontSize: 16,
-              padding: 5,
-              marginHorizontal: 10,
-            }}
-          >
-            {"ชื่อ"}
-          </Text>
-          <Controller
-            name="fname"
-            control={control}
-            defaultValue=""
-            render={({ field }) => (
-              <Input
-                style={{
-                  borderRadius: 5,
-                  borderColor: "#AEAEAE",
-                  borderWidth: 1,
-                  marginTop: 6,
-                }}
-                inputContainerStyle={{ borderBottomWidth: 0 }}
-                onBlur={field.onBlur}
-                onChangeText={field.onChange}
-                value={field.value}
-              />
-            )}
-          />
-        </View>
-        <View style={{ width: 340 }}>
-          <Text
-            style={{
-              fontSize: 16,
-              padding: 5,
-              marginHorizontal: 10,
-            }}
-          >
-            {"นามสกุล"}
-          </Text>
-          <Controller
-            name="lname"
-            control={control}
-            defaultValue=""
-            render={({ field }) => (
-              <Input
-                style={{
-                  borderRadius: 5,
-                  borderColor: "#AEAEAE",
-                  borderWidth: 1,
-                  marginTop: 6,
-                }}
-                inputContainerStyle={{ borderBottomWidth: 0 }}
-                onBlur={field.onBlur}
-                onChangeText={field.onChange}
-                value={field.value}
-              />
-            )}
-          />
-        </View>
-        <View style={{ width: 340 }}>
-          <Text
-            style={{
-              fontSize: 16,
-              padding: 5,
-              marginHorizontal: 10,
-            }}
-          >
-            {"ชื่อผู้ใช้"}
-          </Text>
-          <Controller
-            name="username"
-            control={control}
-            defaultValue=""
-            render={({ field }) => (
-              <Input
-                style={{
-                  borderRadius: 5,
-                  borderColor: "#AEAEAE",
-                  borderWidth: 1,
-                  marginTop: 6,
-                }}
-                inputContainerStyle={{ borderBottomWidth: 0 }}
-                onBlur={field.onBlur}
-                onChangeText={field.onChange}
-                value={field.value}
-              />
-            )}
-          />
-        </View>
-        <View>
-          <Text
-            style={{
-              fontSize: 16,
-              padding: 5,
-            }}
-          >
-            {"เพศ"}
-          </Text>
-          <View
-            style={{
-              width: 320,
-              borderWidth: 1,
-              borderColor: "#AEAEAE",
-              borderRadius: 5,
-              marginBottom: 20,
-            }}
-          >
-            <Picker
-              selectedValue={selectedValue}
-              onValueChange={(itemValue, itemIndex) =>
-                setSelectedValue(itemValue)
-              }
-            >
-              <Picker.Item label="ชาย" value="male" />
-              <Picker.Item label="หญิง" value="female" />
-              <Picker.Item label="อื่นๆ" value="other" />
-            </Picker>
-          </View>
-        </View>
+      <SafeAreaView>
 
-        <View style={{ width: 340 }}>
-          <Text
-            style={{
-              fontSize: 16,
-              padding: 5,
-              marginHorizontal: 10,
-            }}
-          >
-            {"รหัสผ่าน"}
-          </Text>
-          <Controller
-            name="password"
-            control={control}
-            defaultValue=""
-            render={({ field }) => (
-              <Input
-                style={{
-                  borderRadius: 5,
-                  borderColor: "#AEAEAE",
-                  borderWidth: 1,
-                  marginTop: 6,
-                }}
-                inputContainerStyle={{ borderBottomWidth: 0 }}
-                onBlur={field.onBlur}
-                onChangeText={field.onChange}
-                value={field.value}
-              />
-            )}
-          />
-        </View>
 
-        <View style={{ width: 340 }}>
-          <Text
-            style={{
-              fontSize: 16,
-              padding: 5,
-              marginHorizontal: 10,
-            }}
-          >
-            {"ยืนยันรหัสผ่าน"}
-          </Text>
-
-          <Input
-            style={{
-              borderRadius: 5,
-              borderColor: "#AEAEAE",
-              borderWidth: 1,
-              marginTop: 6,
-            }}
-            inputContainerStyle={{ borderBottomWidth: 0 }}
-            onChangeText={setConfirmPwd}
-            value={comfirmPwd}
-          />
-        </View>
-
-        <View style={{ width: 340 }}>
-          <Text
-            style={{
-              fontSize: 16,
-              padding: 5,
-              marginHorizontal: 10,
-            }}
-          >
-            {"เบอร์โทรศัพท์"}
-          </Text>
-          <Controller
-            name="phone"
-            control={control}
-            defaultValue=""
-            render={({ field }) => (
-              <Input
-                style={{
-                  borderRadius: 5,
-                  borderColor: "#AEAEAE",
-                  borderWidth: 1,
-                  marginTop: 6,
-                }}
-                inputContainerStyle={{ borderBottomWidth: 0 }}
-                onBlur={field.onBlur}
-                onChangeText={field.onChange}
-                value={field.value}
-              />
-            )}
-          />
-        </View>
-        <View style={{ width: 320 }}>
-          <RadioGroup
-            radioButtons={typeUserRegister}
-            onPress={setSelectedId}
-            selectedId={selectedId}
-            layout="column"
-            containerStyle={{ alignItems: "flex-start" }}
-          />
-        </View>
-
-        {selectedId === "1" && (
-          <View>
-            <View style={{ width: 340 }}>
-              <Text
-                style={{
-                  fontSize: 16,
-                  padding: 5,
-                  marginHorizontal: 10,
-                }}
-              >
-                {"คำนำหน้า"}
-              </Text>
-              <Controller
-                name="preflex"
-                control={control}
-                render={({ field }) => (
-                  <Input
-                    style={{
-                      borderRadius: 5,
-                      borderColor: "#AEAEAE",
-                      borderWidth: 1,
-                      marginTop: 6,
-                    }}
-                    inputContainerStyle={{ borderBottomWidth: 0 }}
-                    onBlur={field.onBlur}
-                    onChangeText={field.onChange}
-                    value={field.value}
-                  />
-                )}
-              />
-            </View>
-            <View style={{ width: 340 }}>
-              <Text
-                style={{
-                  fontSize: 16,
-                  padding: 5,
-                  marginHorizontal: 10,
-                }}
-              >
-                {"email"}
-              </Text>
-              <Controller
-                name="email"
-                control={control}
-                render={({ field }) => (
-                  <Input
-                    style={{
-                      borderRadius: 5,
-                      borderColor: "#AEAEAE",
-                      borderWidth: 1,
-                      marginTop: 6,
-                    }}
-                    inputContainerStyle={{ borderBottomWidth: 0 }}
-                    onBlur={field.onBlur}
-                    onChangeText={field.onChange}
-                    value={field.value}
-                  />
-                )}
-              />
-            </View>
-
-            <View style={{ width: 340 }}>
-              <Text
-                style={{
-                  fontSize: 16,
-                  padding: 5,
-                  marginHorizontal: 10,
-                }}
-              >
-                {"รหัสประจำตัวอาจารย์"}
-              </Text>
-              <Controller
-                name="job.professorId"
-                control={control}
-                render={({ field }) => (
-                  <Input
-                    style={{
-                      borderRadius: 5,
-                      borderColor: "#AEAEAE",
-                      borderWidth: 1,
-                      marginTop: 6,
-                    }}
-                    inputContainerStyle={{ borderBottomWidth: 0 }}
-                    onBlur={field.onBlur}
-                    onChangeText={field.onChange}
-                    value={field.value}
-                  />
-                )}
-              />
-            </View>
-            <View style={{ width: 340 }}>
-              <Text
-                style={{
-                  fontSize: 16,
-                  padding: 5,
-                  marginHorizontal: 10,
-                }}
-              >
-                {"มหาวิทยาลัยที่จบการศึกษา"}
-              </Text>
-              <Controller
-                name="information.university"
-                control={control}
-                render={({ field }) => (
-                  <Input
-                    style={{
-                      borderRadius: 5,
-                      borderColor: "#AEAEAE",
-                      borderWidth: 1,
-                      marginTop: 6,
-                    }}
-                    inputContainerStyle={{ borderBottomWidth: 0 }}
-                    onBlur={field.onBlur}
-                    onChangeText={field.onChange}
-                    value={field.value}
-                  />
-                )}
-              />
-            </View>
-            <View style={{ width: 340 }}>
-              <Text
-                style={{
-                  fontSize: 16,
-                  padding: 5,
-                  marginHorizontal: 10,
-                }}
-              >
-                {"ประเทศที่จบการศึกษา"}
-              </Text>
-              <Controller
-                name="information.graduatedFrom"
-                control={control}
-                render={({ field }) => (
-                  <Input
-                    style={{
-                      borderRadius: 5,
-                      borderColor: "#AEAEAE",
-                      borderWidth: 1,
-                      marginTop: 6,
-                    }}
-                    inputContainerStyle={{ borderBottomWidth: 0 }}
-                    onBlur={field.onBlur}
-                    onChangeText={field.onChange}
-                    value={field.value}
-                  />
-                )}
-              />
-            </View>
-          </View>
-        )}
-
-        {selectedId === "2" && (
-          <View>
-            <View style={{ width: 340 }}>
-              <Text
-                style={{
-                  fontSize: 16,
-                  padding: 5,
-                  marginHorizontal: 10,
-                }}
-              >
-                {"email"}
-              </Text>
-              <Controller
-                name="email"
-                control={control}
-                defaultValue=""
-                render={({ field }) => (
-                  <Input
-                    style={{
-                      borderRadius: 5,
-                      borderColor: "#AEAEAE",
-                      borderWidth: 1,
-                      marginTop: 6,
-                    }}
-                    inputContainerStyle={{ borderBottomWidth: 0 }}
-                    onBlur={field.onBlur}
-                    onChangeText={field.onChange}
-                    value={field.value}
-                  />
-                )}
-              />
-            </View>
-            <View style={{ width: 340 }}>
-              <Text
-                style={{
-                  fontSize: 16,
-                  padding: 5,
-                  marginHorizontal: 10,
-                }}
-              >
-                {"รหัสประจำตัวนักศึกษา"}
-              </Text>
-              <Controller
-                name="job.studentId"
-                control={control}
-                defaultValue=""
-                render={({ field }) => (
-                  <Input
-                    style={{
-                      borderRadius: 5,
-                      borderColor: "#AEAEAE",
-                      borderWidth: 1,
-                      marginTop: 6,
-                    }}
-                    inputContainerStyle={{ borderBottomWidth: 0 }}
-                    onBlur={field.onBlur}
-                    onChangeText={field.onChange}
-                    value={field.value}
-                  />
-                )}
-              />
-            </View>
-            <Button
-              onPress={() => {
-                pickImage();
-              }}
-              title={"อัพโหลด"}
-              buttonStyle={{
-                marginTop: 20,
-                borderRadius: 8,
-                backgroundColor: "#81ADC8",
-              }}
-              icon={
-                <Icon
-                  name="cloud-upload"
-                  color={"white"}
-                  style={{ marginRight: 10, color: "white" }}
-                />
-              }
+        <View style={styles.screen}>
+          <View style={styles.centeredContainer}>
+            <Image
+              style={{ marginBottom: 10, height: 66, width: width * 0.8 }}
+              source={require("../assets/Logo2.png")}
             />
-
-            <View
-              style={{
-                alignItems: "center",
-                marginTop: 20,
-              }}
-            >
-              {image && (
-                <View>
-                  <Image
-                    source={{ uri: image }}
-                    style={{ width: 200, height: 200 }}
-                  />
-                  <Text
-                    onPress={() => setImage(null)}
-                    style={{
-                      position: "absolute",
-                      right: 0,
-                      paddingHorizontal: 5,
-                      backgroundColor: "#BE2C35",
-                      color: "white",
-                      borderRadius: 100,
-                    }}
-                  >
-                    X
-                  </Text>
-                </View>
-              )}
-            </View>
-            {!image && (
-              <Text
-                style={{ textAlign: "right", marginTop: 10, marginRight: 10 }}
-              >
-                รูปขนาดไม่เกิน 10 MB
-              </Text>
-            )}
+            <Text style={styles.signUpText}>สมัครสมาชิก</Text>
           </View>
-        )}
-
-        {selectedId === "3" && (
-          <View>
-            <View style={{ width: 340 }}>
-              <Text
-                style={{
-                  fontSize: 16,
-                  padding: 5,
-                  marginHorizontal: 10,
-                }}
-              >
-                {"คำนำหน้า"}
-              </Text>
-              <Controller
-                name="preflex"
-                control={control}
-                render={({ field }) => (
-                  <Input
-                    style={{
-                      borderRadius: 5,
-                      borderColor: "#AEAEAE",
-                      borderWidth: 1,
-                      marginTop: 6,
-                    }}
-                    inputContainerStyle={{ borderBottomWidth: 0 }}
-                    onBlur={field.onBlur}
-                    onChangeText={field.onChange}
-                    value={field.value}
-                  />
-                )}
-              />
-            </View>
-            <View style={{ width: 340 }}>
-              <Text
-                style={{
-                  fontSize: 16,
-                  padding: 5,
-                  marginHorizontal: 10,
-                }}
-              >
-                {"email"}
-              </Text>
-              <Controller
-                name="email"
-                control={control}
-                render={({ field }) => (
-                  <Input
-                    style={{
-                      borderRadius: 5,
-                      borderColor: "#AEAEAE",
-                      borderWidth: 1,
-                      marginTop: 6,
-                    }}
-                    inputContainerStyle={{ borderBottomWidth: 0 }}
-                    onBlur={field.onBlur}
-                    onChangeText={field.onChange}
-                    value={field.value}
-                  />
-                )}
-              />
-            </View>
-            <View style={{ width: 340 }}>
-              <Text
-                style={{
-                  fontSize: 16,
-                  padding: 5,
-                  marginHorizontal: 10,
-                }}
-              >
-                {"อาชีพ"}
-              </Text>
-              <Controller
-                name="job.title"
-                control={control}
-                render={({ field }) => (
-                  <Input
-                    style={{
-                      borderRadius: 5,
-                      borderColor: "#AEAEAE",
-                      borderWidth: 1,
-                      marginTop: 6,
-                    }}
-                    inputContainerStyle={{ borderBottomWidth: 0 }}
-                    onBlur={field.onBlur}
-                    onChangeText={field.onChange}
-                    value={field.value}
-                  />
-                )}
-              />
-            </View>
-            <View style={{ width: 340 }}>
-              <Text
-                style={{
-                  fontSize: 16,
-                  padding: 5,
-                  marginHorizontal: 10,
-                }}
-              >
-                {"สถานที่ทำงาน/ สถานที่ศึกษา"}
-              </Text>
-              <Controller
-                name="information.location"
-                control={control}
-                render={({ field }) => (
-                  <Input
-                    style={{
-                      borderRadius: 5,
-                      borderColor: "#AEAEAE",
-                      borderWidth: 1,
-                      marginTop: 6,
-                    }}
-                    inputContainerStyle={{ borderBottomWidth: 0 }}
-                    onBlur={field.onBlur}
-                    onChangeText={field.onChange}
-                    value={field.value}
-                  />
-                )}
-              />
-            </View>
-            <View style={{ width: 340 }}>
-              <Text
-                style={{
-                  fontSize: 16,
-                  padding: 5,
-                  marginHorizontal: 10,
-                }}
-              >
-                {"เบอร์ติดต่อสถานที่ทำงาน"}
-              </Text>
-              <Controller
-                name="information.companyNumber"
-                control={control}
-                render={({ field }) => (
-                  <Input
-                    style={{
-                      borderRadius: 5,
-                      borderColor: "#AEAEAE",
-                      borderWidth: 1,
-                      marginTop: 6,
-                    }}
-                    inputContainerStyle={{ borderBottomWidth: 0 }}
-                    onBlur={field.onBlur}
-                    onChangeText={field.onChange}
-                    value={field.value}
-                  />
-                )}
-              />
-            </View>
-          </View>
-        )}
-
-        <View
-          style={{
-            marginTop: 5,
-            width: 320,
-            maxWidth: 320,
-          }}
-        >
-          <TouchableOpacity
-            onPress={handleSubmit(onSubmit)}
-            style={{
-              marginTop: 20,
-              justifyContent: "center",
-              backgroundColor: "#81ADC8",
-              width: 320,
-              height: 42,
-              borderRadius: 10,
-            }}
-          >
+          <View style={{ marginTop: 10, width: 340 }}>
             <Text
               style={{
-                fontSize: 20,
-                color: "#FFFFFF",
-                lineHeight: 30,
-                textAlign: "center",
+                fontSize: 16,
+                padding: 5,
+                marginHorizontal: 10,
               }}
             >
-              {"สมัครสมาชิก"}
+              {"ชื่อ"}
             </Text>
-          </TouchableOpacity>
-        </View>
+            <Controller
+              name="fname"
+              control={control}
+              defaultValue=""
+              render={({ field }) => (
+                <Input
+                  style={{
+                    borderRadius: 5,
+                    borderColor: "#AEAEAE",
+                    borderWidth: 1,
+                    marginTop: 6,
+                  }}
+                  inputContainerStyle={{ borderBottomWidth: 0 }}
+                  onBlur={field.onBlur}
+                  onChangeText={field.onChange}
+                  value={field.value}
+                />
+              )}
+            />
+          </View>
+          <View style={{ width: 340 }}>
+            <Text
+              style={{
+                fontSize: 16,
+                padding: 5,
+                marginHorizontal: 10,
+              }}
+            >
+              {"นามสกุล"}
+            </Text>
+            <Controller
+              name="lname"
+              control={control}
+              defaultValue=""
+              render={({ field }) => (
+                <Input
+                  style={{
+                    borderRadius: 5,
+                    borderColor: "#AEAEAE",
+                    borderWidth: 1,
+                    marginTop: 6,
+                  }}
+                  inputContainerStyle={{ borderBottomWidth: 0 }}
+                  onBlur={field.onBlur}
+                  onChangeText={field.onChange}
+                  value={field.value}
+                />
+              )}
+            />
+          </View>
+          <View style={{ width: 340 }}>
+            <Text
+              style={{
+                fontSize: 16,
+                padding: 5,
+                marginHorizontal: 10,
+              }}
+            >
+              {"ชื่อผู้ใช้"}
+            </Text>
+            <Controller
+              name="username"
+              control={control}
+              defaultValue=""
+              render={({ field }) => (
+                <Input
+                  style={{
+                    borderRadius: 5,
+                    borderColor: "#AEAEAE",
+                    borderWidth: 1,
+                    marginTop: 6,
+                  }}
+                  inputContainerStyle={{ borderBottomWidth: 0 }}
+                  onBlur={field.onBlur}
+                  onChangeText={field.onChange}
+                  value={field.value}
+                />
+              )}
+            />
+          </View>
+          <View>
+            <Text
+              style={{
+                fontSize: 16,
+                padding: 5,
+              }}
+            >
+              {"เพศ"}
+            </Text>
+            <View
+              style={{
+                width: 320,
+                borderWidth: 1,
+                borderColor: "#AEAEAE",
+                borderRadius: 5,
+                marginBottom: 20,
+              }}
+            >
+              <Picker
+                selectedValue={selectedValue}
+                onValueChange={(itemValue, itemIndex) =>
+                  setSelectedValue(itemValue)
+                }
+              >
+                <Picker.Item label="ชาย" value="male" />
+                <Picker.Item label="หญิง" value="female" />
+                <Picker.Item label="อื่นๆ" value="other" />
+              </Picker>
+            </View>
+          </View>
 
-        <View
-          style={{
-            flexDirection: "row",
-            alignItems: "center",
-            marginTop: 15,
-            justifyContent: "center",
-            paddingBottom: 50,
-          }}
-        >
-          <Text style={styles.fontSm}>สมัครสมาชิกแล้ว? </Text>
-          <TouchableOpacity onPress={() => navigation.navigate("signin")}>
-            <Text style={styles.fontSm}>เข้าสู่ระบบ</Text>
-          </TouchableOpacity>
+          <View style={{ width: 340 }}>
+            <Text
+              style={{
+                fontSize: 16,
+                padding: 5,
+                marginHorizontal: 10,
+              }}
+            >
+              {"รหัสผ่าน"}
+            </Text>
+            <Controller
+              name="password"
+              control={control}
+              defaultValue=""
+              render={({ field }) => (
+                <Input
+                  style={{
+                    borderRadius: 5,
+                    borderColor: "#AEAEAE",
+                    borderWidth: 1,
+                    marginTop: 6,
+                  }}
+                  inputContainerStyle={{ borderBottomWidth: 0 }}
+                  onBlur={field.onBlur}
+                  onChangeText={field.onChange}
+                  value={field.value}
+                />
+              )}
+            />
+          </View>
+
+          <View style={{ width: 340 }}>
+            <Text
+              style={{
+                fontSize: 16,
+                padding: 5,
+                marginHorizontal: 10,
+              }}
+            >
+              {"ยืนยันรหัสผ่าน"}
+            </Text>
+
+            <Input
+              style={{
+                borderRadius: 5,
+                borderColor: "#AEAEAE",
+                borderWidth: 1,
+                marginTop: 6,
+              }}
+              inputContainerStyle={{ borderBottomWidth: 0 }}
+              onChangeText={setConfirmPwd}
+              value={comfirmPwd}
+            />
+          </View>
+
+          <View style={{ width: 340 }}>
+            <Text
+              style={{
+                fontSize: 16,
+                padding: 5,
+                marginHorizontal: 10,
+              }}
+            >
+              {"เบอร์โทรศัพท์"}
+            </Text>
+            <Controller
+              name="phone"
+              control={control}
+              defaultValue=""
+              render={({ field }) => (
+                <Input
+                  style={{
+                    borderRadius: 5,
+                    borderColor: "#AEAEAE",
+                    borderWidth: 1,
+                    marginTop: 6,
+                  }}
+                  inputContainerStyle={{ borderBottomWidth: 0 }}
+                  onBlur={field.onBlur}
+                  onChangeText={field.onChange}
+                  value={field.value}
+                />
+              )}
+            />
+          </View>
+          <View style={{ width: 320 }}>
+            <RadioGroup
+              radioButtons={typeUserRegister}
+              onPress={setSelectedId}
+              selectedId={selectedId}
+              layout="column"
+              containerStyle={{ alignItems: "flex-start" }}
+            />
+          </View>
+
+          {selectedId === "1" && (
+            <View>
+              <View style={{ width: 340 }}>
+                <Text
+                  style={{
+                    fontSize: 16,
+                    padding: 5,
+                    marginHorizontal: 10,
+                  }}
+                >
+                  {"คำนำหน้า"}
+                </Text>
+                <Controller
+                  name="preflex"
+                  control={control}
+                  render={({ field }) => (
+                    <Input
+                      style={{
+                        borderRadius: 5,
+                        borderColor: "#AEAEAE",
+                        borderWidth: 1,
+                        marginTop: 6,
+                      }}
+                      inputContainerStyle={{ borderBottomWidth: 0 }}
+                      onBlur={field.onBlur}
+                      onChangeText={field.onChange}
+                      value={field.value}
+                    />
+                  )}
+                />
+              </View>
+              <View style={{ width: 340 }}>
+                <Text
+                  style={{
+                    fontSize: 16,
+                    padding: 5,
+                    marginHorizontal: 10,
+                  }}
+                >
+                  {"email"}
+                </Text>
+                <Controller
+                  name="email"
+                  control={control}
+                  render={({ field }) => (
+                    <Input
+                      style={{
+                        borderRadius: 5,
+                        borderColor: "#AEAEAE",
+                        borderWidth: 1,
+                        marginTop: 6,
+                      }}
+                      inputContainerStyle={{ borderBottomWidth: 0 }}
+                      onBlur={field.onBlur}
+                      onChangeText={field.onChange}
+                      value={field.value}
+                    />
+                  )}
+                />
+              </View>
+
+              <View style={{ width: 340 }}>
+                <Text
+                  style={{
+                    fontSize: 16,
+                    padding: 5,
+                    marginHorizontal: 10,
+                  }}
+                >
+                  {"รหัสประจำตัวอาจารย์"}
+                </Text>
+                <Controller
+                  name="job.professorId"
+                  control={control}
+                  render={({ field }) => (
+                    <Input
+                      style={{
+                        borderRadius: 5,
+                        borderColor: "#AEAEAE",
+                        borderWidth: 1,
+                        marginTop: 6,
+                      }}
+                      inputContainerStyle={{ borderBottomWidth: 0 }}
+                      onBlur={field.onBlur}
+                      onChangeText={field.onChange}
+                      value={field.value}
+                    />
+                  )}
+                />
+              </View>
+              <View style={{ width: 340 }}>
+                <Text
+                  style={{
+                    fontSize: 16,
+                    padding: 5,
+                    marginHorizontal: 10,
+                  }}
+                >
+                  {"มหาวิทยาลัยที่จบการศึกษา"}
+                </Text>
+                <Controller
+                  name="information.university"
+                  control={control}
+                  render={({ field }) => (
+                    <Input
+                      style={{
+                        borderRadius: 5,
+                        borderColor: "#AEAEAE",
+                        borderWidth: 1,
+                        marginTop: 6,
+                      }}
+                      inputContainerStyle={{ borderBottomWidth: 0 }}
+                      onBlur={field.onBlur}
+                      onChangeText={field.onChange}
+                      value={field.value}
+                    />
+                  )}
+                />
+              </View>
+              <View style={{ width: 340 }}>
+                <Text
+                  style={{
+                    fontSize: 16,
+                    padding: 5,
+                    marginHorizontal: 10,
+                  }}
+                >
+                  {"ประเทศที่จบการศึกษา"}
+                </Text>
+                <Controller
+                  name="information.graduatedFrom"
+                  control={control}
+                  render={({ field }) => (
+                    <Input
+                      style={{
+                        borderRadius: 5,
+                        borderColor: "#AEAEAE",
+                        borderWidth: 1,
+                        marginTop: 6,
+                      }}
+                      inputContainerStyle={{ borderBottomWidth: 0 }}
+                      onBlur={field.onBlur}
+                      onChangeText={field.onChange}
+                      value={field.value}
+                    />
+                  )}
+                />
+              </View>
+            </View>
+          )}
+
+          {selectedId === "2" && (
+            <View>
+              <View style={{ width: 340 }}>
+                <Text
+                  style={{
+                    fontSize: 16,
+                    padding: 5,
+                    marginHorizontal: 10,
+                  }}
+                >
+                  {"email"}
+                </Text>
+                <Controller
+                  name="email"
+                  control={control}
+                  defaultValue=""
+                  render={({ field }) => (
+                    <Input
+                      style={{
+                        borderRadius: 5,
+                        borderColor: "#AEAEAE",
+                        borderWidth: 1,
+                        marginTop: 6,
+                      }}
+                      inputContainerStyle={{ borderBottomWidth: 0 }}
+                      onBlur={field.onBlur}
+                      onChangeText={field.onChange}
+                      value={field.value}
+                    />
+                  )}
+                />
+              </View>
+              <View style={{ width: 340 }}>
+                <Text
+                  style={{
+                    fontSize: 16,
+                    padding: 5,
+                    marginHorizontal: 10,
+                  }}
+                >
+                  {"รหัสประจำตัวนักศึกษา"}
+                </Text>
+                <Controller
+                  name="job.studentId"
+                  control={control}
+                  defaultValue=""
+                  render={({ field }) => (
+                    <Input
+                      style={{
+                        borderRadius: 5,
+                        borderColor: "#AEAEAE",
+                        borderWidth: 1,
+                        marginTop: 6,
+                      }}
+                      inputContainerStyle={{ borderBottomWidth: 0 }}
+                      onBlur={field.onBlur}
+                      onChangeText={field.onChange}
+                      value={field.value}
+                    />
+                  )}
+                />
+              </View>
+              <Button
+                onPress={() => {
+                  pickImage();
+                }}
+                title={"อัพโหลด"}
+                buttonStyle={{
+                  marginTop: 20,
+                  borderRadius: 8,
+                  backgroundColor: "#81ADC8",
+                }}
+                icon={
+                  <Icon
+                    name="cloud-upload"
+                    color={"white"}
+                    style={{ marginRight: 10, color: "white" }}
+                  />
+                }
+              />
+
+              <View
+                style={{
+                  alignItems: "center",
+                  marginTop: 20,
+                }}
+              >
+                {image && (
+                  <View>
+                    <Image
+                      source={{ uri: image }}
+                      style={{ width: 200, height: 200 }}
+                    />
+                    <Text
+                      onPress={() => setImage(null)}
+                      style={{
+                        position: "absolute",
+                        right: 0,
+                        paddingHorizontal: 5,
+                        backgroundColor: "#BE2C35",
+                        color: "white",
+                        borderRadius: 100,
+                      }}
+                    >
+                      X
+                    </Text>
+                  </View>
+                )}
+              </View>
+              {!image && (
+                <Text
+                  style={{ textAlign: "right", marginTop: 10, marginRight: 10 }}
+                >
+                  รูปขนาดไม่เกิน 10 MB
+                </Text>
+              )}
+            </View>
+          )}
+
+          {selectedId === "3" && (
+            <View>
+              <View style={{ width: 340 }}>
+                <Text
+                  style={{
+                    fontSize: 16,
+                    padding: 5,
+                    marginHorizontal: 10,
+                  }}
+                >
+                  {"คำนำหน้า"}
+                </Text>
+                <Controller
+                  name="preflex"
+                  control={control}
+                  render={({ field }) => (
+                    <Input
+                      style={{
+                        borderRadius: 5,
+                        borderColor: "#AEAEAE",
+                        borderWidth: 1,
+                        marginTop: 6,
+                      }}
+                      inputContainerStyle={{ borderBottomWidth: 0 }}
+                      onBlur={field.onBlur}
+                      onChangeText={field.onChange}
+                      value={field.value}
+                    />
+                  )}
+                />
+              </View>
+              <View style={{ width: 340 }}>
+                <Text
+                  style={{
+                    fontSize: 16,
+                    padding: 5,
+                    marginHorizontal: 10,
+                  }}
+                >
+                  {"email"}
+                </Text>
+                <Controller
+                  name="email"
+                  control={control}
+                  render={({ field }) => (
+                    <Input
+                      style={{
+                        borderRadius: 5,
+                        borderColor: "#AEAEAE",
+                        borderWidth: 1,
+                        marginTop: 6,
+                      }}
+                      inputContainerStyle={{ borderBottomWidth: 0 }}
+                      onBlur={field.onBlur}
+                      onChangeText={field.onChange}
+                      value={field.value}
+                    />
+                  )}
+                />
+              </View>
+              <View style={{ width: 340 }}>
+                <Text
+                  style={{
+                    fontSize: 16,
+                    padding: 5,
+                    marginHorizontal: 10,
+                  }}
+                >
+                  {"อาชีพ"}
+                </Text>
+                <Controller
+                  name="job.title"
+                  control={control}
+                  render={({ field }) => (
+                    <Input
+                      style={{
+                        borderRadius: 5,
+                        borderColor: "#AEAEAE",
+                        borderWidth: 1,
+                        marginTop: 6,
+                      }}
+                      inputContainerStyle={{ borderBottomWidth: 0 }}
+                      onBlur={field.onBlur}
+                      onChangeText={field.onChange}
+                      value={field.value}
+                    />
+                  )}
+                />
+              </View>
+              <View style={{ width: 340 }}>
+                <Text
+                  style={{
+                    fontSize: 16,
+                    padding: 5,
+                    marginHorizontal: 10,
+                  }}
+                >
+                  {"สถานที่ทำงาน/ สถานที่ศึกษา"}
+                </Text>
+                <Controller
+                  name="information.location"
+                  control={control}
+                  render={({ field }) => (
+                    <Input
+                      style={{
+                        borderRadius: 5,
+                        borderColor: "#AEAEAE",
+                        borderWidth: 1,
+                        marginTop: 6,
+                      }}
+                      inputContainerStyle={{ borderBottomWidth: 0 }}
+                      onBlur={field.onBlur}
+                      onChangeText={field.onChange}
+                      value={field.value}
+                    />
+                  )}
+                />
+              </View>
+              <View style={{ width: 340 }}>
+                <Text
+                  style={{
+                    fontSize: 16,
+                    padding: 5,
+                    marginHorizontal: 10,
+                  }}
+                >
+                  {"เบอร์ติดต่อสถานที่ทำงาน"}
+                </Text>
+                <Controller
+                  name="information.companyNumber"
+                  control={control}
+                  render={({ field }) => (
+                    <Input
+                      style={{
+                        borderRadius: 5,
+                        borderColor: "#AEAEAE",
+                        borderWidth: 1,
+                        marginTop: 6,
+                      }}
+                      inputContainerStyle={{ borderBottomWidth: 0 }}
+                      onBlur={field.onBlur}
+                      onChangeText={field.onChange}
+                      value={field.value}
+                    />
+                  )}
+                />
+              </View>
+            </View>
+          )}
+
+          <View
+            style={{
+              marginTop: 5,
+              width: 320,
+              maxWidth: 320,
+            }}
+          >
+            <TouchableOpacity
+              onPress={handleSubmit(onSubmit)}
+              style={{
+                marginTop: 20,
+                justifyContent: "center",
+                backgroundColor: "#81ADC8",
+                width: 320,
+                height: 42,
+                borderRadius: 10,
+              }}
+            >
+              <Text
+                style={{
+                  fontSize: 20,
+                  color: "#FFFFFF",
+                  lineHeight: 30,
+                  textAlign: "center",
+                }}
+              >
+                {"สมัครสมาชิก"}
+              </Text>
+            </TouchableOpacity>
+          </View>
+
+          <View
+            style={{
+              flexDirection: "row",
+              alignItems: "center",
+              marginTop: 15,
+              justifyContent: "center",
+              paddingBottom: 50,
+            }}
+          >
+            <Text style={styles.fontSm}>สมัครสมาชิกแล้ว? </Text>
+            <TouchableOpacity onPress={() => navigation.navigate("signin")}>
+              <Text style={styles.fontSm}>เข้าสู่ระบบ</Text>
+            </TouchableOpacity>
+          </View>
         </View>
-      </View>
+      </SafeAreaView>
     </ScrollView>
   );
 };

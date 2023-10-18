@@ -7,6 +7,7 @@ import ProductDetail from "../screens/ProductDetail";
 import ProfileScreen from "../screens/ProfileScreen";
 import { SearchMenu } from "../screens/SearchMenu";
 import { Ionicons } from "@expo/vector-icons";
+import CommentScreen from "../screens/CommentScreen";
 
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
@@ -21,6 +22,7 @@ const HomeStack = () => {
     >
       <Stack.Screen name="productmain" component={MainPageScreen} />
       <Stack.Screen name="detail" component={ProductDetail} />
+      <Stack.Screen name="comment" component={CommentScreen} />
     </Stack.Navigator>
   );
 };
