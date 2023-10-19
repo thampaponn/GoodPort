@@ -1,14 +1,14 @@
 import { Card, CheckBox } from "@rneui/themed";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { View, ScrollView, Text } from "react-native";
+import { View, ScrollView, Text, TouchableOpacity } from "react-native";
 import { ProductCard } from "../components/ProductCard";
 import { post } from "../types/post";
 import { PostCategory } from "../types/postCategory";
 
 type CategoryData = { [key: string]: boolean };
 
-const MainPageScreen = () => {
+const MainPageScreen = ({navigation}) => {
   const [originalPost, setOriginalPost] = useState<post[]>([]);
   useEffect(() => {
     axios
@@ -85,6 +85,9 @@ const MainPageScreen = () => {
             ))}
           </View>
         </Card>
+        <TouchableOpacity onPress={() => (navigation.navigate("comment"))}>
+          <Text>comment</Text>
+        </TouchableOpacity>
 
         {filteredPosts.map((post: post, index: number) => (
           <ProductCard

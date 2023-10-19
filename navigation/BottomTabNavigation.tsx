@@ -7,6 +7,7 @@ import ProductDetail from "../screens/ProductDetail";
 import ProfileScreen from "../screens/ProfileScreen";
 import { SearchMenu } from "../screens/SearchMenu";
 import { Ionicons } from "@expo/vector-icons";
+import CommentScreen from "../screens/CommentScreen";
 
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
@@ -21,6 +22,21 @@ const HomeStack = () => {
     >
       <Stack.Screen name="productmain" component={MainPageScreen} />
       <Stack.Screen name="detail" component={ProductDetail} />
+      <Stack.Screen name="comment" component={CommentScreen} />
+    </Stack.Navigator>
+  );
+};
+
+const ProfileStack = () => {
+  return (
+    <Stack.Navigator
+      initialRouteName="Profile"
+      screenOptions={{
+        headerShown: true,
+      }}
+    >
+      <Stack.Screen name="Profile" component={ProfileScreen} />
+      <Stack.Screen name="Search" component={SearchMenu} />
     </Stack.Navigator>
   );
 };
@@ -28,24 +44,40 @@ const HomeStack = () => {
 const BottomTabNavigation = () => {
   return (
     <Tab.Navigator
-      initialRouteName="Home"
+      initialRouteName="Profile"
       screenOptions={{
         headerShown: false,
       }}
     >
-      <Tab.Screen name="Home" component={HomeStack} />
-      <Tab.Screen name="Add" component={AddPortScreen} />
-      <Tab.Screen name="Notification" component={NotificationScreen} />
       <Tab.Screen
-    options={{
-      tabBarLabel: "Profile",
-      tabBarIcon: ({ color, size }) => (
-        <Ionicons name="person-circle" size={size} color={color} />
-      ),
-    }}
-    name="Profile"
-    component={SearchMenu}
-  />
+        options={{
+          tabBarLabel: "Home",
+          tabBarIcon: ({ color, size }) => (
+            <Ionicons name="home" size={size} color={color} />
+          ),
+        }} name="Home" component={HomeStack} />
+      <Tab.Screen
+        options={{
+          tabBarLabel: "Upload",
+          tabBarIcon: ({ color, size }) => (
+            <Ionicons name="add-circle" size={size} color={color} />
+          ),
+        }} name="Add" component={AddPortScreen} />
+      <Tab.Screen
+        options={{
+          tabBarLabel: "Notifications",
+          tabBarIcon: ({ color, size }) => (
+            <Ionicons name="notifications" size={size} color={color} />
+          ),
+        }} name="Notification" component={NotificationScreen} />
+      <Tab.Screen
+        options={{
+          tabBarLabel: "Profile",
+          tabBarIcon: ({ color, size }) => (
+            <Ionicons name="person-circle" size={size} color={color} />
+          ),
+        }} name="profilestack" component={ProfileStack}
+      />
     </Tab.Navigator>
   );
 };

@@ -284,7 +284,7 @@ const AddPortScreen = ({ navigation }) => {
 
           <Button
             onPress={handleSubmit(onSubmit)}
-            title={"submit"}
+            title={"Submit"}
             buttonStyle={{
               marginTop: 20,
               borderRadius: 8,
