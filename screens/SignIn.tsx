@@ -10,7 +10,7 @@ import {
   TextInput,
   useWindowDimensions,
 } from "react-native";
-
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const SignIn = ({ navigation }) => {
   const [username, setUsername] = useState<string>("");
@@ -27,13 +27,12 @@ const SignIn = ({ navigation }) => {
   const handleSubmit = async () => {
     try {
       setLoading(true);
-      const response = await axios.post(
-        `http://192.168.1.96:3000/auth/signin`,
-        {
-          username,
-          password,
-        }
-      );
+      const response = await axios.post(`http://10.72.7.37:3000/auth/signin`, {
+        username,
+        password,
+      });
+      const token = response.data.access_token;
+      await AsyncStorage.setItem("token", token);
       navigation.navigate("main");
     } catch (error) {
       toggleModal();
@@ -47,16 +46,19 @@ const SignIn = ({ navigation }) => {
       <View style={{ alignItems: "center", padding: 20, marginTop: 40 }}>
         <Dialog isVisible={isModalVisible} onBackdropPress={toggleModal}>
           <Dialog.Title title="รหัสผ่านไม่ถูกต้อง" />
-          <Text style={{ fontFamily: "BaiJamjuree-Regular" }}>
-            กรุณาลองใหม่อีกครั้ง
-          </Text>
+          <Text style={{}}>กรุณาลองใหม่อีกครั้ง</Text>
         </Dialog>
         <Dialog isVisible={isLoading}>
           <Dialog.Loading />
         </Dialog>
 
         <Image
-          style={{ marginTop: 20, marginBottom: 10, height: 66, width: width * 0.8 }}
+          style={{
+            marginTop: 20,
+            marginBottom: 10,
+            height: 66,
+            width: width * 0.8,
+          }}
           source={require("../assets/Logo2.png")}
         />
         <Text

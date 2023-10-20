@@ -85,9 +85,9 @@ const MainPageScreen = ({navigation}) => {
             ))}
           </View>
         </Card>
-        <TouchableOpacity onPress={() => (navigation.navigate("comment"))}>
+        {/* <TouchableOpacity onPress={() => (navigation.navigate("comment"))}>
           <Text>comment</Text>
-        </TouchableOpacity>
+        </TouchableOpacity> */}
 
         {filteredPosts.map((post: post, index: number) => (
           <ProductCard
