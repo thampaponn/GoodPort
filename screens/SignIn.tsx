@@ -11,6 +11,7 @@ import {
   useWindowDimensions,
 } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import Constants from 'expo-constants';
 
 const SignIn = ({ navigation }) => {
   const [username, setUsername] = useState<string>("");
@@ -27,7 +28,7 @@ const SignIn = ({ navigation }) => {
   const handleSubmit = async () => {
     try {
       setLoading(true);
-      const response = await axios.post(`http://10.72.7.37:3000/auth/signin`, {
+      const response = await axios.post(`${Constants.expoConfig.extra.API_URL}/auth/signin`, {
         username,
         password,
       });

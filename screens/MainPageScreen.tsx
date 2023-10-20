@@ -5,6 +5,7 @@ import { View, ScrollView, Text, TouchableOpacity } from "react-native";
 import { ProductCard } from "../components/ProductCard";
 import { post } from "../types/post";
 import { PostCategory } from "../types/postCategory";
+import Constants from 'expo-constants';
 
 type CategoryData = { [key: string]: boolean };
 
@@ -12,7 +13,7 @@ const MainPageScreen = ({navigation}) => {
   const [originalPost, setOriginalPost] = useState<post[]>([]);
   useEffect(() => {
     axios
-      .get(`http://10.72.7.37:3000/post`)
+      .get(`${Constants.expoConfig.extra.API_URL}/post`)
       .then((response) => {
         setOriginalPost(response.data);
       })

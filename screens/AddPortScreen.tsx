@@ -1,11 +1,4 @@
-import {
-  Text,
-  SafeAreaView,
-  Alert,
-  Image,
-  ScrollView,
-  View,
-} from "react-native";
+import { Text, SafeAreaView, Image, ScrollView, View } from "react-native";
 import { Button, Card, Icon, Input } from "@rneui/themed";
 import * as ImagePicker from "expo-image-picker";
 import * as FileSystem from "expo-file-system";
@@ -20,19 +13,20 @@ import { zPost } from "../types/zod/Post";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import jwtDecode from "jwt-decode";
 import { Userjwt } from "../types/userjwt";
+import Constants from "expo-constants";
 
 const AddPortScreen = ({ navigation }) => {
   const [image, setImage] = useState<any>(null);
   const [uploading, setUploading] = useState<boolean>(false);
   const [filename, setFilename] = useState<string>("");
-  const [user, setUser] = useState<Userjwt>(null);
+
   const {
     control,
     handleSubmit,
     formState: { errors },
+    setValue,
   } = useForm<post>({
     resolver: zodResolver(zPost),
-    defaultValues: {},
   });
 
   useEffect(() => {
@@ -40,34 +34,32 @@ const AddPortScreen = ({ navigation }) => {
       try {
         const token = await AsyncStorage.getItem("token");
         const decoded: { sub: Userjwt } = jwtDecode(token);
-        setUser(decoded.sub);
+        const user = decoded;
+        if (user) {
+          setValue("owner.userId", decoded.sub._id);
+          setValue("owner.fname", decoded.sub.fname);
+          setValue("owner.lname", decoded.sub.lname);
+          setValue("owner.email", decoded.sub.email);
+        }
       } catch (error) {
         navigation.navigate("signin");
         console.log("เกิดข้อผิดพลาดในการดึง token:", error);
       }
     };
-
     retrieveToken();
   }, []);
 
   const onSubmit: SubmitHandler<FormData> = async (data) => {
-    await uploadMedia();
-    const owner = {
-      userId: user._id,
-      fname: user.fname,
-      lname: user.lname,
-      email: user.email,
-    };
-    const bodyReq = {
-      ...data,
-      image: filename,
-      status: PostStatus.submited,
-      owner: owner,
-    };
+    if (image) {
+      await uploadMedia();
+    }
     try {
-      const response = await axios.post(`http://10.72.7.37:3000/post`, bodyReq);
-      Alert.alert("โพสต์สำเร็จ");
-      navigation.navigate("productmain");
+      const bodyReq = {
+        ...data,
+        image: filename,
+        status: PostStatus.submited,
+      };
+      await axios.post(`${Constants.expoConfig.extra.API_URL}/post`, bodyReq);
     } catch (error) {
       console.error(error);
     }
