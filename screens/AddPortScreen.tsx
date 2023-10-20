@@ -1,4 +1,11 @@
-import { Text, SafeAreaView, Image, ScrollView, View } from "react-native";
+import {
+  Text,
+  SafeAreaView,
+  Image,
+  ScrollView,
+  View,
+  Alert,
+} from "react-native";
 import { Button, Card, Icon, Input } from "@rneui/themed";
 import * as ImagePicker from "expo-image-picker";
 import * as FileSystem from "expo-file-system";
@@ -14,11 +21,16 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import jwtDecode from "jwt-decode";
 import { Userjwt } from "../types/userjwt";
 import Constants from "expo-constants";
+import { Picker } from "@react-native-picker/picker";
+import { PostCategory } from "../types/postCategory";
 
 const AddPortScreen = ({ navigation }) => {
   const [image, setImage] = useState<any>(null);
   const [uploading, setUploading] = useState<boolean>(false);
   const [filename, setFilename] = useState<string>("");
+  const [selectedValue, setSelectedValue] = useState<PostCategory>(
+    PostCategory.learning
+  );
 
   const {
     control,
@@ -49,22 +61,6 @@ const AddPortScreen = ({ navigation }) => {
     retrieveToken();
   }, []);
 
-  const onSubmit: SubmitHandler<FormData> = async (data) => {
-    if (image) {
-      await uploadMedia();
-    }
-    try {
-      const bodyReq = {
-        ...data,
-        image: filename,
-        status: PostStatus.submited,
-      };
-      await axios.post(`${Constants.expoConfig.extra.API_URL}/post`, bodyReq);
-    } catch (error) {
-      console.error(error);
-    }
-  };
-
   const pickImage = async () => {
     let result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.All,
@@ -86,6 +82,9 @@ const AddPortScreen = ({ navigation }) => {
     setUploading(true);
 
     try {
+      if (!image) {
+        return;
+      }
       const { uri } = await FileSystem.getInfoAsync(image);
       const blob = await new Promise<Blob>((resolve, reject) => {
         const xhr = new XMLHttpRequest();
@@ -108,6 +107,25 @@ const AddPortScreen = ({ navigation }) => {
     } catch (error) {
       console.error(error);
       setUploading(false);
+    }
+  };
+
+  const onSubmit: SubmitHandler<FormData> = async (data) => {
+    setValue("category", selectedValue);
+    if (filename) {
+      await uploadMedia();
+    }
+
+    try {
+      const bodyReq = {
+        ...data,
+        image: filename,
+        status: PostStatus.submited,
+      };
+      await axios.post(`${Constants.expoConfig.extra.API_URL}/post`, bodyReq);
+      Alert.alert("โพสต์สำเร็จ");
+    } catch (error) {
+      console.error(error);
     }
   };
 
@@ -177,21 +195,32 @@ const AddPortScreen = ({ navigation }) => {
           <Controller
             name="category"
             control={control}
+            defaultValue={selectedValue}
             render={({ field }) => (
-              <Input
+              <View
                 style={{
-                  borderRadius: 5,
-                  borderColor: "#AEAEAE",
+                  width: 307,
                   borderWidth: 1,
-                  marginTop: 6,
+                  borderColor: "#AEAEAE",
+                  borderRadius: 5,
+                  marginBottom: 20,
+                  marginHorizontal: 10,
                 }}
-                inputContainerStyle={{ borderBottomWidth: 0 }}
-                onBlur={field.onBlur}
-                onChangeText={field.onChange}
-                value={field.value}
-              />
+              >
+                <Picker
+                  selectedValue={selectedValue}
+                  onValueChange={(val) => field.onChange(val)}
+                >
+                  <Picker.Item label="การเรียน" value={PostCategory.learning} />
+                  <Picker.Item label="กีฬา" value={PostCategory.activity} />
+                  <Picker.Item label="สหกิจ" value={PostCategory.internship} />
+                  <Picker.Item label="จิตอาสา" value={PostCategory.volunteer} />
+                  <Picker.Item label="อื่นๆ" value={PostCategory.other} />
+                </Picker>
+              </View>
             )}
           />
+
           {errors.category && (
             <Text style={{ color: "red", marginHorizontal: 10 }}>
               {errors.category.message}
