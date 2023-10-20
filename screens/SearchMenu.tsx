@@ -2,13 +2,14 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { ScrollView, TextInput, View } from "react-native";
 import { UserCardSearch } from "../components/UserCardSearch";
+import Constants from 'expo-constants';
 
 export const SearchMenu = () => {
   const [originalUsers, setOriginalUsers] = useState([]);
   const [filteredUsers, setFilteredUsers] = useState([]);
   useEffect(() => {
     axios
-      .get(`http://10.72.7.37:3000/user`)
+      .get(`${Constants.expoConfig.extra.API_URL}/user`)
       .then((response) => {
         setOriginalUsers(response.data);
         setFilteredUsers(response.data);
