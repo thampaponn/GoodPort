@@ -10,37 +10,67 @@ import { Button, Card, Icon, Input } from "@rneui/themed";
 import * as ImagePicker from "expo-image-picker";
 import * as FileSystem from "expo-file-system";
 import { firebase } from "../config";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useForm, Controller, SubmitHandler } from "react-hook-form";
 import { post } from "../types/post";
 import axios from "axios";
 import { PostStatus } from "../types/postStatus";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { zPost } from "../types/zod/Post";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import jwtDecode from "jwt-decode";
+import { Userjwt } from "../types/userjwt";
 
 const AddPortScreen = ({ navigation }) => {
   const [image, setImage] = useState<any>(null);
   const [uploading, setUploading] = useState<boolean>(false);
   const [filename, setFilename] = useState<string>("");
-
+  const [user, setUser] = useState<Userjwt>(null);
   const {
     control,
     handleSubmit,
     formState: { errors },
   } = useForm<post>({
-    defaultValues: {
-      status: PostStatus.submited,
-      owner: {
-        userId: "user123",
-        fname: "ชื่อเจ้าของโพสต์",
-        lname: "นามสกุลเจ้าของโพสต์",
-        email: "user@email.com",
-      },
-    },
+    resolver: zodResolver(zPost),
+    defaultValues: {},
   });
+
+  useEffect(() => {
+    const retrieveToken = async () => {
+      try {
+        const token = await AsyncStorage.getItem("token");
+        const decoded: { sub: Userjwt } = jwtDecode(token);
+        setUser(decoded.sub);
+      } catch (error) {
+        navigation.navigate("signin");
+        console.log("เกิดข้อผิดพลาดในการดึง token:", error);
+      }
+    };
+
+    retrieveToken();
+  }, []);
 
   const onSubmit: SubmitHandler<FormData> = async (data) => {
     await uploadMedia();
-    const bodyReq = { ...data, image: filename };
-    await axios.post(`http://192.168.1.45:3000/post`, bodyReq);
+    const owner = {
+      userId: user._id,
+      fname: user.fname,
+      lname: user.lname,
+      email: user.email,
+    };
+    const bodyReq = {
+      ...data,
+      image: filename,
+      status: PostStatus.submited,
+      owner: owner,
+    };
+    try {
+      const response = await axios.post(`http://10.72.7.37:3000/post`, bodyReq);
+      Alert.alert("โพสต์สำเร็จ");
+      navigation.navigate("productmain");
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   const pickImage = async () => {
@@ -54,8 +84,11 @@ const AddPortScreen = ({ navigation }) => {
     if (!result.canceled) {
       setImage(result.assets[0].uri);
     }
-    setFilename(`https://firebasestorage.googleapis.com/v0/b/goodport-cb0e6.appspot.com/o/${result.assets[0].uri.substring(result.assets[0].uri.lastIndexOf("/") + 1)}?alt=media`)
-    console.log("ลิ้งเป็น", filename)
+    setFilename(
+      `https://firebasestorage.googleapis.com/v0/b/goodport-cb0e6.appspot.com/o/${result.assets[0].uri.substring(
+        result.assets[0].uri.lastIndexOf("/") + 1
+      )}?alt=media`
+    );
   };
   const uploadMedia = async () => {
     setUploading(true);
@@ -79,7 +112,6 @@ const AddPortScreen = ({ navigation }) => {
       const ref = firebase.storage().ref().child(filename);
       await ref.put(blob);
       setUploading(false);
-      Alert.alert("Photo Uploaded");
       setImage(null);
     } catch (error) {
       console.error(error);
@@ -116,7 +148,9 @@ const AddPortScreen = ({ navigation }) => {
             )}
           />
           {errors.nameTh && (
-            <Text style={{ color: "red" }}>กรุณากรอกชื่อโครงงานภาษาไทย</Text>
+            <Text style={{ color: "red", marginHorizontal: 10 }}>
+              {errors.nameTh.message}
+            </Text>
           )}
           <Text style={{ marginLeft: 10, fontSize: 16, alignItems: "center" }}>
             ชื่อโครงงานภาษาอังกฤษ*
@@ -140,6 +174,11 @@ const AddPortScreen = ({ navigation }) => {
               />
             )}
           />
+          {errors.nameEn && (
+            <Text style={{ color: "red", marginHorizontal: 10 }}>
+              {errors.nameEn.message}
+            </Text>
+          )}
           <Text style={{ marginLeft: 10, fontSize: 16, alignItems: "center" }}>
             ประเภทโครงงาน*
           </Text>
@@ -161,6 +200,11 @@ const AddPortScreen = ({ navigation }) => {
               />
             )}
           />
+          {errors.category && (
+            <Text style={{ color: "red", marginHorizontal: 10 }}>
+              {errors.category.message}
+            </Text>
+          )}
           <Text style={{ marginLeft: 10, fontSize: 16, alignItems: "center" }}>
             จุดประสงค์
           </Text>
@@ -186,6 +230,11 @@ const AddPortScreen = ({ navigation }) => {
               />
             )}
           />
+          {errors.objective && (
+            <Text style={{ color: "red", marginHorizontal: 10 }}>
+              {errors.objective.message}
+            </Text>
+          )}
           <Text style={{ marginLeft: 10, fontSize: 16, alignItems: "center" }}>
             ที่มา
           </Text>
@@ -211,6 +260,11 @@ const AddPortScreen = ({ navigation }) => {
               />
             )}
           />
+          {errors.source && (
+            <Text style={{ color: "red", marginHorizontal: 10 }}>
+              {errors.source.message}
+            </Text>
+          )}
           <Text style={{ marginLeft: 10, fontSize: 16, alignItems: "center" }}>
             รายละเอียด
           </Text>
@@ -236,6 +290,11 @@ const AddPortScreen = ({ navigation }) => {
               />
             )}
           />
+          {errors.detail && (
+            <Text style={{ color: "red", marginHorizontal: 10 }}>
+              {errors.detail.message}
+            </Text>
+          )}
 
           <Button
             onPress={() => {
