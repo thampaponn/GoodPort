@@ -1,26 +1,27 @@
-import { Card, CheckBox } from "@rneui/themed";
+import { Card, CheckBox, Input } from "@rneui/themed";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { View, ScrollView, Text, TouchableOpacity } from "react-native";
+import { View, ScrollView, Text, TextInput } from "react-native";
 import { ProductCard } from "../components/ProductCard";
 import { post } from "../types/post";
 import { PostCategory } from "../types/postCategory";
-import Constants from 'expo-constants';
+import Constants from "expo-constants";
 
 type CategoryData = { [key: string]: boolean };
 
-const MainPageScreen = ({navigation}) => {
+const MainPageScreen = ({ navigation }) => {
   const [originalPost, setOriginalPost] = useState<post[]>([]);
+  const [searchKeyword, setSearchKeyword] = useState<string>("");
   useEffect(() => {
     axios
-      .get(`${Constants.expoConfig.extra.API_URL}/post`)
+      .get(`${Constants.expoConfig.extra.API_URL}/post/last-7-days`)
       .then((response) => {
         setOriginalPost(response.data);
       })
       .catch((error) => {
         console.error(error);
       });
-  }, []);
+  }, [originalPost]);
 
   const categoryMockup: string[] = [
     "activity",
@@ -33,12 +34,14 @@ const MainPageScreen = ({navigation}) => {
   const [checkboxStates, setCheckboxStates] = useState<boolean[]>(
     categoryMockup.map(() => false)
   );
-  const objFilterData:CategoryData[] = categoryMockup.map((category, index) => {
-    return { [category]: checkboxStates[index] };
-  });
+  const objFilterData: CategoryData[] = categoryMockup.map(
+    (category, index) => {
+      return { [category]: checkboxStates[index] };
+    }
+  );
 
   const toggleCheckbox = (index: number) => {
-    const newCheckboxStates:boolean[] = [...checkboxStates];
+    const newCheckboxStates: boolean[] = [...checkboxStates];
     newCheckboxStates[index] = !newCheckboxStates[index];
     setCheckboxStates(newCheckboxStates);
   };
@@ -54,13 +57,18 @@ const MainPageScreen = ({navigation}) => {
         const categoryData: CategoryData = objFilterData.find(
           (categoryObj) => categoryObj[postCategory] !== undefined
         );
-        return categoryData && categoryData[postCategory];
+        const isTitleMatched = post.nameTh
+          .toLowerCase()
+          .includes(searchKeyword.toLowerCase());
+        return categoryData && categoryData[postCategory] && isTitleMatched;
       });
 
   return (
     <View style={{ backgroundColor: "#FFFFFF", height: "100%" }}>
       <ScrollView>
-        <Card containerStyle={{ borderRadius: 20 }}>
+        <Card
+          containerStyle={{ borderRadius: 20, marginTop: 10, paddingBottom: 0 }}
+        >
           <Text style={{ fontSize: 18, fontWeight: "600", marginLeft: 10 }}>
             ประเภทโครงงาน
           </Text>
@@ -84,22 +92,35 @@ const MainPageScreen = ({navigation}) => {
                 <Text>{data}</Text>
               </View>
             ))}
+            <Input
+              containerStyle={{}}
+              style={{
+                borderRadius: 5,
+                borderColor: "#AEAEAE",
+                borderWidth: 1,
+                marginTop: 10,
+                paddingHorizontal:15
+              }}
+              disabled={areAllDataFalse}
+              placeholder={"กรุณากรอกคำค้นหา"}
+              onChangeText={setSearchKeyword}
+              value={searchKeyword}
+            />
           </View>
         </Card>
-        {/* <TouchableOpacity onPress={() => (navigation.navigate("comment"))}>
-          <Text>comment</Text>
-        </TouchableOpacity> */}
-
-        {filteredPosts.map((post: post, index: number) => (
-          <ProductCard
-            key={index}
-            image={post.image || ""}
-            name={post.nameTh}
-            category={post.category}
-            owner={post.owner}
-            advisor={post.advisor}
-          />
-        ))}
+        <View style={{ marginBottom: 20 }}>
+          {filteredPosts.map((post: post, index: number) => (
+            <ProductCard
+              key={index}
+              image={post.image || ""}
+              name={post.nameTh}
+              category={post.category}
+              owner={post.owner}
+              advisor={post.advisor}
+              id={post._id}
+            />
+          ))}
+        </View>
       </ScrollView>
     </View>
   );

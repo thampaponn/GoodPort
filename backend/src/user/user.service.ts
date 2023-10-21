@@ -33,6 +33,17 @@ export class UserService {
     return await this.userModel.find().exec();
   }
 
+  async getUsersWithRoles() {
+    const rolesToFind = ["advisor", "visitor"];
+    
+    try {
+      const users = await this.userModel.find({ role: { $in: rolesToFind } }).exec();
+      return users;
+    } catch (error) {
+      throw error;
+    }
+  }
+
   async getUserById(id: string) {
     return await this.userModel.findById(id);
   }

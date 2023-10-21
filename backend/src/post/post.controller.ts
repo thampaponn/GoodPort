@@ -11,10 +11,21 @@ export class PostController {
     return createPost;
   }
 
+  @Get('category/:category')
+  async getPostsByCategory(@Param('category') category: string) {
+    return this.PostService.getPostsByCategory(category);
+  }
+
   @Get()
   async getAllPost() {
     const users = await this.PostService.getAllPost();
     return users;
+  }
+
+  @Get('last-7-days')
+  async getPostsCreatedWithinLast7Days() {
+    const posts = await this.PostService.getPostsCreatedWithinLast7Days();
+    return posts;
   }
 
   @Post(":id")

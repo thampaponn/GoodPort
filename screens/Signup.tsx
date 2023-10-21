@@ -23,6 +23,7 @@ import { transformRole } from "../hook/transformRole";
 import axios from "axios";
 import { UserRole } from "../types/role";
 import { SafeAreaView } from "react-native-safe-area-context";
+import Constants from "expo-constants";
 
 type UserType = {
   id: string;
@@ -39,10 +40,12 @@ const SignUp = ({ navigation }) => {
     handleSubmit,
     formState: { errors },
   } = useForm<User>();
-
-  const [comfirmPwd, setConfirmPwd] = useState<string>("");
+  
   const onSubmit: SubmitHandler<FormData> = async (data) => {
-    await uploadMedia();
+    if (filename) {
+      await uploadMedia();
+    }
+
     const role: UserRole = transformRole(selectedId);
     const bodyReq: any = {
       ...data,
@@ -50,7 +53,11 @@ const SignUp = ({ navigation }) => {
       sex: selectedValue,
       role: role,
     };
-    const res: any = await axios.post(`http://10.72.7.37:3000/user`, bodyReq);
+    const res: any = await axios.post(
+      `${Constants.expoConfig.extra.API_URL}/user`,
+      bodyReq
+    );
+    navigation.navigate("signin");
   };
 
   const { width } = useWindowDimensions();
@@ -79,6 +86,9 @@ const SignUp = ({ navigation }) => {
     setUploading(true);
 
     try {
+      if (!image) {
+        return;
+      }
       const { uri } = await FileSystem.getInfoAsync(image);
       const blob = await new Promise<Blob>((resolve, reject) => {
         const xhr = new XMLHttpRequest();
@@ -107,8 +117,6 @@ const SignUp = ({ navigation }) => {
   return (
     <ScrollView style={styles.card}>
       <SafeAreaView>
-
-
         <View style={styles.screen}>
           <View style={styles.centeredContainer}>
             <Image
@@ -266,30 +274,6 @@ const SignUp = ({ navigation }) => {
                   value={field.value}
                 />
               )}
-            />
-          </View>
-
-          <View style={{ width: 340 }}>
-            <Text
-              style={{
-                fontSize: 16,
-                padding: 5,
-                marginHorizontal: 10,
-              }}
-            >
-              {"ยืนยันรหัสผ่าน"}
-            </Text>
-
-            <Input
-              style={{
-                borderRadius: 5,
-                borderColor: "#AEAEAE",
-                borderWidth: 1,
-                marginTop: 6,
-              }}
-              inputContainerStyle={{ borderBottomWidth: 0 }}
-              onChangeText={setConfirmPwd}
-              value={comfirmPwd}
             />
           </View>
 

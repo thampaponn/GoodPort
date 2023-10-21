@@ -6,7 +6,7 @@ import {
   View,
   Alert,
 } from "react-native";
-import { Button, Card, Icon, Input } from "@rneui/themed";
+import { Button, Card, Icon, Input, Dialog } from "@rneui/themed";
 import * as ImagePicker from "expo-image-picker";
 import * as FileSystem from "expo-file-system";
 import { firebase } from "../config";
@@ -23,6 +23,7 @@ import { Userjwt } from "../types/userjwt";
 import Constants from "expo-constants";
 import { Picker } from "@react-native-picker/picker";
 import { PostCategory } from "../types/postCategory";
+import { User } from "../types/user";
 
 const AddPortScreen = ({ navigation }) => {
   const [image, setImage] = useState<any>(null);
@@ -31,6 +32,22 @@ const AddPortScreen = ({ navigation }) => {
   const [selectedValue, setSelectedValue] = useState<PostCategory>(
     PostCategory.learning
   );
+  const [selectedValue2, setSelectedValue2] = useState<any>(null);
+  const [userConfirm, setUserConfirm] = useState<any>(null);
+  const [loading, setLoading] = useState<boolean>(true);
+
+  useEffect(() => {
+    axios
+      .get(`${Constants.expoConfig.extra.API_URL}/user/with-roles`)
+      .then((response) => {
+        setUserConfirm(response.data);
+        setLoading(false);
+      })
+      .catch((error) => {
+        console.error(error);
+        setLoading(false);
+      });
+  }, [userConfirm]);
 
   const {
     control,
@@ -78,6 +95,7 @@ const AddPortScreen = ({ navigation }) => {
       )}?alt=media`
     );
   };
+
   const uploadMedia = async () => {
     setUploading(true);
 
@@ -111,19 +129,27 @@ const AddPortScreen = ({ navigation }) => {
   };
 
   const onSubmit: SubmitHandler<FormData> = async (data) => {
+    const advisorConfirm = userConfirm.find(
+      (obj) => obj._id === selectedValue2
+    );
     setValue("category", selectedValue);
     if (filename) {
       await uploadMedia();
     }
-
     try {
       const bodyReq = {
         ...data,
         image: filename,
         status: PostStatus.submited,
+        advisor: {
+          email: advisorConfirm["email"],
+          fname: advisorConfirm["fname"],
+          lname: advisorConfirm["lname"],
+        },
       };
       await axios.post(`${Constants.expoConfig.extra.API_URL}/post`, bodyReq);
       Alert.alert("โพสต์สำเร็จ");
+      navigation.navigate("productmain");
     } catch (error) {
       console.error(error);
     }
@@ -132,6 +158,9 @@ const AddPortScreen = ({ navigation }) => {
   return (
     <SafeAreaView style={{ backgroundColor: "#FFFFFF" }}>
       <ScrollView>
+        <Dialog isVisible={loading}>
+          <Dialog.Loading />
+        </Dialog>
         <Card
           containerStyle={{ borderRadius: 20, padding: 25, marginBottom: 50 }}
         >
@@ -209,7 +238,10 @@ const AddPortScreen = ({ navigation }) => {
               >
                 <Picker
                   selectedValue={selectedValue}
-                  onValueChange={(val) => field.onChange(val)}
+                  onValueChange={(val) => {
+                    field.onChange(val);
+                    setSelectedValue(val);
+                  }}
                 >
                   <Picker.Item label="การเรียน" value={PostCategory.learning} />
                   <Picker.Item label="กีฬา" value={PostCategory.activity} />
@@ -361,7 +393,34 @@ const AddPortScreen = ({ navigation }) => {
               </View>
             )}
           </View>
-
+          <View
+            style={{
+              width: 307,
+              borderWidth: 1,
+              borderColor: "#AEAEAE",
+              borderRadius: 5,
+              marginBottom: 20,
+              marginHorizontal: 10,
+              marginTop: 10,
+            }}
+          >
+            <Picker
+              selectedValue={selectedValue2}
+              onValueChange={(itemValue, index) => setSelectedValue2(itemValue)}
+            >
+              {loading ? (
+                <Picker.Item label="Loading..." value={null} />
+              ) : (
+                userConfirm.map((user: any) => (
+                  <Picker.Item
+                    label={user.fname + " " + user.lname}
+                    value={user._id}
+                    key={user._id}
+                  />
+                ))
+              )}
+            </Picker>
+          </View>
           <Button
             onPress={handleSubmit(onSubmit)}
             title={"Submit"}
