@@ -24,6 +24,8 @@ import axios from "axios";
 import { UserRole } from "../types/role";
 import { SafeAreaView } from "react-native-safe-area-context";
 import Constants from "expo-constants";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { zUser } from "../types/zod/user";
 
 type UserType = {
   id: string;
@@ -39,8 +41,11 @@ const SignUp = ({ navigation }) => {
     control,
     handleSubmit,
     formState: { errors },
-  } = useForm<User>();
-  
+  } = useForm<User>({
+    resolver: zodResolver(zUser),
+  });
+
+  console.log(errors);
   const onSubmit: SubmitHandler<FormData> = async (data) => {
     if (filename) {
       await uploadMedia();
@@ -154,6 +159,11 @@ const SignUp = ({ navigation }) => {
                 />
               )}
             />
+            {errors.fname && (
+              <Text style={{ color: "red", marginHorizontal: 10 }}>
+                {errors.fname.message}
+              </Text>
+            )}
           </View>
           <View style={{ width: 340 }}>
             <Text
@@ -184,6 +194,11 @@ const SignUp = ({ navigation }) => {
                 />
               )}
             />
+            {errors.lname && (
+              <Text style={{ color: "red", marginHorizontal: 10 }}>
+                {errors.lname.message}
+              </Text>
+            )}
           </View>
           <View style={{ width: 340 }}>
             <Text
@@ -215,6 +230,11 @@ const SignUp = ({ navigation }) => {
               )}
             />
           </View>
+          {errors.username && (
+            <Text style={{ color: "red", marginHorizontal: 10 }}>
+              {errors.username.message}
+            </Text>
+          )}
           <View>
             <Text
               style={{
@@ -268,6 +288,7 @@ const SignUp = ({ navigation }) => {
                     borderWidth: 1,
                     marginTop: 6,
                   }}
+                  secureTextEntry={true}
                   inputContainerStyle={{ borderBottomWidth: 0 }}
                   onBlur={field.onBlur}
                   onChangeText={field.onChange}
@@ -276,7 +297,11 @@ const SignUp = ({ navigation }) => {
               )}
             />
           </View>
-
+          {errors.password && (
+            <Text style={{ color: "red", marginHorizontal: 10 }}>
+              {errors.password.message}
+            </Text>
+          )}
           <View style={{ width: 340 }}>
             <Text
               style={{
@@ -303,10 +328,16 @@ const SignUp = ({ navigation }) => {
                   onBlur={field.onBlur}
                   onChangeText={field.onChange}
                   value={field.value}
+                  keyboardType="numeric"
                 />
               )}
             />
           </View>
+          {errors.phone && (
+            <Text style={{ color: "red", marginHorizontal: 10 }}>
+              {errors.phone.message}
+            </Text>
+          )}
           <View style={{ width: 320 }}>
             <RadioGroup
               radioButtons={typeUserRegister}
@@ -348,6 +379,11 @@ const SignUp = ({ navigation }) => {
                   )}
                 />
               </View>
+              {errors.preflex && (
+                <Text style={{ color: "red", marginHorizontal: 10 }}>
+                  {errors.preflex.message}
+                </Text>
+              )}
               <View style={{ width: 340 }}>
                 <Text
                   style={{
@@ -377,7 +413,11 @@ const SignUp = ({ navigation }) => {
                   )}
                 />
               </View>
-
+              {errors.email && (
+                <Text style={{ color: "red", marginHorizontal: 10 }}>
+                  {errors.email.message}
+                </Text>
+              )}
               <View style={{ width: 340 }}>
                 <Text
                   style={{
@@ -407,6 +447,7 @@ const SignUp = ({ navigation }) => {
                   )}
                 />
               </View>
+
               <View style={{ width: 340 }}>
                 <Text
                   style={{
@@ -730,6 +771,7 @@ const SignUp = ({ navigation }) => {
                       onBlur={field.onBlur}
                       onChangeText={field.onChange}
                       value={field.value}
+                      keyboardType="numeric"
                     />
                   )}
                 />
