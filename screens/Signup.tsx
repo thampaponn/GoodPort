@@ -262,6 +262,7 @@ const SignUp = ({ navigation }) => {
               defaultValue=""
               render={({ field }) => (
                 <Input
+                secureTextEntry={true}
                   style={{
                     borderRadius: 5,
                     borderColor: "#AEAEAE",
