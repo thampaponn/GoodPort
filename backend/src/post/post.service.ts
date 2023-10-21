@@ -16,11 +16,27 @@ export class PostService {
       }
     
       async getAllPost() {
-        return await this.postModel.find().exec();
+        return await this.postModel.find().sort({ createAt: -1 }).exec();
+      }
+
+      async getPostsCreatedWithinLast7Days(): Promise<Posts[]> {
+        const sevenDaysAgo = new Date();
+        sevenDaysAgo.setDate(sevenDaysAgo.getDate() - 7);
+    
+        const posts = await this.postModel
+          .find({ createAt: { $gte: sevenDaysAgo } })
+          .sort({ createAt: -1 })
+          .exec();
+    
+        return posts;
       }
     
       async getPostById(id: string) {
         return await this.postModel.findById(id);
+      }
+
+      async getPostsByCategory(category: string) {
+        return await this.postModel.find({ category: category }).sort({ createdAt: -1 }).exec();
       }
     
       async delPostById(id: string) {

@@ -4,6 +4,7 @@ import { owner } from "./postOwner";
 import { PostStatus } from "./postStatus";
 
 export type post = {
+  _id:string;
   nameTh: string;
   nameEn: string;
   category: PostCategory;

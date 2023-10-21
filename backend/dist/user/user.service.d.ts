@@ -31,6 +31,9 @@ export declare class UserService {
     getAllUsers(): Promise<(import("mongoose").Document<unknown, {}, User> & User & {
         _id: import("mongoose").Types.ObjectId;
     })[]>;
+    getUsersWithRoles(): Promise<(import("mongoose").Document<unknown, {}, User> & User & {
+        _id: import("mongoose").Types.ObjectId;
+    })[]>;
     getUserById(id: string): Promise<import("mongoose").Document<unknown, {}, User> & User & {
         _id: import("mongoose").Types.ObjectId;
     }>;

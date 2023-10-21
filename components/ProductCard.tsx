@@ -11,6 +11,7 @@ type owner = {
 };
 
 type ProductCardProps = {
+  id: string;
   image?: string;
   name: string;
   category: string;
@@ -19,6 +20,7 @@ type ProductCardProps = {
 };
 
 export const ProductCard = ({
+  id,
   image,
   name,
   category,
@@ -26,7 +28,9 @@ export const ProductCard = ({
   advisor,
 }: ProductCardProps) => {
   const navigation: any = useNavigation();
-  const handleSubmit = () => {};
+  const handleSubmit = () => {
+    navigation.navigate("detail", { data: id });
+  };
   return (
     <Card containerStyle={{ borderRadius: 20, padding: 25 }}>
       <View style={{ display: "flex", alignItems: "center" }}>
@@ -69,9 +73,17 @@ export const ProductCard = ({
         <Text style={{ fontSize: 16 }}>เจ้าของโครงงาน : </Text>
         <Text style={{ fontSize: 16 }}>{owner.fname + " " + owner.lname}</Text>
       </View>
-      <View style={{ display: "flex", flexDirection: "row", marginTop: 5 }}>
+
+      <View>
         {advisor && (
-          <View style={{ width: "50%" }}>
+          <View
+            style={{
+              display: "flex",
+              flexDirection: "row",
+              marginTop: 5,
+              width: "50%",
+            }}
+          >
             <Text style={{ fontSize: 16 }}>อาจารย์ที่ปรึกษา : </Text>
             <Text style={{ fontSize: 16 }}>
               {advisor.fname + " " + advisor.lname}
@@ -81,7 +93,7 @@ export const ProductCard = ({
       </View>
 
       <Button
-        onPress={() => navigation.navigate("detail")}
+        onPress={() => handleSubmit()}
         title={"แสดงรายละเอียด"}
         buttonStyle={{
           marginTop: 20,

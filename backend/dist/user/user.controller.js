@@ -34,6 +34,15 @@ let UserController = class UserController {
         const user = await this.userService.getUserById(id);
         return user;
     }
+    async getUsersWithRoles() {
+        try {
+            const users = await this.userService.getUsersWithRoles();
+            return users;
+        }
+        catch (error) {
+            throw error;
+        }
+    }
     async updateUser(id, updatedData) {
         const updatedUser = await this.userService.updateUser(id, updatedData);
         if (!updatedUser) {
@@ -73,6 +82,13 @@ __decorate([
     __metadata("design:paramtypes", [String]),
     __metadata("design:returntype", Promise)
 ], UserController.prototype, "getUserById", null);
+__decorate([
+    (0, common_1.Get)('with-roles'),
+    openapi.ApiResponse({ status: 200, type: [Object] }),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", []),
+    __metadata("design:returntype", Promise)
+], UserController.prototype, "getUsersWithRoles", null);
 __decorate([
     (0, common_1.Put)(":id"),
     openapi.ApiResponse({ status: 200, type: require("./user.model").User }),

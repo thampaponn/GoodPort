@@ -2,7 +2,7 @@ import { z } from "zod";
 const zAdvisor = z.object({
   fname: z.string().optional(),
   lname: z.string().optional(),
-  email: z.string().email().optional(),
+  email: z.string().optional(),
   professorId: z.string().optional(),
 });
 

@@ -35,6 +35,9 @@ export declare class UserController {
     getUserById(id: string): Promise<import("mongoose").Document<unknown, {}, User> & User & {
         _id: import("mongoose").Types.ObjectId;
     }>;
+    getUsersWithRoles(): Promise<(import("mongoose").Document<unknown, {}, User> & User & {
+        _id: import("mongoose").Types.ObjectId;
+    })[]>;
     updateUser(id: string, updatedData: Partial<User>): Promise<User>;
     delUserById(id: string): Promise<string>;
     searchUsers(query: string): Promise<User[]>;

@@ -1,8 +1,9 @@
 import { Button, Card, Chip, Icon } from "@rneui/themed";
 import React from "react";
-import { View, Text, StyleSheet, ScrollView } from "react-native";
+import { View, Text, ScrollView } from "react-native";
 
-const ProductDetail = () => {
+const ProductDetail = ({route}) => {
+  const { data } = route.params;
   const ImageMockup = [
     "https://awildgeographer.files.wordpress.com/2015/02/john_muir_glacier.jpg",
     "https://awildgeographer.files.wordpress.com/2015/02/john_muir_glacier.jpg",

@@ -36,6 +36,16 @@ export class UserController {
     return user;
   }
 
+  @Get('with-roles')
+  async getUsersWithRoles() {
+    try {
+      const users = await this.userService.getUsersWithRoles();
+      return users;
+    } catch (error) {
+      throw error;
+    }
+  }
+
   @Put(":id")
   async updateUser(
     @Param("id") id: string,
