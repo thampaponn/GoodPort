@@ -234,6 +234,8 @@ const AddPortScreen = ({ navigation }) => {
         },
         postId: response.data._id,
         advisorId: response.data.advisor.userId,
+        advisorFname: response.data.advisor.fname,
+        advisorLname: response.data.advisor.lname,
         detail: response.data.status,
       };
 

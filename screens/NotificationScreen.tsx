@@ -1,11 +1,34 @@
 import { View, Text, ScrollView, SafeAreaView } from "react-native";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Card, ListItem } from "@rneui/themed";
 import { ProductConfirmCardNotification } from "../components/ProductConfirmCardNotification";
+import { Userjwt } from "../types/userjwt";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import jwtDecode from "jwt-decode";
 
-export default function NotificationScreen() {
-  const [expanded, setExpanded] = useState(true);
-  const [logToggle, setLogToggle] = useState(true);
+export default function NotificationScreen({navigation}) {
+  const [expanded, setExpanded] = useState<boolean>(true);
+  const [logToggle, setLogToggle] = useState<boolean>(true);
+  const [user, setUser] = useState<Userjwt>(null);
+
+
+  useEffect(() => {
+    const retrieveToken = async () => {
+      try {
+        const token = await AsyncStorage.getItem("token");
+        const decoded: { sub: Userjwt } = jwtDecode(token);
+        const user = decoded.sub;
+        setUser(user)
+        
+      } catch (error) {
+        navigation.navigate("signin");
+        console.log("เกิดข้อผิดพลาดในการดึง token:", error);
+      }
+    };
+    retrieveToken();
+  }, []);
+
+
   const mockupData = [
     {
       name: "hellodadasfasgasgagagarsr14141",
@@ -61,6 +84,8 @@ export default function NotificationScreen() {
           {NodataComfirm && <NotificationEmpty text={"ไม่มีโปรเจคให้ยืนยัน"} />}
         </ScrollView>
       </ListItem.Accordion>
+
+
       <ListItem.Accordion
         containerStyle={{ borderWidth: 1 }}
         content={
