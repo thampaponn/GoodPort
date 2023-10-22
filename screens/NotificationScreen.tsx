@@ -1,49 +1,64 @@
 import { View, Text, ScrollView, SafeAreaView } from "react-native";
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { Card, ListItem } from "@rneui/themed";
 import { ProductConfirmCardNotification } from "../components/ProductConfirmCardNotification";
 import { Userjwt } from "../types/userjwt";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import jwtDecode from "jwt-decode";
+import Constants from "expo-constants";
+import axios from "axios";
+import { Button } from "@rneui/base";
 
-export default function NotificationScreen({navigation}) {
+export default function NotificationScreen({ navigation }) {
   const [expanded, setExpanded] = useState<boolean>(true);
   const [logToggle, setLogToggle] = useState<boolean>(true);
   const [user, setUser] = useState<Userjwt>(null);
+  const [loading, setLoading] = useState<boolean>(true);
+  const [alert, setAleart] = useState<any>(null);
+  const [alertConfirm, setAlertConfirm] = useState<any>(null);
 
+  const retrieveToken = useCallback(async () => {
+    console.log("click")
+    try {
+      const token = await AsyncStorage.getItem("token");
+      const decoded: { sub: Userjwt } = jwtDecode(token);
+      const user = decoded.sub;
+      setUser(user);
+
+      axios
+        .get(
+          `${Constants.expoConfig.extra.API_URL}/alert/byadvisorId/${user._id}`
+        )
+        .then((response) => {
+          setAleart(response.data);
+        })
+        .catch((error) => {
+          console.error(error);
+          setLoading(false);
+        });
+
+      axios
+        .get(
+          `${Constants.expoConfig.extra.API_URL}/alert/byUserIdConfirm/${user._id}`
+        )
+        .then((response) => {
+          setAlertConfirm(response.data);
+        })
+        .catch((error) => {
+          console.error(error);
+          setLoading(false);
+        });
+
+    } catch (error) {
+      navigation.navigate("signin");
+      console.log("เกิดข้อผิดพลาดในการดึง token:", error);
+    }
+  }, [navigation]);
 
   useEffect(() => {
-    const retrieveToken = async () => {
-      try {
-        const token = await AsyncStorage.getItem("token");
-        const decoded: { sub: Userjwt } = jwtDecode(token);
-        const user = decoded.sub;
-        setUser(user)
-        
-      } catch (error) {
-        navigation.navigate("signin");
-        console.log("เกิดข้อผิดพลาดในการดึง token:", error);
-      }
-    };
     retrieveToken();
-  }, []);
+  }, [retrieveToken]);
 
-
-  const mockupData = [
-    {
-      name: "hellodadasfasgasgagagarsr14141",
-      owner: "ธนาธิป สิงหานนท์",
-      advisor: "อาจารย์ ขิม",
-      category: "Learning",
-    },
-    {
-      name: "hellodadasfasgasgagagarsr14141",
-      owner: "ธนาธิป สิงหานนท์",
-      advisor: "อาจารย์ ขิม",
-      category: "Learning",
-    },
-  ];
-  const NodataComfirm = mockupData.length === 0;
   return (
     <SafeAreaView style={{ backgroundColor: "#FFFFFF" }}>
       <ListItem.Accordion
@@ -70,21 +85,24 @@ export default function NotificationScreen({navigation}) {
             backgroundColor: "#FFFFFF",
           }}
         >
-          {mockupData &&
-            mockupData.map((data, index) => (
+          {alert &&
+            alert.map((data:any, index:number) => (
               <View key={index} style={{ marginTop: 10 }}>
                 <ProductConfirmCardNotification
-                  name={data.name}
-                  owner={data.owner}
-                  advisor={data.advisor}
-                  category={data.category}
+                  navigation={navigation}
+                  name={data.postTitle}
+                  owner={data.owner.fname + " " + data.owner.lname}
+                  advisor={data.advisorFname + " " + data.advisorLname}
+                  category={data.postCategory}
+                  id={data.advisorId}
+                  postId={data.postId}
+                  action={retrieveToken}
                 />
               </View>
             ))}
-          {NodataComfirm && <NotificationEmpty text={"ไม่มีโปรเจคให้ยืนยัน"} />}
+          {alert && alert.length === 0 && <NotificationEmpty text={"ไม่มีโปรเจคให้ยืนยัน"} />}
         </ScrollView>
       </ListItem.Accordion>
-
 
       <ListItem.Accordion
         containerStyle={{ borderWidth: 1 }}
@@ -110,13 +128,13 @@ export default function NotificationScreen({navigation}) {
             height: "100%",
           }}
         >
-          {mockupData &&
-            mockupData.map((data, index) => (
+          {alertConfirm &&
+            alertConfirm.map((data, index) => (
               <View key={index} style={{ marginTop: 1 }}>
-                <ProductNotificationCard text={data.name} />
+                <ProductNotificationCard text={data.postTitle} />
               </View>
             ))}
-          {NodataComfirm && <NotificationEmpty text={"ไม่มีแจ้งเตือน"} />}
+          {alertConfirm && alertConfirm.length === 0 && <NotificationEmpty text={"ไม่มีแจ้งเตือน"} />}
         </ScrollView>
       </ListItem.Accordion>
     </SafeAreaView>

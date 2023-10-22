@@ -7,6 +7,8 @@ export const AlertSchema = new mongoose.Schema({
     lname: { type: String, required: true },
   },
   postId: { type: String, required: true },
+  postTitle: { type: String },
+  postCategory: { type: String },
   advisorId: { type: String },
   advisorFname: { type: String },
   advisorLname: { type: String },
@@ -22,6 +24,8 @@ export interface Alert extends mongoose.Document {
     lname: string;
   };
   postId: string;
+  postTitle: string;
+  postCategory: string;
   advisorId: string;
   advisorFname: string;
   advisorLname: string;

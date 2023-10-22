@@ -30,9 +30,31 @@ export class AlertController {
     return this.alertService.getAlertByPostId(postId);
   }
 
-  @Get("byUserId/:userId")
-  async getAlertByUserId(@Param("userId") userId: string): Promise<Alert[]> {
-    return this.alertService.getAlertByUserId(userId);
+  @Get("byadvisorId/:advisorId")
+  async getAlertByadvisorId(@Param("advisorId") advisorId: string): Promise<Alert[]> {
+    return this.alertService.getAlertByUserId(advisorId);
+  }
+
+
+  @Post('updateDetailToAccepted/:advisorId/:postId')
+  async updateAlertDetailToAccepted(
+    @Param('advisorId') advisorId: string,
+    @Param('postId') postId: string,
+  ) {
+    try {
+      const updatedAlert = await this.alertService.updateAlertDetailToAccepted(
+        advisorId,
+        postId,
+      );
+      return { message: 'Alert ได้รับการอัปเดตเป็น "accepted" แล้ว', updatedAlert };
+    } catch (error) {
+      return { message: 'ไม่สามารถอัปเดตรายละเอียด Alert ได้', error };
+    }
+  }
+
+  @Get("byUserIdConfirm/:userId")
+  async getAlertByUserIdComfirm(@Param("userId") userId: string): Promise<Alert[]> {
+    return this.alertService.getAlertByUserIdComfirm(userId);
   }
 
   @Delete(":id")

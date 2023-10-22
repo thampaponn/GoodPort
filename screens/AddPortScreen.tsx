@@ -64,6 +64,7 @@ const AddPortScreen = ({ navigation }) => {
     resolver: zodResolver(zPost),
   });
 
+
   useEffect(() => {
     const retrieveToken = async () => {
       try {
@@ -233,6 +234,8 @@ const AddPortScreen = ({ navigation }) => {
           lname: response.data.owner.lname,
         },
         postId: response.data._id,
+        postTitle: response.data.nameTh,
+        postCategory: response.data.category,
         advisorId: response.data.advisor.userId,
         advisorFname: response.data.advisor.fname,
         advisorLname: response.data.advisor.lname,

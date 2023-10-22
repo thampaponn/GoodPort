@@ -1,7 +1,7 @@
-import { Card, CheckBox, Input } from "@rneui/themed";
+import { Button, Card, CheckBox, Icon, Input } from "@rneui/themed";
 import axios from "axios";
-import React, { useEffect, useState } from "react";
-import { View, ScrollView, Text, TextInput } from "react-native";
+import React, { useCallback, useEffect, useState } from "react";
+import { View, ScrollView, Text } from "react-native";
 import { ProductCard } from "../components/ProductCard";
 import { post } from "../types/post";
 import { PostCategory } from "../types/postCategory";
@@ -12,16 +12,19 @@ type CategoryData = { [key: string]: boolean };
 const MainPageScreen = ({ navigation }) => {
   const [originalPost, setOriginalPost] = useState<post[]>([]);
   const [searchKeyword, setSearchKeyword] = useState<string>("");
+
+  const fetchOriginalPost = useCallback(async () => {
+    try {
+      const response = await axios.get(`${Constants.expoConfig.extra.API_URL}/post/last-7-days`);
+      setOriginalPost(response.data);
+    } catch (error) {
+      console.error(error);
+    }
+  }, []);
+  
   useEffect(() => {
-    axios
-      .get(`${Constants.expoConfig.extra.API_URL}/post/last-7-days`)
-      .then((response) => {
-        setOriginalPost(response.data);
-      })
-      .catch((error) => {
-        console.error(error);
-      });
-  }, [originalPost]);
+    fetchOriginalPost();
+  }, [fetchOriginalPost]);
 
   const categoryMockup: string[] = [
     "activity",
@@ -108,6 +111,25 @@ const MainPageScreen = ({ navigation }) => {
             />
           </View>
         </Card>
+        <Button
+              onPress={() =>fetchOriginalPost()}
+              title={"รีเฟรส"}
+              buttonStyle={{
+                marginTop: 20,
+                borderRadius: 8,
+                backgroundColor: "#81ADC8",
+                width:"40%",
+                marginRight:20,
+                alignSelf:"flex-end"
+              }}
+              icon={
+                <Icon
+                  name="refresh"
+                  color={"white"}
+                  style={{ marginRight: 10, color: "white" }}
+                />
+              }
+            />
         <View style={{ marginBottom: 20 }}>
           {filteredPosts.map((post: post, index: number) => (
             <ProductCard

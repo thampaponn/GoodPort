@@ -22,8 +22,27 @@ export class AlertService {
     return this.alertModel.find({ postId }).exec();
   }
 
-  async getAlertByUserId(userId: string): Promise<Alert[]> {
-    return this.alertModel.find({ "owner.userId": userId }).exec();
+  async getAlertByUserId(advisorId: string): Promise<Alert[]> {
+    return this.alertModel
+      .find({ advisorId: advisorId, detail: "submited" })
+      .exec();
+  }
+
+  async updateAlertDetailToAccepted(advisorId: string, postId: string) {
+    const alerts = await this.alertModel.findOne({ advisorId, postId });
+    if (!alerts) {
+      throw new Error('โปรเจกต์ไม่พบ');
+    }
+    alerts.detail = "accepted";
+    await alerts.save();
+
+    return alerts;
+  }
+
+  async getAlertByUserIdComfirm(userId: string): Promise<Alert[]> {
+    return this.alertModel
+      .find({ "owner.userId": userId, detail: "accepted" })
+      .exec();
   }
 
   async delAlertById(id: string) {
@@ -40,7 +59,7 @@ export class AlertService {
     return user;
   }
 
-  async getAll(){
+  async getAll() {
     return await this.alertModel.find().exec();
   }
 }
