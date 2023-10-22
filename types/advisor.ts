@@ -3,4 +3,5 @@ export type advisor = {
   lname?: string;
   email?: string;
   professorId?: string;
+  userId?: string;
 };

@@ -27,6 +27,7 @@ export const PostSchema = new mongoose.Schema({
     lname: { type: String },
     email: { type: String },
     professorId: { type: String },
+    userId: { type: String },
   },
   owner: {
     userId: { type: String, required: true },
@@ -54,6 +55,7 @@ export interface Posts extends mongoose.Document {
     lname?: string;
     email?: string;
     professorId?: string;
+    userId?:string;
   };
   owner: {
     userId: string;

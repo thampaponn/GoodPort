@@ -8,6 +8,7 @@ import {
 } from "react-native";
 import { Button, Card, Icon, Input, Dialog } from "@rneui/themed";
 import * as ImagePicker from "expo-image-picker";
+import * as DocumentPicker from "expo-document-picker";
 import * as FileSystem from "expo-file-system";
 import { firebase } from "../config";
 import React, { useEffect, useState } from "react";
@@ -23,24 +24,29 @@ import { Userjwt } from "../types/userjwt";
 import Constants from "expo-constants";
 import { Picker } from "@react-native-picker/picker";
 import { PostCategory } from "../types/postCategory";
-import { User } from "../types/user";
+import * as Linking from "expo-linking";
 
 const AddPortScreen = ({ navigation }) => {
   const [image, setImage] = useState<any>(null);
+  const [file, setFile] = useState<any>(null);
   const [uploading, setUploading] = useState<boolean>(false);
+  const [uploading2, setUploading2] = useState<boolean>(false);
   const [filename, setFilename] = useState<string>("");
+  const [filename2, setFilename2] = useState<string>("");
   const [selectedValue, setSelectedValue] = useState<PostCategory>(
     PostCategory.learning
   );
   const [selectedValue2, setSelectedValue2] = useState<any>(null);
   const [userConfirm, setUserConfirm] = useState<any>(null);
   const [loading, setLoading] = useState<boolean>(true);
-
+  const [nameFile, setNameFile] = useState<string>("");
   useEffect(() => {
     axios
       .get(`${Constants.expoConfig.extra.API_URL}/user/with-roles`)
       .then((response) => {
-        setUserConfirm(response.data);
+        const newData = { fname: "ไม่มี", lname: "", _id: null };
+        response.data.unshift(newData);
+        setUserConfirm([...response.data]);
         setLoading(false);
       })
       .catch((error) => {
@@ -77,6 +83,32 @@ const AddPortScreen = ({ navigation }) => {
     };
     retrieveToken();
   }, []);
+
+  const pickDocuments = async () => {
+    let result = await DocumentPicker.getDocumentAsync();
+
+    if (!result.canceled) {
+      setFile(result.assets[0].uri);
+    }
+    setNameFile(
+      result.assets[0].uri.substring(result.assets[0].uri.lastIndexOf("/") + 1)
+    );
+    setFilename2(
+      `https://firebasestorage.googleapis.com/v0/b/goodport-cb0e6.appspot.com/o/er%2F${result.assets[0].uri.substring(
+        result.assets[0].uri.lastIndexOf("/") + 1
+      )}?alt=media`
+    );
+  };
+
+  const openWebsite = async () => {
+    const url = filename2;
+    const supported = await Linking.canOpenURL(url);
+    if (supported) {
+      await Linking.openURL(url);
+    } else {
+      console.error("ไม่สามารถเปิด URL นี้ได้");
+    }
+  };
 
   const pickImage = async () => {
     let result = await ImagePicker.launchImageLibraryAsync({
@@ -128,6 +160,38 @@ const AddPortScreen = ({ navigation }) => {
     }
   };
 
+  const uploadFile = async () => {
+    setUploading2(true);
+
+    try {
+      if (!file) {
+        return;
+      }
+      const { uri } = await FileSystem.getInfoAsync(file);
+      const blob = await new Promise<Blob>((resolve, reject) => {
+        const xhr = new XMLHttpRequest();
+        xhr.onload = () => {
+          resolve(xhr.response as Blob);
+        };
+        xhr.onerror = (e) => {
+          reject(new TypeError("Network request failed"));
+        };
+        xhr.responseType = "blob";
+        xhr.open("GET", uri, true);
+        xhr.send(null);
+      });
+
+      const filename2 = file.substring(image.lastIndexOf("/") + 1);
+      const ref = firebase.storage().ref().child(filename2);
+      await ref.put(blob);
+      setUploading2(false);
+      setFile(null);
+    } catch (error) {
+      console.error(error);
+      setUploading2(false);
+    }
+  };
+
   const onSubmit: SubmitHandler<FormData> = async (data) => {
     const advisorConfirm = userConfirm.find(
       (obj) => obj._id === selectedValue2
@@ -136,18 +200,51 @@ const AddPortScreen = ({ navigation }) => {
     if (filename) {
       await uploadMedia();
     }
+    if (file) {
+      await uploadFile();
+    }
     try {
+      const statusProduct = advisorConfirm["_id"]
+        ? PostStatus.submited
+        : PostStatus.accepted;
       const bodyReq = {
         ...data,
         image: filename,
-        status: PostStatus.submited,
+        file: filename2,
+        status: statusProduct,
         advisor: {
           email: advisorConfirm["email"],
           fname: advisorConfirm["fname"],
           lname: advisorConfirm["lname"],
+          userId: advisorConfirm["_id"],
         },
       };
-      await axios.post(`${Constants.expoConfig.extra.API_URL}/post`, bodyReq);
+
+      const response = await axios.post(
+        `${Constants.expoConfig.extra.API_URL}/post`,
+        bodyReq
+      );
+
+      setFilename("");
+      const bodyAleart = {
+        owner: {
+          userId: response.data.owner.userId,
+          fname: response.data.owner.fname,
+          lname: response.data.owner.lname,
+        },
+        postId: response.data._id,
+        detail: response.data.status,
+      };
+
+      await axios.post(
+        `${Constants.expoConfig.extra.API_URL}/alert`,
+        bodyAleart
+      );
+      setValue("nameTh", "");
+      setValue("nameEn", "");
+      setValue("objective", "");
+      setValue("detail", "");
+      setValue("source", "");
       Alert.alert("โพสต์สำเร็จ");
       navigation.navigate("productmain");
     } catch (error) {
@@ -158,7 +255,7 @@ const AddPortScreen = ({ navigation }) => {
   return (
     <SafeAreaView style={{ backgroundColor: "#FFFFFF" }}>
       <ScrollView>
-        <Dialog isVisible={loading}>
+        <Dialog isVisible={loading || uploading || uploading2}>
           <Dialog.Loading />
         </Dialog>
         <Card
@@ -178,6 +275,7 @@ const AddPortScreen = ({ navigation }) => {
                   borderColor: "#AEAEAE",
                   borderWidth: 1,
                   marginTop: 6,
+                  paddingHorizontal: 10,
                 }}
                 inputContainerStyle={{ borderBottomWidth: 0 }}
                 onBlur={field.onBlur}
@@ -205,6 +303,7 @@ const AddPortScreen = ({ navigation }) => {
                   borderColor: "#AEAEAE",
                   borderWidth: 1,
                   marginTop: 6,
+                  paddingHorizontal: 10,
                 }}
                 inputContainerStyle={{ borderBottomWidth: 0 }}
                 onBlur={field.onBlur}
@@ -218,7 +317,7 @@ const AddPortScreen = ({ navigation }) => {
               {errors.nameEn.message}
             </Text>
           )}
-          <Text style={{ marginLeft: 10, fontSize: 16, alignItems: "center" }}>
+          <Text style={{ fontSize: 16, alignItems: "center" }}>
             ประเภทโครงงาน*
           </Text>
           <Controller
@@ -233,7 +332,7 @@ const AddPortScreen = ({ navigation }) => {
                   borderColor: "#AEAEAE",
                   borderRadius: 5,
                   marginBottom: 20,
-                  marginHorizontal: 10,
+                  marginTop: 10,
                 }}
               >
                 <Picker
@@ -353,7 +452,7 @@ const AddPortScreen = ({ navigation }) => {
             onPress={() => {
               pickImage();
             }}
-            title={"อัพโหลด"}
+            title={"อัพโหลดรูป"}
             buttonStyle={{
               marginTop: 20,
               borderRadius: 8,
@@ -393,6 +492,51 @@ const AddPortScreen = ({ navigation }) => {
               </View>
             )}
           </View>
+
+          <View>
+            <Button
+              onPress={() => {
+                pickDocuments();
+              }}
+              title={"อัพโหลดไฟล์"}
+              buttonStyle={{
+                marginTop: 20,
+                borderRadius: 8,
+                backgroundColor: "#81ADC8",
+              }}
+              icon={
+                <Icon
+                  name="cloud-upload"
+                  color={"white"}
+                  style={{ marginRight: 10, color: "white" }}
+                />
+              }
+            />
+
+            {file && (
+              <View
+                style={{
+                  display: "flex",
+                  flexDirection: "row",
+                  margin: 15,
+                  alignItems: "center",
+                }}
+              >
+                <Icon name="attach-file" />
+                <Text>{nameFile}</Text>
+              </View>
+            )}
+          </View>
+          <Text
+            style={{
+              marginLeft: 10,
+              fontSize: 16,
+              alignItems: "center",
+              marginTop: 10,
+            }}
+          >
+            อาจารย์ที่ปรึกษา (ไม่มีให้ใส่ ไม่มี )
+          </Text>
           <View
             style={{
               width: 307,
@@ -400,7 +544,6 @@ const AddPortScreen = ({ navigation }) => {
               borderColor: "#AEAEAE",
               borderRadius: 5,
               marginBottom: 20,
-              marginHorizontal: 10,
               marginTop: 10,
             }}
           >
