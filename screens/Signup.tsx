@@ -45,7 +45,6 @@ const SignUp = ({ navigation }) => {
     resolver: zodResolver(zUser),
   });
 
-  console.log(errors);
   const onSubmit: SubmitHandler<FormData> = async (data) => {
     if (filename) {
       await uploadMedia();

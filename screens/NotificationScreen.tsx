@@ -18,7 +18,6 @@ export default function NotificationScreen({ navigation }) {
   const [alertConfirm, setAlertConfirm] = useState<any>(null);
 
   const retrieveToken = useCallback(async () => {
-    console.log("click")
     try {
       const token = await AsyncStorage.getItem("token");
       const decoded: { sub: Userjwt } = jwtDecode(token);
