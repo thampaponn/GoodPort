@@ -35,12 +35,13 @@ const AddPortScreen = ({ navigation }) => {
   const [selectedValue2, setSelectedValue2] = useState<any>(null);
   const [userConfirm, setUserConfirm] = useState<any>(null);
   const [loading, setLoading] = useState<boolean>(true);
-
   useEffect(() => {
     axios
       .get(`${Constants.expoConfig.extra.API_URL}/user/with-roles`)
       .then((response) => {
-        setUserConfirm(response.data);
+        const newData = { fname: "ไม่มี", lname: "", _id: null };
+        response.data.unshift(newData);
+        setUserConfirm([...response.data]);
         setLoading(false);
       })
       .catch((error) => {
@@ -54,6 +55,7 @@ const AddPortScreen = ({ navigation }) => {
     handleSubmit,
     formState: { errors },
     setValue,
+    reset,
   } = useForm<post>({
     resolver: zodResolver(zPost),
   });
@@ -145,9 +147,27 @@ const AddPortScreen = ({ navigation }) => {
           email: advisorConfirm["email"],
           fname: advisorConfirm["fname"],
           lname: advisorConfirm["lname"],
+          userId: advisorConfirm["_id"],
         },
       };
-      await axios.post(`${Constants.expoConfig.extra.API_URL}/post`, bodyReq);
+
+      const response = await axios.post(
+        `${Constants.expoConfig.extra.API_URL}/post`,
+        bodyReq
+      );
+
+      setFilename("")
+      const bodyAleart = {
+        owner: {
+          userId: response.data.owner.userId,
+          fname: response.data.owner.fname,
+          lname: response.data.owner.lname,
+        },
+        postId: response.data._id,
+        detail: response.data.status,
+      };
+
+      await axios.post(`${Constants.expoConfig.extra.API_URL}/alert`, bodyAleart);
       Alert.alert("โพสต์สำเร็จ");
       navigation.navigate("productmain");
     } catch (error) {
@@ -178,6 +198,7 @@ const AddPortScreen = ({ navigation }) => {
                   borderColor: "#AEAEAE",
                   borderWidth: 1,
                   marginTop: 6,
+                  paddingHorizontal: 10,
                 }}
                 inputContainerStyle={{ borderBottomWidth: 0 }}
                 onBlur={field.onBlur}
@@ -205,6 +226,7 @@ const AddPortScreen = ({ navigation }) => {
                   borderColor: "#AEAEAE",
                   borderWidth: 1,
                   marginTop: 6,
+                  paddingHorizontal: 10,
                 }}
                 inputContainerStyle={{ borderBottomWidth: 0 }}
                 onBlur={field.onBlur}
