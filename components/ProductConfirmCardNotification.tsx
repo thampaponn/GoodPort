@@ -1,19 +1,42 @@
 import { Button, Chip, Card } from "@rneui/themed";
 import { View, Text } from "react-native";
+import axios from "axios";
+import Constants from "expo-constants";
 
 type ProductConfirmCardNotificationProps = {
   name: string;
   category: string;
   owner: string;
   advisor: string;
+  id: string;
+  navigation: any;
+  postId: string;
+  action: () => void;
 };
 
 export const ProductConfirmCardNotification = ({
+  navigation,
   name,
   category,
   owner,
   advisor,
+  id,
+  postId,
+  action
 }: ProductConfirmCardNotificationProps) => {
+  const handleSubmit = () =>{
+    navigation.navigate("detail", { data: id });
+  }
+
+  const handleChangeStatus = async() =>{
+    await axios.post(
+      `${Constants.expoConfig.extra.API_URL}/alert/updateDetailToAccepted/${id}/${postId}`
+    );
+    await axios.post(
+      `${Constants.expoConfig.extra.API_URL}/post/updateStatusToAccepted/${postId}`
+    );
+    action()
+  }
   return (
     <Card containerStyle={{ borderRadius: 8, marginTop: 5 }}>
       <Text
@@ -60,6 +83,7 @@ export const ProductConfirmCardNotification = ({
         <Button
           color={"#AEAEAE"}
           containerStyle={{ borderRadius: 8, marginTop: 10 }}
+          onPress={() => handleSubmit()}
         >
           แสดงรายละเอียด
         </Button>
@@ -70,21 +94,12 @@ export const ProductConfirmCardNotification = ({
           containerStyle={{
             borderRadius: 8,
             marginTop: 10,
-            width: 160,
+            width: "100%",
           }}
+
+          onPress={() => handleChangeStatus()}
         >
           ยืนยัน
-        </Button>
-        <View style={{ flex: 1 }}></View>
-        <Button
-          color={"#BE2C35"}
-          containerStyle={{
-            borderRadius: 8,
-            marginTop: 10,
-            width: 160,
-          }}
-        >
-          ปฎิเสธ
         </Button>
       </View>
     </Card>

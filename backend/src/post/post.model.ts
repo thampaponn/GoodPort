@@ -8,7 +8,7 @@ enum PostCategory {
   other = "other",
 }
 
-enum PostStatus {
+export enum PostStatus {
   submited = "submited",
   accepted = "accepted",
 }

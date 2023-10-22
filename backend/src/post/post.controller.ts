@@ -28,6 +28,16 @@ export class PostController {
     return posts;
   }
 
+  @Post('updateStatusToAccepted/:id')
+  async updatePostStatusToAccepted(@Param('id') id: string) {
+    try {
+      const updatedPost = await this.PostService.updatePostStatusToAccepted(id);
+      return { message: 'สถานะโพสต์ถูกอัปเดตเป็น "accepted" แล้ว', updatedPost };
+    } catch (error) {
+      return { message: 'ไม่สามารถอัปเดตสถานะโพสต์', error };
+    }
+  }
+
   @Post(":id")
   async getPostById(@Param("id") id: string) {
     const user = await this.PostService.getPostById(id);
