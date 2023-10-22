@@ -8,6 +8,8 @@ export const AlertSchema = new mongoose.Schema({
   },
   postId: { type: String, required: true },
   advisorId: { type: String },
+  advisorFname: { type: String },
+  advisorLname: { type: String },
   detail: { type: String, required: true },
   createAt: { type: Date, default: Date.now },
 });
@@ -21,6 +23,8 @@ export interface Alert extends mongoose.Document {
   };
   postId: string;
   advisorId: string;
+  advisorFname: string;
+  advisorLname: string;
   detail: string;
   createAt: Date;
 }
