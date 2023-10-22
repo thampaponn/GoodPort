@@ -1,4 +1,4 @@
-import * as mongoose from 'mongoose';
+import * as mongoose from "mongoose";
 
 export const AlertSchema = new mongoose.Schema({
   owner: {
@@ -7,6 +7,7 @@ export const AlertSchema = new mongoose.Schema({
     lname: { type: String, required: true },
   },
   postId: { type: String, required: true },
+  advisorId: { type: String },
   detail: { type: String, required: true },
   createAt: { type: Date, default: Date.now },
 });
@@ -19,6 +20,7 @@ export interface Alert extends mongoose.Document {
     lname: string;
   };
   postId: string;
+  advisorId: string;
   detail: string;
   createAt: Date;
 }
