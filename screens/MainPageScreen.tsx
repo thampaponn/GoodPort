@@ -1,7 +1,7 @@
-import { Button, Card, CheckBox, Icon, Input } from "@rneui/themed";
+import { Button, Card, CheckBox, Icon, Input, Chip } from "@rneui/themed";
 import axios from "axios";
 import React, { useCallback, useEffect, useState } from "react";
-import { View, ScrollView, Text } from "react-native";
+import { View, ScrollView, Text, Image } from "react-native";
 import { ProductCard } from "../components/ProductCard";
 import { post } from "../types/post";
 import { PostCategory } from "../types/postCategory";
@@ -21,7 +21,7 @@ const MainPageScreen = ({ navigation }) => {
       console.error(error);
     }
   }, []);
-  
+
   useEffect(() => {
     fetchOriginalPost();
   }, [fetchOriginalPost]);
@@ -56,15 +56,15 @@ const MainPageScreen = ({ navigation }) => {
   const filteredPosts: post[] = areAllDataFalse
     ? originalPost
     : originalPost.filter((post: post) => {
-        const postCategory: PostCategory = post.category;
-        const categoryData: CategoryData = objFilterData.find(
-          (categoryObj) => categoryObj[postCategory] !== undefined
-        );
-        const isTitleMatched = post.nameTh
-          .toLowerCase()
-          .includes(searchKeyword.toLowerCase());
-        return categoryData && categoryData[postCategory] && isTitleMatched;
-      });
+      const postCategory: PostCategory = post.category;
+      const categoryData: CategoryData = objFilterData.find(
+        (categoryObj) => categoryObj[postCategory] !== undefined
+      );
+      const isTitleMatched = post.nameTh
+        .toLowerCase()
+        .includes(searchKeyword.toLowerCase());
+      return categoryData && categoryData[postCategory] && isTitleMatched;
+    });
 
   return (
     <View style={{ backgroundColor: "#FFFFFF", height: "100%" }}>
@@ -102,7 +102,7 @@ const MainPageScreen = ({ navigation }) => {
                 borderColor: "#AEAEAE",
                 borderWidth: 1,
                 marginTop: 10,
-                paddingHorizontal:15
+                paddingHorizontal: 15
               }}
               disabled={areAllDataFalse}
               placeholder={"กรุณากรอกคำค้นหา"}
@@ -111,25 +111,45 @@ const MainPageScreen = ({ navigation }) => {
             />
           </View>
         </Card>
-        <Button
-              onPress={() =>fetchOriginalPost()}
-              title={"รีเฟรช"}
-              buttonStyle={{
-                marginTop: 20,
-                borderRadius: 8,
-                backgroundColor: "#81ADC8",
-                width:"40%",
-                marginRight:20,
-                alignSelf:"flex-end"
-              }}
-              icon={
-                <Icon
-                  name="refresh"
-                  color={"white"}
-                  style={{ marginRight: 10, color: "white" }}
-                />
-              }
-            />
+        <View style={{ flexDirection: "row", width: "100%", justifyContent: "center", alignItems: "center" }}>
+          <Button
+            onPress={() => fetchOriginalPost()}
+            title={"Alert"}
+            buttonStyle={{
+              marginTop: 20,
+              borderRadius: 8,
+              backgroundColor: "#81ADE8",
+              width: "70%",
+              alignSelf: "center",
+            }}
+            icon={
+              <Icon
+                name="notifications"
+                color={"white"}
+                style={{ marginRight: 10, color: "white" }}
+              />
+            }
+          />
+          <Button
+            onPress={() => fetchOriginalPost()}
+            title={"รีเฟรช"}
+            buttonStyle={{
+              marginTop: 20,
+              borderRadius: 8,
+              backgroundColor: "#81ADC8",
+              width: "80%",
+              alignSelf: "center"
+            }}
+            icon={
+              <Icon
+                name="refresh"
+                color={"white"}
+                style={{ marginRight: 10, color: "white" }}
+              />
+            }
+          />
+        </View>
+
         <View style={{ marginBottom: 20 }}>
           {filteredPosts.map((post: post, index: number) => (
             <ProductCard
@@ -143,6 +163,54 @@ const MainPageScreen = ({ navigation }) => {
             />
           ))}
         </View>
+        <View style={{ marginBottom: 20 }}>
+          {filteredPosts.map((post: post, index: number) => (
+            <ProductCard
+              key={index}
+              image={post.image || ""}
+              name={post.nameTh}
+              category={post.category}
+              owner={post.owner}
+              advisor={post.advisor}
+              id={post._id}
+            />
+          ))}
+        </View>
+
+
+        <View style={{ justifyContent: "center", borderRadius: 20, borderWidth: 2, borderColor: "#D4D4D4", margin: 15 }}>
+          <View style={{ flexDirection: "row", alignItems: "center", borderBottomWidth: 2, borderColor: "#D4D4D4" }}>
+            <Image
+              style={{
+                margin: 15,
+                height: 50,
+                width: 50,
+                borderRadius: 100,
+              }}
+              source={require("../assets/placeholder.png")}
+            />
+            <View>
+              <Text style={{ marginBottom: 5 }}>Nutaya Nitiapaitham</Text>
+              <Chip title="yee" type="outline" size="sm" />
+            </View>
+          </View>
+          <View style={{ margin: 15 }}>
+            <Text>รับสมัครแฮกเกอร์</Text>
+            <View style={{ justifyContent: "center", alignItems: "center" }}>
+              <Image
+                style={{
+                  margin: 15,
+                  height: 150,
+                  width: 150,
+                  borderRadius: 100,
+                }}
+                source={require("../assets/placeholder.png")}
+              />
+            </View>
+            <Text style={{ textAlign: "right", color: "#AEAEAE" }}>created 1 Jan 2020</Text>
+          </View>
+        </View>
+
       </ScrollView>
     </View>
   );
