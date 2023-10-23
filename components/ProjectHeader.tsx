@@ -3,26 +3,24 @@ import { View, Image, TouchableOpacity } from "react-native";
 
 export const ProjectHeader = ({ navigation, user }) => {
   return (
-    <View style={{ width: "100%", paddingTop: 50 }}>
+    <View style={{ width: "100%", paddingTop: 70 }}>
       <View
         style={{
-          display: "flex",
           flexDirection: "row",
-          justifyContent: "center",
+          justifyContent: "space-between",
           alignItems: "center",
         }}
       >
         <Image
-          style={{ width: 250, height: 50 }}
+          style={{ width: 250, height: 50, marginLeft: 70 }}
           source={require("../assets/Logo2.png")}
         />
-        <View style={{ display: "flex", alignItems: "flex-end" }}>
-          <TouchableOpacity
-            onPress={() => navigation.navigate("Search", { data: user })}
-          >
-            <Icon name="search" size={35} />
-          </TouchableOpacity>
-        </View>
+        <TouchableOpacity
+          style={{marginRight: 15}}
+          onPress={() => navigation.navigate("Search", { data: user })}
+        >
+          <Icon name="search" size={35} />
+        </TouchableOpacity>
       </View>
     </View>
   );
