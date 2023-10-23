@@ -35,9 +35,13 @@ export class UserService {
 
   async getUsersWithRoles() {
     const rolesToFind = ["advisor", "visitor"];
-    
+  
     try {
-      const users = await this.userModel.find({ role: { $in: rolesToFind } }).exec();
+      const users = await this.userModel
+        .find({ role: { $in: rolesToFind } })
+        .sort({ fname: 1, lname: 1 })
+        .collation({ locale: "th" })
+        .exec();
       return users;
     } catch (error) {
       throw error;

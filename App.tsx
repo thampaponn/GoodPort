@@ -1,5 +1,5 @@
-import SignIn from './screens/SignIn';
-import SignUp from './screens/Signup';
+import SignIn from './screens/auth/SignIn';
+import SignUp from './screens/auth/Signup';
 import BottomTabNavigation from './navigation/BottomTabNavigation';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';

@@ -9,6 +9,7 @@ import { SearchMenu } from "../screens/SearchMenu";
 import { Ionicons } from "@expo/vector-icons";
 import CommentScreen from "../screens/CommentScreen";
 import ProductCategory from "../screens/ProductCategory";
+import ProfilePublic from "../screens/ProfilePublic";
 
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
@@ -33,11 +34,12 @@ const ProfileStack = () => {
     <Stack.Navigator
       initialRouteName="Profile"
       screenOptions={{
-        headerShown: true,
+        headerShown: false,
       }}
     >
       <Stack.Screen name="Profile" component={ProfileScreen} />
       <Stack.Screen name="Search" component={SearchMenu} />
+      <Stack.Screen name="profilePublic" component={ProfilePublic} />
       <Stack.Screen name="category" component={ProductCategory} />
     </Stack.Navigator>
   );

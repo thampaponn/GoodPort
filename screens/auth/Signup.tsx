@@ -13,19 +13,19 @@ import RadioGroup from "react-native-radio-buttons-group";
 import { useState } from "react";
 import { Picker } from "@react-native-picker/picker";
 import { useForm, Controller, SubmitHandler } from "react-hook-form";
-import { User } from "../types/user";
+import { User } from "../../types/user";
 import { Input, Button, Icon } from "@rneui/themed";
-import { typeOfRegisterScreen } from "../hook/typeOfRegisterScreen";
+import { typeOfRegisterScreen } from "../../hook/typeOfRegisterScreen";
 import * as ImagePicker from "expo-image-picker";
 import * as FileSystem from "expo-file-system";
-import { firebase } from "../config";
-import { transformRole } from "../hook/transformRole";
+import { firebase } from "../../config";
+import { transformRole } from "../../hook/transformRole";
 import axios from "axios";
-import { UserRole } from "../types/role";
+import { UserRole } from "../../types/role";
 import { SafeAreaView } from "react-native-safe-area-context";
 import Constants from "expo-constants";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { zUser } from "../types/zod/user";
+import { zUser } from "../../types/zod/user";
 
 type UserType = {
   id: string;
@@ -125,7 +125,7 @@ const SignUp = ({ navigation }) => {
           <View style={styles.centeredContainer}>
             <Image
               style={{ marginBottom: 10, height: 66, width: width * 0.8 }}
-              source={require("../assets/Logo2.png")}
+              source={require("../../assets/Logo2.png")}
             />
             <Text style={styles.signUpText}>สมัครสมาชิก</Text>
           </View>

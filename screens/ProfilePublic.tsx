@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import {
   View,
   Text,
@@ -9,94 +9,19 @@ import {
   ScrollView,
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
-import { Userjwt } from "../types/userjwt";
-import AsyncStorage from "@react-native-async-storage/async-storage";
-import jwtDecode from "jwt-decode";
-import { Chip, Dialog } from "@rneui/themed";
-import Constants from "expo-constants";
-import axios from "axios";
-import { ProjectHeader } from "../components/ProjectHeader";
+import { Chip } from "@rneui/themed";
 import { UserRole } from "../types/role";
 
-export default function ProfileScreen({ navigation, route }) {
+export default function ProfilePublic({ navigation, route }) {
   const [select, setSelect] = useState<boolean>(true);
-  const [user, setUser] = useState<any>(null);
-  const [loading, setLoading] = useState<boolean>(true);
-
-  useEffect(() => {
-    const retrieveToken = async () => {
-      try {
-        const token = await AsyncStorage.getItem("token");
-        const decoded: { sub: Userjwt } = jwtDecode(token);
-        const user = decoded.sub;
-
-        axios
-          .post(`${Constants.expoConfig.extra.API_URL}/user/${user._id}`)
-          .then((response) => {
-            setUser(response.data);
-            setLoading(false);
-          })
-          .catch((error) => {
-            console.error(error);
-            setLoading(false);
-          });
-      } catch (error) {
-        setLoading(false);
-        navigation.navigate("signin");
-        console.log("เกิดข้อผิดพลาดในการดึง token:", error);
-      }
-    };
-    retrieveToken();
-  }, []);
-
-  const selectorArray = [
-    {
-      icon: "book-outline",
-      category: "หมวดการเรียน",
-    },
-    {
-      icon: "medal-outline",
-      category: "หมวดกีฬา",
-    },
-    {
-      icon: "school-outline",
-      category: "หมวดสหกิจ",
-    },
-    {
-      icon: "people-outline",
-      category: "หมวดจิตอาสา",
-    },
-    {
-      icon: "ellipsis-horizontal",
-      category: "หมวดอื่นๆ",
-    },
-  ];
-
-  const iconMapping = {
-    "book-outline": "book-outline",
-    "medal-outline": "medal-outline",
-    "school-outline": "school-outline",
-    "people-outline": "people-outline",
-    "ellipsis-horizontal": "ellipsis-horizontal",
-  };
-
-  const infoIcon = {
-    "person-outline": "person-outline",
-    "mail-outline": "mail-outline",
-    "phone-portrait-sharp": "phone-portrait-sharp",
-    "briefcase-outline": "briefcase-outline",
-    "location-outline": "location-outline",
-  };
+  const { data } = route.params;
+  const user = data;
 
   return (
     <ScrollView style={{ flex: 1, backgroundColor: "#FFFFFF" }}>
-      <ProjectHeader navigation={navigation} user={user} />
-      <Dialog isVisible={loading}>
-        <Dialog.Loading />
-      </Dialog>
       <SafeAreaView>
         <View style={styles.container}>
-          {!loading && user.image.profileImage ? (
+          {user.image.profileImage ? (
             <Image
               style={{
                 marginTop: 15,
@@ -119,14 +44,13 @@ export default function ProfileScreen({ navigation, route }) {
               source={require("../assets/placeholder.png")}
             />
           )}
-          {!loading && (
-            <View>
-              <Text style={{ fontSize: 18, marginBottom: 10 }}>
-                {user.fname + " " + user.lname}
-              </Text>
-              <Chip color={"success"} title={user.role} />
-            </View>
-          )}
+
+          <View>
+            <Text style={{ fontSize: 18, marginBottom: 10 }}>
+              {user.fname + " " + user.lname}
+            </Text>
+            <Chip color={"success"} title={user.role} />
+          </View>
 
           <View style={styles.selector}>
             <TouchableOpacity
@@ -161,7 +85,7 @@ export default function ProfileScreen({ navigation, route }) {
             </TouchableOpacity>
           </View>
           {select ? (
-            !loading && user.role != UserRole.Advisor ? (
+            user.role != UserRole.Advisor ? (
               <View style={{ width: "100%", marginTop: 10 }}>
                 <TouchableOpacity
                   onPress={() => navigation.navigate("category")}
@@ -436,13 +360,11 @@ export default function ProfileScreen({ navigation, route }) {
                       {"ชื่อบัญชีผู้ใช้งาน"}
                     </Text>
 
-                    {!loading && (
-                      <Text
-                        style={{ fontSize: 14, textAlign: "left", margin: 3 }}
-                      >
-                        {user.username ?? "ไม่ระบุ"}
-                      </Text>
-                    )}
+                    <Text
+                      style={{ fontSize: 14, textAlign: "left", margin: 3 }}
+                    >
+                      {user.username ?? "ไม่ระบุ"}
+                    </Text>
                   </View>
                 </TouchableOpacity>
 
@@ -483,13 +405,11 @@ export default function ProfileScreen({ navigation, route }) {
                       {"อีเมลล์"}
                     </Text>
 
-                    {!loading && (
-                      <Text
-                        style={{ fontSize: 14, textAlign: "left", margin: 3 }}
-                      >
-                        {user.email ?? "ไม่ระบุ"}
-                      </Text>
-                    )}
+                    <Text
+                      style={{ fontSize: 14, textAlign: "left", margin: 3 }}
+                    >
+                      {user.email ?? "ไม่ระบุ"}
+                    </Text>
                   </View>
                 </TouchableOpacity>
 
@@ -530,13 +450,11 @@ export default function ProfileScreen({ navigation, route }) {
                       {"เบอร์โทรศัพท์"}
                     </Text>
 
-                    {!loading && (
-                      <Text
-                        style={{ fontSize: 14, textAlign: "left", margin: 3 }}
-                      >
-                        {user.phone ?? "ไม่ระบุ"}
-                      </Text>
-                    )}
+                    <Text
+                      style={{ fontSize: 14, textAlign: "left", margin: 3 }}
+                    >
+                      {user.phone ?? "ไม่ระบุ"}
+                    </Text>
                   </View>
                 </TouchableOpacity>
 
@@ -577,13 +495,11 @@ export default function ProfileScreen({ navigation, route }) {
                       {"รหัสประจำตัวนักศึกษา"}
                     </Text>
 
-                    {!loading && (
-                      <Text
-                        style={{ fontSize: 14, textAlign: "left", margin: 3 }}
-                      >
-                        {user.job.studentId ?? "ไม่ระบุ"}
-                      </Text>
-                    )}
+                    <Text
+                      style={{ fontSize: 14, textAlign: "left", margin: 3 }}
+                    >
+                      {user.job.studentId ?? "ไม่ระบุ"}
+                    </Text>
                   </View>
                 </TouchableOpacity>
 
@@ -624,13 +540,11 @@ export default function ProfileScreen({ navigation, route }) {
                       {"มหาวิทยาลัย"}
                     </Text>
 
-                    {!loading && (
-                      <Text
-                        style={{ fontSize: 14, textAlign: "left", margin: 3 }}
-                      >
-                        {user.information.location ?? "ไม่ระบุ"}
-                      </Text>
-                    )}
+                    <Text
+                      style={{ fontSize: 14, textAlign: "left", margin: 3 }}
+                    >
+                      {user.information.location ?? "ไม่ระบุ"}
+                    </Text>
                   </View>
                 </TouchableOpacity>
 
@@ -671,13 +585,11 @@ export default function ProfileScreen({ navigation, route }) {
                       {"มหาวิทยาลัยที่จบการศึกษา"}
                     </Text>
 
-                    {!loading && (
-                      <Text
-                        style={{ fontSize: 14, textAlign: "left", margin: 3 }}
-                      >
-                        {user.information.university ?? "ไม่ระบุ"}
-                      </Text>
-                    )}
+                    <Text
+                      style={{ fontSize: 14, textAlign: "left", margin: 3 }}
+                    >
+                      {user.information.university ?? "ไม่ระบุ"}
+                    </Text>
                   </View>
                 </TouchableOpacity>
 
@@ -718,13 +630,11 @@ export default function ProfileScreen({ navigation, route }) {
                       {"ประเทศที่จบการศึกษา"}
                     </Text>
 
-                    {!loading && (
-                      <Text
-                        style={{ fontSize: 14, textAlign: "left", margin: 3 }}
-                      >
-                        {user.information.graduatedFrom ?? "ไม่ระบุ"}
-                      </Text>
-                    )}
+                    <Text
+                      style={{ fontSize: 14, textAlign: "left", margin: 3 }}
+                    >
+                      {user.information.graduatedFrom ?? "ไม่ระบุ"}
+                    </Text>
                   </View>
                 </TouchableOpacity>
 
@@ -765,13 +675,11 @@ export default function ProfileScreen({ navigation, route }) {
                       {"อาชีพ"}
                     </Text>
 
-                    {!loading && (
-                      <Text
-                        style={{ fontSize: 14, textAlign: "left", margin: 3 }}
-                      >
-                        {user.information.location ?? "ไม่ระบุ"}
-                      </Text>
-                    )}
+                    <Text
+                      style={{ fontSize: 14, textAlign: "left", margin: 3 }}
+                    >
+                      {user.information.location ?? "ไม่ระบุ"}
+                    </Text>
                   </View>
                 </TouchableOpacity>
 
@@ -812,13 +720,11 @@ export default function ProfileScreen({ navigation, route }) {
                       {"สถานที่ทำงาน"}
                     </Text>
 
-                    {!loading && (
-                      <Text
-                        style={{ fontSize: 14, textAlign: "left", margin: 3 }}
-                      >
-                        {user.information.location ?? "ไม่ระบุ"}
-                      </Text>
-                    )}
+                    <Text
+                      style={{ fontSize: 14, textAlign: "left", margin: 3 }}
+                    >
+                      {user.information.location ?? "ไม่ระบุ"}
+                    </Text>
                   </View>
                 </TouchableOpacity>
 
@@ -859,13 +765,11 @@ export default function ProfileScreen({ navigation, route }) {
                       {"หมายเลขติดต่อที่ทำงาน"}
                     </Text>
 
-                    {!loading && (
-                      <Text
-                        style={{ fontSize: 14, textAlign: "left", margin: 3 }}
-                      >
-                        {user.information.companyNumber ?? "ไม่ระบุ"}
-                      </Text>
-                    )}
+                    <Text
+                      style={{ fontSize: 14, textAlign: "left", margin: 3 }}
+                    >
+                      {user.information.companyNumber ?? "ไม่ระบุ"}
+                    </Text>
                   </View>
                 </TouchableOpacity>
               </View>
