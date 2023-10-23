@@ -1,5 +1,5 @@
 import { Card, Chip } from "@rneui/themed";
-import { View, Text, TouchableOpacity } from "react-native";
+import { View, Text, TouchableOpacity, Image } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 const ProductCategory = () => {
@@ -97,7 +97,41 @@ const ProductCategory = () => {
               </View>
             </View>
           </View>
+          
         </Card>
+        <View style={{ justifyContent: "center", borderRadius: 20, borderWidth: 2, borderColor: "#D4D4D4", margin: 15 }}>
+          <View style={{ flexDirection: "row", alignItems: "center", borderBottomWidth: 2, borderColor: "#D4D4D4" }}>
+            <Image
+              style={{
+                margin: 15,
+                height: 50,
+                width: 50,
+                borderRadius: 100,
+              }}
+              source={require("../assets/placeholder.png")}
+            />
+            <View>
+              <Text style={{ marginBottom: 5 }}>Nutaya Nitiapaitham</Text>
+              <Chip title="yee" type="outline" size="sm" />
+            </View>
+          </View>
+          <View style={{ margin: 15 }}>
+            <Text>รับสมัครแฮกเกอร์</Text>
+            <View style={{ justifyContent: "center", alignItems: "center" }}>
+              <Image
+                style={{
+                  margin: 15,
+                  height: 150,
+                  width: 150,
+                  borderRadius: 100,
+                }}
+                source={require("../assets/placeholder.png")}
+              />
+            </View>
+            <Text style={{ textAlign: "right", color: "#AEAEAE" }}>created 1 Jan 2020</Text>
+          </View>
+        </View>
+
       </SafeAreaView>
     </View>
   );

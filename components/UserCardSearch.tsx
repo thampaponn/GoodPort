@@ -29,7 +29,7 @@ export const UserCardSearch = ({ user, empty }: CardSearchProps) => {
         </View>
       )}
       {empty && (
-        <View style={{ display: "flex", flexDirection: "row" }}>
+        <View style={{ display: "flex", flexDirection: "row", justifyContent: "center", alignItems: "center" }}>
           <Text style={{ fontWeight: "600", fontSize: 16 }}>
             ไม่พบผู้ใช้งาน
           </Text>

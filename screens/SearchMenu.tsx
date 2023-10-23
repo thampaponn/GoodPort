@@ -1,8 +1,9 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { ScrollView, TextInput, TouchableOpacity, View } from "react-native";
+import { ScrollView, TextInput, TouchableOpacity, View, Text } from "react-native";
 import { UserCardSearch } from "../components/UserCardSearch";
 import Constants from "expo-constants";
+import { Ionicons } from "@expo/vector-icons";
 
 export const SearchMenu = ({ navigation, route }) => {
   const [originalUsers, setOriginalUsers] = useState([]);
@@ -39,19 +40,32 @@ export const SearchMenu = ({ navigation, route }) => {
         backgroundColor: "#FFFFFF",
       }}
     >
-      <TextInput
-        style={{
-          width: "93%",
-          height: 42,
-          backgroundColor: "#F0F0F0",
-          borderColor: "#AEAEAE",
-          borderWidth: 1,
-          borderRadius: 5,
-          marginTop: 6,
-          paddingHorizontal: 15,
-        }}
-        onChangeText={(e) => handleSearch(e)}
-      />
+      <View style={{ flexDirection: "row" }}>
+        <TouchableOpacity style={{ justifyContent: "center" }}
+          onPress={() => (navigation.navigate("Profile"))}
+        >
+          <Ionicons
+            style={{ textAlign: "center", marginRight: 10, paddingRight: 5 }}
+            name={"chevron-back"}
+            size={30}
+            color="black"
+          />
+        </TouchableOpacity>
+        <TextInput
+          style={{
+            width: "82%",
+            height: 42,
+            backgroundColor: "#F0F0F0",
+            borderColor: "#AEAEAE",
+            borderWidth: 1,
+            borderRadius: 5,
+            marginTop: 6,
+            paddingHorizontal: 15,
+          }}
+          onChangeText={(e) => handleSearch(e)}
+        />
+      </View>
+
       <ScrollView style={{ width: "100%", marginBottom: 20, margin: "auto" }}>
         {filteredUsers.length !== 0 ? (
           filteredUsers.map(
