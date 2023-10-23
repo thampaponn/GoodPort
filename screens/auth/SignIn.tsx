@@ -60,7 +60,7 @@ const SignIn = ({ navigation }) => {
             height: 66,
             width: width * 0.8,
           }}
-          source={require("../assets/Logo2.png")}
+          source={require("../../assets/Logo2.png")}
         />
         <Text
           style={{

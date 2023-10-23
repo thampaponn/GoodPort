@@ -1,12 +1,14 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { ScrollView, TextInput, View } from "react-native";
+import { ScrollView, TextInput, TouchableOpacity, View } from "react-native";
 import { UserCardSearch } from "../components/UserCardSearch";
-import Constants from 'expo-constants';
+import Constants from "expo-constants";
 
-export const SearchMenu = () => {
+export const SearchMenu = ({ navigation, route }) => {
   const [originalUsers, setOriginalUsers] = useState([]);
   const [filteredUsers, setFilteredUsers] = useState([]);
+  const { data } = route.params;
+
   useEffect(() => {
     axios
       .get(`${Constants.expoConfig.extra.API_URL}/user`)
@@ -31,7 +33,7 @@ export const SearchMenu = () => {
   return (
     <View
       style={{
-        paddingTop: 30,
+        paddingTop: 50,
         flex: 1,
         alignItems: "center",
         backgroundColor: "#FFFFFF",
@@ -52,9 +54,19 @@ export const SearchMenu = () => {
       />
       <ScrollView style={{ width: "100%", marginBottom: 20, margin: "auto" }}>
         {filteredUsers.length !== 0 ? (
-          filteredUsers.map((user, index) => (
-            <UserCardSearch key={index} user={user} />
-          ))
+          filteredUsers.map(
+            (user, index) =>
+              data._id != user._id && (
+                <TouchableOpacity
+                  key={index}
+                  onPress={() =>
+                    navigation.navigate("profilePublic", { data: user })
+                  }
+                >
+                  <UserCardSearch user={user} />
+                </TouchableOpacity>
+              )
+          )
         ) : (
           <View style={{ margin: "auto" }}>
             <UserCardSearch empty={true} />

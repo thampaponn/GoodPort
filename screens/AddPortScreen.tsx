@@ -64,7 +64,6 @@ const AddPortScreen = ({ navigation }) => {
     resolver: zodResolver(zPost),
   });
 
-
   useEffect(() => {
     const retrieveToken = async () => {
       try {
@@ -87,7 +86,7 @@ const AddPortScreen = ({ navigation }) => {
 
   const pickDocuments = async () => {
     let result = await DocumentPicker.getDocumentAsync({
-      type: 'application/pdf',
+      type: "application/pdf",
     });
 
     if (!result.canceled) {
@@ -261,7 +260,7 @@ const AddPortScreen = ({ navigation }) => {
   };
 
   return (
-    <SafeAreaView style={{ backgroundColor: "#FFFFFF" }}>
+    <SafeAreaView style={{ backgroundColor: "#FFFFFF", width: "100%" }}>
       <ScrollView>
         <Dialog isVisible={loading || uploading || uploading2}>
           <Dialog.Loading />
