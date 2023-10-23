@@ -19,6 +19,7 @@ const ProductDetail = ({ route }) => {
   const [select, setSelect] = useState<boolean>(false);
   const [product, setProduct] = useState<any>(null);
   const [loading, setLoading] = useState<boolean>(true);
+  const [advisor, setAdvisor] = useState<any>(null);
   function checkSelect() {
     if (select === true) {
       setSelect(false);
@@ -45,6 +46,13 @@ const ProductDetail = ({ route }) => {
         `${Constants.expoConfig.extra.API_URL}/post/${data}`
       );
       setProduct(response.data);
+      if (response.data.advisor.userId) {
+        const resAdvisor = await axios.post(
+          `${Constants.expoConfig.extra.API_URL}/user/${response.data.advisor.userId}`
+        );
+        setAdvisor(resAdvisor.data);
+      }
+
       setLoading(false);
     } catch (error) {
       console.error(error);
@@ -55,8 +63,6 @@ const ProductDetail = ({ route }) => {
   useEffect(() => {
     fetchPost();
   }, [fetchPost]);
-
-  const fileMockup = ["madara.pdf", "madara.pdf"];
 
   const infoArray = [
     {
@@ -174,34 +180,38 @@ const ProductDetail = ({ route }) => {
           </View>
 
           <View style={{ marginTop: 15 }}>
-            <Text style={{ fontSize: 16, fontWeight: "600" }}>
-              ไฟล์ที่เกี่ยวข้อง
-            </Text>
+            {!loading && product.file && (
+              <View>
+                <Text style={{ fontSize: 16, fontWeight: "600" }}>
+                  ไฟล์ที่เกี่ยวข้อง
+                </Text>
 
-            <Card containerStyle={{ borderRadius: 12 }}>
-              <View
-                style={{
-                  display: "flex",
-                  flexDirection: "row",
-                  alignItems: "center",
-                }}
-              >
-                <Icon
-                  name="picture-as-pdf"
-                  size={30}
-                  containerStyle={{ alignItems: "flex-start" }}
-                />
-                <Button
-                  color={"white"}
-                  containerStyle={{ width: "90%", borderRadius: 5 }}
-                  titleStyle={{ color: "black" }}
-                  title={"ตรวจสอบไฟล์"}
-                  onPress={() => {
-                    openWebsite();
-                  }}
-                />
+                <Card containerStyle={{ borderRadius: 12 }}>
+                  <View
+                    style={{
+                      display: "flex",
+                      flexDirection: "row",
+                      alignItems: "center",
+                    }}
+                  >
+                    <Icon
+                      name="picture-as-pdf"
+                      size={30}
+                      containerStyle={{ alignItems: "flex-start" }}
+                    />
+                    <Button
+                      color={"white"}
+                      containerStyle={{ width: "90%", borderRadius: 5 }}
+                      titleStyle={{ color: "black" }}
+                      title={"ตรวจสอบไฟล์"}
+                      onPress={() => {
+                        openWebsite();
+                      }}
+                    />
+                  </View>
+                </Card>
               </View>
-            </Card>
+            )}
 
             {!loading && product.advisor.userId && (
               <View style={{ marginTop: 15 }}>
@@ -211,14 +221,22 @@ const ProductDetail = ({ route }) => {
                 <View>
                   <Card containerStyle={{ borderRadius: 12 }}>
                     <View style={{ display: "flex", flexDirection: "row" }}>
-                      <Card.Image
-                        style={{ width: 40, height: 40, borderRadius: 100 }}
-                        source={{
-                          uri: "https://awildgeographer.files.wordpress.com/2015/02/john_muir_glacier.jpg",
-                        }}
-                      />
+                      {!loading && advisor.image.profileImage ? (
+                        <Card.Image
+                          style={{ width: 40, height: 40, borderRadius: 100 }}
+                          source={{ uri: advisor.image.profileImage }}
+                        />
+                      ) : (
+                        <Card.Image
+                          style={{ width: 40, height: 40, borderRadius: 100 }}
+                          source={require("../assets/placeholder.png")}
+                        />
+                      )}
+
                       <View style={{ marginLeft: 20 }}>
-                        <Text>{product.advisor.fname + " " + product.advisor.lname}</Text>
+                        <Text>
+                          {product.advisor.fname + " " + product.advisor.lname}
+                        </Text>
                         <Text>{product.advisor.email}</Text>
                       </View>
                     </View>
@@ -226,7 +244,6 @@ const ProductDetail = ({ route }) => {
                 </View>
               </View>
             )}
-            
           </View>
         </Card>
       </ScrollView>
