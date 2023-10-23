@@ -25,6 +25,8 @@ import Constants from "expo-constants";
 import { Picker } from "@react-native-picker/picker";
 import { PostCategory } from "../types/postCategory";
 import * as Linking from "expo-linking";
+import { UserRole } from "../types/role";
+import AddProductAdvisor from "../components/AddProductAdvisor";
 
 const AddPortScreen = ({ navigation }) => {
   const [image, setImage] = useState<any>(null);
@@ -36,9 +38,11 @@ const AddPortScreen = ({ navigation }) => {
   const [selectedValue, setSelectedValue] = useState<PostCategory>(
     PostCategory.learning
   );
+  const [me, setMe] = useState<any>(null);
   const [selectedValue2, setSelectedValue2] = useState<any>(null);
   const [userConfirm, setUserConfirm] = useState<any>(null);
   const [loading, setLoading] = useState<boolean>(true);
+  const [loading2, setLoading2] = useState<boolean>(true);
   const [nameFile, setNameFile] = useState<string>("");
   useEffect(() => {
     axios
@@ -53,7 +57,7 @@ const AddPortScreen = ({ navigation }) => {
         console.error(error);
         setLoading(false);
       });
-  }, [userConfirm]);
+  }, []);
 
   const {
     control,
@@ -70,6 +74,11 @@ const AddPortScreen = ({ navigation }) => {
         const token = await AsyncStorage.getItem("token");
         const decoded: { sub: Userjwt } = jwtDecode(token);
         const user = decoded;
+        const res = await axios.post(
+          `${Constants.expoConfig.extra.API_URL}/user/${user.sub._id}`
+        );
+        setMe(res.data);
+        setLoading2(false);
         if (user) {
           setValue("owner.userId", decoded.sub._id);
           setValue("owner.fname", decoded.sub.fname);
@@ -77,6 +86,7 @@ const AddPortScreen = ({ navigation }) => {
           setValue("owner.email", decoded.sub.email);
         }
       } catch (error) {
+        setLoading2(false);
         navigation.navigate("signin");
         console.log("เกิดข้อผิดพลาดในการดึง token:", error);
       }
@@ -260,252 +270,228 @@ const AddPortScreen = ({ navigation }) => {
   };
 
   return (
-    <SafeAreaView style={{ backgroundColor: "#FFFFFF", width: "100%" }}>
-      <ScrollView>
-        <Dialog isVisible={loading || uploading || uploading2}>
-          <Dialog.Loading />
-        </Dialog>
-        <Card
-          containerStyle={{ borderRadius: 20, padding: 25, marginBottom: 50 }}
-        >
-          <Text style={{ marginLeft: 10, fontSize: 16, alignItems: "center" }}>
-            ชื่อโครงงานภาษาไทย*
-          </Text>
-          <Controller
-            name="nameTh"
-            control={control}
-            defaultValue=""
-            render={({ field }) => (
-              <Input
-                style={{
-                  borderRadius: 5,
-                  borderColor: "#AEAEAE",
-                  borderWidth: 1,
-                  marginTop: 6,
-                  paddingHorizontal: 10,
-                }}
-                inputContainerStyle={{ borderBottomWidth: 0 }}
-                onBlur={field.onBlur}
-                onChangeText={field.onChange}
-                value={field.value}
-              />
-            )}
-          />
-          {errors.nameTh && (
-            <Text style={{ color: "red", marginHorizontal: 10 }}>
-              {errors.nameTh.message}
+    <SafeAreaView
+      style={{ backgroundColor: "#FFFFFF", width: "100%", height: "100%" }}
+    >
+      {!loading2 && !loading && me.role !== UserRole.Advisor && (
+        <ScrollView>
+          <Dialog isVisible={loading || uploading || uploading2}>
+            <Dialog.Loading />
+          </Dialog>
+          <Card
+            containerStyle={{ borderRadius: 20, padding: 25, marginBottom: 50 }}
+          >
+            <Text
+              style={{ marginLeft: 10, fontSize: 16, alignItems: "center" }}
+            >
+              ชื่อโครงงานภาษาไทย*
             </Text>
-          )}
-          <Text style={{ marginLeft: 10, fontSize: 16, alignItems: "center" }}>
-            ชื่อโครงงานภาษาอังกฤษ*
-          </Text>
-          <Controller
-            name="nameEn"
-            control={control}
-            defaultValue=""
-            render={({ field }) => (
-              <Input
-                style={{
-                  borderRadius: 5,
-                  borderColor: "#AEAEAE",
-                  borderWidth: 1,
-                  marginTop: 6,
-                  paddingHorizontal: 10,
-                }}
-                inputContainerStyle={{ borderBottomWidth: 0 }}
-                onBlur={field.onBlur}
-                onChangeText={field.onChange}
-                value={field.value}
-              />
-            )}
-          />
-          {errors.nameEn && (
-            <Text style={{ color: "red", marginHorizontal: 10 }}>
-              {errors.nameEn.message}
-            </Text>
-          )}
-          <Text style={{ fontSize: 16, alignItems: "center" }}>
-            ประเภทโครงงาน*
-          </Text>
-          <Controller
-            name="category"
-            control={control}
-            defaultValue={selectedValue}
-            render={({ field }) => (
-              <View
-                style={{
-                  width: 307,
-                  borderWidth: 1,
-                  borderColor: "#AEAEAE",
-                  borderRadius: 5,
-                  marginBottom: 20,
-                  marginTop: 10,
-                }}
-              >
-                <Picker
-                  selectedValue={selectedValue}
-                  onValueChange={(val) => {
-                    field.onChange(val);
-                    setSelectedValue(val);
-                  }}
-                >
-                  <Picker.Item label="การเรียน" value={PostCategory.learning} />
-                  <Picker.Item label="กีฬา" value={PostCategory.activity} />
-                  <Picker.Item label="สหกิจ" value={PostCategory.internship} />
-                  <Picker.Item label="จิตอาสา" value={PostCategory.volunteer} />
-                  <Picker.Item label="อื่นๆ" value={PostCategory.other} />
-                </Picker>
-              </View>
-            )}
-          />
-
-          {errors.category && (
-            <Text style={{ color: "red", marginHorizontal: 10 }}>
-              {errors.category.message}
-            </Text>
-          )}
-          <Text style={{ marginLeft: 10, fontSize: 16, alignItems: "center" }}>
-            จุดประสงค์
-          </Text>
-          <Controller
-            name="objective"
-            control={control}
-            defaultValue=""
-            render={({ field }) => (
-              <Input
-                style={{
-                  borderRadius: 5,
-                  borderColor: "#AEAEAE",
-                  borderWidth: 1,
-                  marginTop: 6,
-                  paddingHorizontal: 15,
-                }}
-                multiline={true}
-                numberOfLines={4}
-                inputContainerStyle={{ borderBottomWidth: 0 }}
-                onBlur={field.onBlur}
-                onChangeText={field.onChange}
-                value={field.value}
-              />
-            )}
-          />
-          {errors.objective && (
-            <Text style={{ color: "red", marginHorizontal: 10 }}>
-              {errors.objective.message}
-            </Text>
-          )}
-          <Text style={{ marginLeft: 10, fontSize: 16, alignItems: "center" }}>
-            ที่มา
-          </Text>
-          <Controller
-            name="source"
-            control={control}
-            defaultValue=""
-            render={({ field }) => (
-              <Input
-                style={{
-                  borderRadius: 5,
-                  borderColor: "#AEAEAE",
-                  borderWidth: 1,
-                  marginTop: 6,
-                  paddingHorizontal: 15,
-                }}
-                multiline={true}
-                numberOfLines={4}
-                inputContainerStyle={{ borderBottomWidth: 0 }}
-                onBlur={field.onBlur}
-                onChangeText={field.onChange}
-                value={field.value}
-              />
-            )}
-          />
-          {errors.source && (
-            <Text style={{ color: "red", marginHorizontal: 10 }}>
-              {errors.source.message}
-            </Text>
-          )}
-          <Text style={{ marginLeft: 10, fontSize: 16, alignItems: "center" }}>
-            รายละเอียด
-          </Text>
-          <Controller
-            name="detail"
-            control={control}
-            defaultValue=""
-            render={({ field }) => (
-              <Input
-                style={{
-                  borderRadius: 5,
-                  borderColor: "#AEAEAE",
-                  borderWidth: 1,
-                  marginTop: 6,
-                  paddingHorizontal: 15,
-                }}
-                multiline={true}
-                numberOfLines={4}
-                inputContainerStyle={{ borderBottomWidth: 0 }}
-                onBlur={field.onBlur}
-                onChangeText={field.onChange}
-                value={field.value}
-              />
-            )}
-          />
-          {errors.detail && (
-            <Text style={{ color: "red", marginHorizontal: 10 }}>
-              {errors.detail.message}
-            </Text>
-          )}
-
-          <Button
-            onPress={() => {
-              pickImage();
-            }}
-            title={"อัพโหลดรูป"}
-            buttonStyle={{
-              marginTop: 20,
-              borderRadius: 8,
-              backgroundColor: "#81ADC8",
-            }}
-            icon={
-              <Icon
-                name="cloud-upload"
-                color={"white"}
-                style={{ marginRight: 10, color: "white" }}
-              />
-            }
-          />
-          <Text style={{ textAlign: "right", marginTop: 10, marginRight: 10 }}>
-            รูปขนาดไม่เกิน 10 MB
-          </Text>
-          <View style={{ flex: 1, alignItems: "center", marginTop: 20 }}>
-            {image && (
-              <View>
-                <Image
-                  source={{ uri: image }}
-                  style={{ width: 200, height: 200 }}
-                />
-                <Text
-                  onPress={() => setImage(null)}
+            <Controller
+              name="nameTh"
+              control={control}
+              defaultValue=""
+              render={({ field }) => (
+                <Input
                   style={{
-                    position: "absolute",
-                    right: 0,
-                    paddingHorizontal: 5,
-                    backgroundColor: "#BE2C35",
-                    color: "white",
-                    borderRadius: 100,
+                    borderRadius: 5,
+                    borderColor: "#AEAEAE",
+                    borderWidth: 1,
+                    marginTop: 6,
+                    paddingHorizontal: 10,
+                  }}
+                  inputContainerStyle={{ borderBottomWidth: 0 }}
+                  onBlur={field.onBlur}
+                  onChangeText={field.onChange}
+                  value={field.value}
+                />
+              )}
+            />
+            {errors.nameTh && (
+              <Text style={{ color: "red", marginHorizontal: 10 }}>
+                {errors.nameTh.message}
+              </Text>
+            )}
+            <Text
+              style={{ marginLeft: 10, fontSize: 16, alignItems: "center" }}
+            >
+              ชื่อโครงงานภาษาอังกฤษ*
+            </Text>
+            <Controller
+              name="nameEn"
+              control={control}
+              defaultValue=""
+              render={({ field }) => (
+                <Input
+                  style={{
+                    borderRadius: 5,
+                    borderColor: "#AEAEAE",
+                    borderWidth: 1,
+                    marginTop: 6,
+                    paddingHorizontal: 10,
+                  }}
+                  inputContainerStyle={{ borderBottomWidth: 0 }}
+                  onBlur={field.onBlur}
+                  onChangeText={field.onChange}
+                  value={field.value}
+                />
+              )}
+            />
+            {errors.nameEn && (
+              <Text style={{ color: "red", marginHorizontal: 10 }}>
+                {errors.nameEn.message}
+              </Text>
+            )}
+            <Text style={{ fontSize: 16, alignItems: "center" }}>
+              ประเภทโครงงาน*
+            </Text>
+            <Controller
+              name="category"
+              control={control}
+              defaultValue={selectedValue}
+              render={({ field }) => (
+                <View
+                  style={{
+                    width: 307,
+                    borderWidth: 1,
+                    borderColor: "#AEAEAE",
+                    borderRadius: 5,
+                    marginBottom: 20,
+                    marginTop: 10,
                   }}
                 >
-                  X
-                </Text>
-              </View>
-            )}
-          </View>
+                  <Picker
+                    selectedValue={selectedValue}
+                    onValueChange={(val) => {
+                      field.onChange(val);
+                      setSelectedValue(val);
+                    }}
+                  >
+                    <Picker.Item
+                      label="การเรียน"
+                      value={PostCategory.learning}
+                    />
+                    <Picker.Item label="กีฬา" value={PostCategory.activity} />
+                    <Picker.Item
+                      label="สหกิจ"
+                      value={PostCategory.internship}
+                    />
+                    <Picker.Item
+                      label="จิตอาสา"
+                      value={PostCategory.volunteer}
+                    />
+                    <Picker.Item label="อื่นๆ" value={PostCategory.other} />
+                  </Picker>
+                </View>
+              )}
+            />
 
-          <View>
+            {errors.category && (
+              <Text style={{ color: "red", marginHorizontal: 10 }}>
+                {errors.category.message}
+              </Text>
+            )}
+            <Text
+              style={{ marginLeft: 10, fontSize: 16, alignItems: "center" }}
+            >
+              จุดประสงค์
+            </Text>
+            <Controller
+              name="objective"
+              control={control}
+              defaultValue=""
+              render={({ field }) => (
+                <Input
+                  style={{
+                    borderRadius: 5,
+                    borderColor: "#AEAEAE",
+                    borderWidth: 1,
+                    marginTop: 6,
+                    paddingHorizontal: 15,
+                  }}
+                  multiline={true}
+                  numberOfLines={4}
+                  inputContainerStyle={{ borderBottomWidth: 0 }}
+                  onBlur={field.onBlur}
+                  onChangeText={field.onChange}
+                  value={field.value}
+                />
+              )}
+            />
+            {errors.objective && (
+              <Text style={{ color: "red", marginHorizontal: 10 }}>
+                {errors.objective.message}
+              </Text>
+            )}
+            <Text
+              style={{ marginLeft: 10, fontSize: 16, alignItems: "center" }}
+            >
+              ที่มา
+            </Text>
+            <Controller
+              name="source"
+              control={control}
+              defaultValue=""
+              render={({ field }) => (
+                <Input
+                  style={{
+                    borderRadius: 5,
+                    borderColor: "#AEAEAE",
+                    borderWidth: 1,
+                    marginTop: 6,
+                    paddingHorizontal: 15,
+                  }}
+                  multiline={true}
+                  numberOfLines={4}
+                  inputContainerStyle={{ borderBottomWidth: 0 }}
+                  onBlur={field.onBlur}
+                  onChangeText={field.onChange}
+                  value={field.value}
+                />
+              )}
+            />
+            {errors.source && (
+              <Text style={{ color: "red", marginHorizontal: 10 }}>
+                {errors.source.message}
+              </Text>
+            )}
+            <Text
+              style={{ marginLeft: 10, fontSize: 16, alignItems: "center" }}
+            >
+              รายละเอียด
+            </Text>
+            <Controller
+              name="detail"
+              control={control}
+              defaultValue=""
+              render={({ field }) => (
+                <Input
+                  style={{
+                    borderRadius: 5,
+                    borderColor: "#AEAEAE",
+                    borderWidth: 1,
+                    marginTop: 6,
+                    paddingHorizontal: 15,
+                  }}
+                  multiline={true}
+                  numberOfLines={4}
+                  inputContainerStyle={{ borderBottomWidth: 0 }}
+                  onBlur={field.onBlur}
+                  onChangeText={field.onChange}
+                  value={field.value}
+                />
+              )}
+            />
+            {errors.detail && (
+              <Text style={{ color: "red", marginHorizontal: 10 }}>
+                {errors.detail.message}
+              </Text>
+            )}
+
             <Button
               onPress={() => {
-                pickDocuments();
+                pickImage();
               }}
-              title={"อัพโหลดไฟล์"}
+              title={"อัพโหลดรูป"}
               buttonStyle={{
                 marginTop: 20,
                 borderRadius: 8,
@@ -519,69 +505,125 @@ const AddPortScreen = ({ navigation }) => {
                 />
               }
             />
-
-            {file && (
-              <View
-                style={{
-                  display: "flex",
-                  flexDirection: "row",
-                  margin: 15,
-                  alignItems: "center",
-                }}
-              >
-                <Icon name="attach-file" />
-                <Text>{nameFile}</Text>
-              </View>
-            )}
-          </View>
-          <Text
-            style={{
-              marginLeft: 10,
-              fontSize: 16,
-              alignItems: "center",
-              marginTop: 10,
-            }}
-          >
-            อาจารย์ที่ปรึกษา (ไม่มีให้ใส่ ไม่มี )
-          </Text>
-          <View
-            style={{
-              width: 307,
-              borderWidth: 1,
-              borderColor: "#AEAEAE",
-              borderRadius: 5,
-              marginBottom: 20,
-              marginTop: 10,
-            }}
-          >
-            <Picker
-              selectedValue={selectedValue2}
-              onValueChange={(itemValue, index) => setSelectedValue2(itemValue)}
+            <Text
+              style={{ textAlign: "right", marginTop: 10, marginRight: 10 }}
             >
-              {loading ? (
-                <Picker.Item label="Loading..." value={null} />
-              ) : (
-                userConfirm.map((user: any) => (
-                  <Picker.Item
-                    label={user.fname + " " + user.lname}
-                    value={user._id}
-                    key={user._id}
+              รูปขนาดไม่เกิน 10 MB
+            </Text>
+            <View style={{ flex: 1, alignItems: "center", marginTop: 20 }}>
+              {image && (
+                <View>
+                  <Image
+                    source={{ uri: image }}
+                    style={{ width: 200, height: 200 }}
                   />
-                ))
+                  <Text
+                    onPress={() => setImage(null)}
+                    style={{
+                      position: "absolute",
+                      right: 0,
+                      paddingHorizontal: 5,
+                      backgroundColor: "#BE2C35",
+                      color: "white",
+                      borderRadius: 100,
+                    }}
+                  >
+                    X
+                  </Text>
+                </View>
               )}
-            </Picker>
-          </View>
-          <Button
-            onPress={handleSubmit(onSubmit)}
-            title={"Submit"}
-            buttonStyle={{
-              marginTop: 20,
-              borderRadius: 8,
-              backgroundColor: "#81ADC8",
-            }}
-          />
-        </Card>
-      </ScrollView>
+            </View>
+
+            <View>
+              <Button
+                onPress={() => {
+                  pickDocuments();
+                }}
+                title={"อัพโหลดไฟล์"}
+                buttonStyle={{
+                  marginTop: 20,
+                  borderRadius: 8,
+                  backgroundColor: "#81ADC8",
+                }}
+                icon={
+                  <Icon
+                    name="cloud-upload"
+                    color={"white"}
+                    style={{ marginRight: 10, color: "white" }}
+                  />
+                }
+              />
+
+              {file && (
+                <View
+                  style={{
+                    display: "flex",
+                    flexDirection: "row",
+                    margin: 15,
+                    alignItems: "center",
+                  }}
+                >
+                  <Icon name="attach-file" />
+                  <Text>{nameFile}</Text>
+                </View>
+              )}
+            </View>
+            <Text
+              style={{
+                marginLeft: 10,
+                fontSize: 16,
+                alignItems: "center",
+                marginTop: 10,
+              }}
+            >
+              อาจารย์ที่ปรึกษา (ไม่มีให้ใส่ ไม่มี )
+            </Text>
+            <View
+              style={{
+                width: 307,
+                borderWidth: 1,
+                borderColor: "#AEAEAE",
+                borderRadius: 5,
+                marginBottom: 20,
+                marginTop: 10,
+              }}
+            >
+              <Picker
+                selectedValue={selectedValue2}
+                onValueChange={(itemValue, index) =>
+                  setSelectedValue2(itemValue)
+                }
+              >
+                {loading ? (
+                  <Picker.Item label="Loading..." value={null} />
+                ) : (
+                  userConfirm.map((user: any) => (
+                    <Picker.Item
+                      label={user.fname + " " + user.lname}
+                      value={user._id}
+                      key={user._id}
+                    />
+                  ))
+                )}
+              </Picker>
+            </View>
+            <Button
+              onPress={handleSubmit(onSubmit)}
+              title={"Submit"}
+              buttonStyle={{
+                marginTop: 20,
+                borderRadius: 8,
+                backgroundColor: "#81ADC8",
+              }}
+            />
+          </Card>
+        </ScrollView>
+      )}
+      {!loading2 && !loading && me.role === UserRole.Advisor && (
+        <ScrollView>
+          <AddProductAdvisor />
+        </ScrollView>
+      )}
     </SafeAreaView>
   );
 };
