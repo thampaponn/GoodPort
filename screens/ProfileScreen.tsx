@@ -12,12 +12,11 @@ import { Ionicons } from "@expo/vector-icons";
 import { Userjwt } from "../types/userjwt";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import jwtDecode from "jwt-decode";
-import { Dialog } from "@rneui/themed";
+import { Chip, Dialog } from "@rneui/themed";
 import Constants from "expo-constants";
 import axios from "axios";
 
-
-export default function ProfileScreen({ navigation }) {
+export default function ProfileScreen({ navigation, route }) {
   const [select, setSelect] = useState<boolean>(true);
   const [user, setUser] = useState<any>(null);
   const [loading, setLoading] = useState<boolean>(true);
@@ -28,6 +27,7 @@ export default function ProfileScreen({ navigation }) {
         const token = await AsyncStorage.getItem("token");
         const decoded: { sub: Userjwt } = jwtDecode(token);
         const user = decoded.sub;
+
         axios
           .post(`${Constants.expoConfig.extra.API_URL}/user/${user._id}`)
           .then((response) => {
@@ -86,7 +86,6 @@ export default function ProfileScreen({ navigation }) {
     "location-outline": "location-outline",
   };
 
-
   return (
     <ScrollView style={{ flex: 1, backgroundColor: "#FFFFFF" }}>
       <Dialog isVisible={loading}>
@@ -94,19 +93,38 @@ export default function ProfileScreen({ navigation }) {
       </Dialog>
       <SafeAreaView>
         <View style={styles.container}>
-          {!loading && user.image.profileImage ?
+          {!loading && user.image.profileImage ? (
             <Image
-              style={{ marginTop: 15, marginBottom: 10, height: 180, width: 180, borderRadius: 100 }}
+              style={{
+                marginTop: 15,
+                marginBottom: 10,
+                height: 180,
+                width: 180,
+                borderRadius: 100,
+              }}
               source={{ uri: user.image.profileImage }}
-            /> :
+            />
+          ) : (
             <Image
-              style={{ marginTop: 15, marginBottom: 10, height: 180, width: 180, borderRadius: 100 }}
+              style={{
+                marginTop: 15,
+                marginBottom: 10,
+                height: 180,
+                width: 180,
+                borderRadius: 100,
+              }}
               source={require("../assets/placeholder.png")}
             />
-          }
-          {!loading && <Text style={{ fontSize: 18, marginBottom: 10 }}>
-            {user.fname + " " + user.lname}
-          </Text>}
+          )}
+          {!loading && (
+            <View>
+              <Text style={{ fontSize: 18, marginBottom: 10 }}>
+                {user.fname + " " + user.lname}
+              </Text>
+              <Chip color={"success"} title={user.role} />
+            </View>
+          )}
+
           <View style={styles.selector}>
             <TouchableOpacity
               style={{
@@ -141,46 +159,195 @@ export default function ProfileScreen({ navigation }) {
           </View>
           {select ? (
             <View style={{ width: "100%", marginTop: 10 }}>
-              {selectorArray.map((data, index) => (
-                <TouchableOpacity
-                  key={index}
+              <TouchableOpacity onPress={() => navigation.navigate("category")}
+                style={{
+                  backgroundColor: "#FFFFFF",
+                  width: "100%",
+                  justifyContent: "space-evenly",
+                  alignItems: "center",
+                  flexDirection: "row",
+                  marginTop: 10,
+                }}
+              >
+                <View
                   style={{
-                    backgroundColor: "#FFFFFF",
-                    width: "100%",
-                    justifyContent: "space-evenly",
                     alignItems: "center",
-                    flexDirection: "row",
-                    marginTop: 10,
+                    justifyContent: "center",
+                    marginLeft: 20,
+                    marginRight: 10,
                   }}
                 >
-                  <View
-                    style={{
-                      alignItems: "center",
-                      justifyContent: "center",
-                      marginLeft: 20,
-                      marginRight: 10,
-                    }}
-                  >
-                    <Ionicons
-                      style={{ textAlign: "center", padding: 15 }}
-                      name={iconMapping[data.icon]}
-                      size={30}
-                      color="black"
-                    />
-                  </View>
-                  <View style={{ flex: 1 }}>
-                    <Text style={{ fontSize: 18, textAlign: "left" }}>
-                      {data.category}
-                    </Text>
-                  </View>
                   <Ionicons
-                    style={{ marginRight: 30 }}
-                    name="chevron-forward"
+                    style={{ textAlign: "center", padding: 15 }}
+                    name={"book-outline"}
                     size={30}
                     color="black"
                   />
-                </TouchableOpacity>
-              ))}
+                </View>
+                <View style={{ flex: 1 }}>
+                  <Text style={{ fontSize: 18, textAlign: "left" }}>
+                    {"หมวดการเรียน"}
+                  </Text>
+                </View>
+                <Ionicons
+                  style={{ marginRight: 30 }}
+                  name="chevron-forward"
+                  size={30}
+                  color="black"
+                />
+              </TouchableOpacity>
+
+              <TouchableOpacity
+                style={{
+                  backgroundColor: "#FFFFFF",
+                  width: "100%",
+                  justifyContent: "space-evenly",
+                  alignItems: "center",
+                  flexDirection: "row",
+                  marginTop: 10,
+                }}
+              >
+                <View
+                  style={{
+                    alignItems: "center",
+                    justifyContent: "center",
+                    marginLeft: 20,
+                    marginRight: 10,
+                  }}
+                >
+                  <Ionicons
+                    style={{ textAlign: "center", padding: 15 }}
+                    name={"medal-outline"}
+                    size={30}
+                    color="black"
+                  />
+                </View>
+                <View style={{ flex: 1 }}>
+                  <Text style={{ fontSize: 18, textAlign: "left" }}>
+                    {"หมวดกีฬา"}
+                  </Text>
+                </View>
+                <Ionicons
+                  style={{ marginRight: 30 }}
+                  name="chevron-forward"
+                  size={30}
+                  color="black"
+                />
+              </TouchableOpacity>
+
+              <TouchableOpacity
+                style={{
+                  backgroundColor: "#FFFFFF",
+                  width: "100%",
+                  justifyContent: "space-evenly",
+                  alignItems: "center",
+                  flexDirection: "row",
+                  marginTop: 10,
+                }}
+              >
+                <View
+                  style={{
+                    alignItems: "center",
+                    justifyContent: "center",
+                    marginLeft: 20,
+                    marginRight: 10,
+                  }}
+                >
+                  <Ionicons
+                    style={{ textAlign: "center", padding: 15 }}
+                    name={"school-outline"}
+                    size={30}
+                    color="black"
+                  />
+                </View>
+                <View style={{ flex: 1 }}>
+                  <Text style={{ fontSize: 18, textAlign: "left" }}>
+                    {"หมวดสหกิจ"}
+                  </Text>
+                </View>
+                <Ionicons
+                  style={{ marginRight: 30 }}
+                  name="chevron-forward"
+                  size={30}
+                  color="black"
+                />
+              </TouchableOpacity>
+
+              <TouchableOpacity
+                style={{
+                  backgroundColor: "#FFFFFF",
+                  width: "100%",
+                  justifyContent: "space-evenly",
+                  alignItems: "center",
+                  flexDirection: "row",
+                  marginTop: 10,
+                }}
+              >
+                <View
+                  style={{
+                    alignItems: "center",
+                    justifyContent: "center",
+                    marginLeft: 20,
+                    marginRight: 10,
+                  }}
+                >
+                  <Ionicons
+                    style={{ textAlign: "center", padding: 15 }}
+                    name={"people-outline"}
+                    size={30}
+                    color="black"
+                  />
+                </View>
+                <View style={{ flex: 1 }}>
+                  <Text style={{ fontSize: 18, textAlign: "left" }}>
+                    {"หมวดจิตอาสา"}
+                  </Text>
+                </View>
+                <Ionicons
+                  style={{ marginRight: 30 }}
+                  name="chevron-forward"
+                  size={30}
+                  color="black"
+                />
+              </TouchableOpacity>
+
+              <TouchableOpacity
+                style={{
+                  backgroundColor: "#FFFFFF",
+                  width: "100%",
+                  justifyContent: "space-evenly",
+                  alignItems: "center",
+                  flexDirection: "row",
+                  marginTop: 10,
+                }}
+              >
+                <View
+                  style={{
+                    alignItems: "center",
+                    justifyContent: "center",
+                    marginLeft: 20,
+                    marginRight: 10,
+                  }}
+                >
+                  <Ionicons
+                    style={{ textAlign: "center", padding: 15 }}
+                    name={"ellipsis-horizontal"}
+                    size={30}
+                    color="black"
+                  />
+                </View>
+                <View style={{ flex: 1 }}>
+                  <Text style={{ fontSize: 18, textAlign: "left" }}>
+                    {"หมวดอื่นๆ"}
+                  </Text>
+                </View>
+                <Ionicons
+                  style={{ marginRight: 30 }}
+                  name="chevron-forward"
+                  size={30}
+                  color="black"
+                />
+              </TouchableOpacity>
             </View>
           ) : (
             <View style={{ width: "100%", marginTop: 10, marginBottom: 60 }}>
@@ -222,12 +389,13 @@ export default function ProfileScreen({ navigation }) {
                       {"ชื่อบัญชีผู้ใช้งาน"}
                     </Text>
 
-                    {!loading && <Text
-                      style={{ fontSize: 14, textAlign: "left", margin: 3 }}
-                    >
-                      {user.username ?? ""}
-                    </Text>
-                    }
+                    {!loading && (
+                      <Text
+                        style={{ fontSize: 14, textAlign: "left", margin: 3 }}
+                      >
+                        {user.username ?? "ไม่ระบุ"}
+                      </Text>
+                    )}
                   </View>
                 </TouchableOpacity>
 
@@ -268,12 +436,13 @@ export default function ProfileScreen({ navigation }) {
                       {"อีเมลล์"}
                     </Text>
 
-                    {!loading && <Text
-                      style={{ fontSize: 14, textAlign: "left", margin: 3 }}
-                    >
-                      {user.email ?? ""}
-                    </Text>
-                    }
+                    {!loading && (
+                      <Text
+                        style={{ fontSize: 14, textAlign: "left", margin: 3 }}
+                      >
+                        {user.email ?? "ไม่ระบุ"}
+                      </Text>
+                    )}
                   </View>
                 </TouchableOpacity>
 
@@ -314,12 +483,13 @@ export default function ProfileScreen({ navigation }) {
                       {"เบอร์โทรศัพท์"}
                     </Text>
 
-                    {!loading && <Text
-                      style={{ fontSize: 14, textAlign: "left", margin: 3 }}
-                    >
-                      {user.phone ?? ""}
-                    </Text>
-                    }
+                    {!loading && (
+                      <Text
+                        style={{ fontSize: 14, textAlign: "left", margin: 3 }}
+                      >
+                        {user.phone ?? "ไม่ระบุ"}
+                      </Text>
+                    )}
                   </View>
                 </TouchableOpacity>
 
@@ -360,12 +530,13 @@ export default function ProfileScreen({ navigation }) {
                       {"รหัสประจำตัวนักศึกษา"}
                     </Text>
 
-                    {!loading && <Text
-                      style={{ fontSize: 14, textAlign: "left", margin: 3 }}
-                    >
-                      {user.job.studentId ?? ""}
-                    </Text>
-                    }
+                    {!loading && (
+                      <Text
+                        style={{ fontSize: 14, textAlign: "left", margin: 3 }}
+                      >
+                        {user.job.studentId ?? "ไม่ระบุ"}
+                      </Text>
+                    )}
                   </View>
                 </TouchableOpacity>
 
@@ -406,14 +577,16 @@ export default function ProfileScreen({ navigation }) {
                       {"มหาวิทยาลัย"}
                     </Text>
 
-                    {!loading && <Text
-                      style={{ fontSize: 14, textAlign: "left", margin: 3 }}
-                    >
-                      {user.information.location ?? ""}
-                    </Text>
-                    }
+                    {!loading && (
+                      <Text
+                        style={{ fontSize: 14, textAlign: "left", margin: 3 }}
+                      >
+                        {user.information.location ?? "ไม่ระบุ"}
+                      </Text>
+                    )}
                   </View>
                 </TouchableOpacity>
+
                 <TouchableOpacity
                   style={{
                     backgroundColor: "#FFFFFF",
@@ -451,14 +624,16 @@ export default function ProfileScreen({ navigation }) {
                       {"มหาวิทยาลัยที่จบการศึกษา"}
                     </Text>
 
-                    {!loading && <Text
-                      style={{ fontSize: 14, textAlign: "left", margin: 3 }}
-                    >
-                      {user.information.location ?? ""}
-                    </Text>
-                    }
+                    {!loading && (
+                      <Text
+                        style={{ fontSize: 14, textAlign: "left", margin: 3 }}
+                      >
+                        {user.information.university ?? "ไม่ระบุ"}
+                      </Text>
+                    )}
                   </View>
                 </TouchableOpacity>
+
                 <TouchableOpacity
                   style={{
                     backgroundColor: "#FFFFFF",
@@ -496,14 +671,16 @@ export default function ProfileScreen({ navigation }) {
                       {"ประเทศที่จบการศึกษา"}
                     </Text>
 
-                    {!loading && <Text
-                      style={{ fontSize: 14, textAlign: "left", margin: 3 }}
-                    >
-                      {user.information.location ?? ""}
-                    </Text>
-                    }
+                    {!loading && (
+                      <Text
+                        style={{ fontSize: 14, textAlign: "left", margin: 3 }}
+                      >
+                        {user.information.graduatedFrom ?? "ไม่ระบุ"}
+                      </Text>
+                    )}
                   </View>
                 </TouchableOpacity>
+
                 <TouchableOpacity
                   style={{
                     backgroundColor: "#FFFFFF",
@@ -541,14 +718,16 @@ export default function ProfileScreen({ navigation }) {
                       {"อาชีพ"}
                     </Text>
 
-                    {!loading && <Text
-                      style={{ fontSize: 14, textAlign: "left", margin: 3 }}
-                    >
-                      {user.information.location ?? ""}
-                    </Text>
-                    }
+                    {!loading && (
+                      <Text
+                        style={{ fontSize: 14, textAlign: "left", margin: 3 }}
+                      >
+                        {user.information.location ?? "ไม่ระบุ"}
+                      </Text>
+                    )}
                   </View>
                 </TouchableOpacity>
+
                 <TouchableOpacity
                   style={{
                     backgroundColor: "#FFFFFF",
@@ -586,14 +765,16 @@ export default function ProfileScreen({ navigation }) {
                       {"สถานที่ทำงาน"}
                     </Text>
 
-                    {!loading && <Text
-                      style={{ fontSize: 14, textAlign: "left", margin: 3 }}
-                    >
-                      {user.information.location ?? ""}
-                    </Text>
-                    }
+                    {!loading && (
+                      <Text
+                        style={{ fontSize: 14, textAlign: "left", margin: 3 }}
+                      >
+                        {user.information.location ?? "ไม่ระบุ"}
+                      </Text>
+                    )}
                   </View>
                 </TouchableOpacity>
+
                 <TouchableOpacity
                   style={{
                     backgroundColor: "#FFFFFF",
@@ -631,12 +812,13 @@ export default function ProfileScreen({ navigation }) {
                       {"หมายเลขติดต่อที่ทำงาน"}
                     </Text>
 
-                    {!loading && <Text
-                      style={{ fontSize: 14, textAlign: "left", margin: 3 }}
-                    >
-                      {user.information.location ?? ""}
-                    </Text>
-                    }
+                    {!loading && (
+                      <Text
+                        style={{ fontSize: 14, textAlign: "left", margin: 3 }}
+                      >
+                        {user.information.companyNumber ?? "ไม่ระบุ"}
+                      </Text>
+                    )}
                   </View>
                 </TouchableOpacity>
               </View>

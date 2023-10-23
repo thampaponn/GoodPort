@@ -41,7 +41,7 @@ export class AlertService {
 
   async getAlertByUserIdComfirm(userId: string): Promise<Alert[]> {
     return this.alertModel
-      .find({ "owner.userId": userId, detail: "accepted" })
+      .find({ "owner.userId": userId, detail: "accepted" }).sort({ createAt: -1 })
       .exec();
   }
 
