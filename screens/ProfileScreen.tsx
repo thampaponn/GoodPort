@@ -29,15 +29,15 @@ export default function ProfileScreen({ navigation }) {
         const decoded: { sub: Userjwt } = jwtDecode(token);
         const user = decoded.sub;
         axios
-      .post(`${Constants.expoConfig.extra.API_URL}/user/${user._id}`)
-      .then((response) => {
-        setUser(response.data);
-        setLoading(false);
-      })
-      .catch((error) => {
-        console.error(error);
-        setLoading(false);
-      });
+          .post(`${Constants.expoConfig.extra.API_URL}/user/${user._id}`)
+          .then((response) => {
+            setUser(response.data);
+            setLoading(false);
+          })
+          .catch((error) => {
+            console.error(error);
+            setLoading(false);
+          });
       } catch (error) {
         setLoading(false);
         navigation.navigate("signin");
@@ -90,19 +90,19 @@ export default function ProfileScreen({ navigation }) {
   return (
     <ScrollView style={{ flex: 1, backgroundColor: "#FFFFFF" }}>
       <Dialog isVisible={loading}>
-          <Dialog.Loading />
-        </Dialog>
+        <Dialog.Loading />
+      </Dialog>
       <SafeAreaView>
         <View style={styles.container}>
           {!loading && user.image.profileImage ?
             <Image
-            style={{ marginTop: 15, marginBottom: 10, height: 180, width:180, borderRadius:100 }}
-            source={{uri:user.image.profileImage }}
-          />:
-          <Image
-          style={{ marginTop: 15, marginBottom: 10, height: 180, width:180, borderRadius:100 }}
-          source={require("../assets/placeholder.png")}
-        />
+              style={{ marginTop: 15, marginBottom: 10, height: 180, width: 180, borderRadius: 100 }}
+              source={{ uri: user.image.profileImage }}
+            /> :
+            <Image
+              style={{ marginTop: 15, marginBottom: 10, height: 180, width: 180, borderRadius: 100 }}
+              source={require("../assets/placeholder.png")}
+            />
           }
           {!loading && <Text style={{ fontSize: 18, marginBottom: 10 }}>
             {user.fname + " " + user.lname}
@@ -111,8 +111,8 @@ export default function ProfileScreen({ navigation }) {
             <TouchableOpacity
               style={{
                 backgroundColor: select ? "#F8F2DC" : "#81ADC8",
-                width: "47%",
-                height: "75%",
+                width: 150,
+                height: 40,
                 alignItems: "center",
                 justifyContent: "center",
                 borderRadius: 50,
@@ -126,8 +126,8 @@ export default function ProfileScreen({ navigation }) {
             <TouchableOpacity
               style={{
                 backgroundColor: select ? "#81ADC8" : "#F8F2DC",
-                width: "47%",
-                height: "75%",
+                width: 150,
+                height: 40,
                 alignItems: "center",
                 justifyContent: "center",
                 borderRadius: 50,
@@ -183,8 +183,8 @@ export default function ProfileScreen({ navigation }) {
               ))}
             </View>
           ) : (
-            <View style={{ width: "100%", marginTop: 10 }}>
-
+            <View style={{ width: "100%", marginTop: 10, marginBottom: 60 }}>
+              <View>
                 <TouchableOpacity
                   style={{
                     backgroundColor: "#FFFFFF",
@@ -221,13 +221,13 @@ export default function ProfileScreen({ navigation }) {
                     >
                       {"ชื่อบัญชีผู้ใช้งาน"}
                     </Text>
-                    
-                    {!loading &&  <Text
+
+                    {!loading && <Text
                       style={{ fontSize: 14, textAlign: "left", margin: 3 }}
                     >
                       {user.username ?? ""}
                     </Text>
-}
+                    }
                   </View>
                 </TouchableOpacity>
 
@@ -267,13 +267,13 @@ export default function ProfileScreen({ navigation }) {
                     >
                       {"อีเมลล์"}
                     </Text>
-                    
-                    {!loading &&  <Text
+
+                    {!loading && <Text
                       style={{ fontSize: 14, textAlign: "left", margin: 3 }}
                     >
                       {user.email ?? ""}
                     </Text>
-}
+                    }
                   </View>
                 </TouchableOpacity>
 
@@ -313,13 +313,13 @@ export default function ProfileScreen({ navigation }) {
                     >
                       {"เบอร์โทรศัพท์"}
                     </Text>
-                    
-                    {!loading &&  <Text
+
+                    {!loading && <Text
                       style={{ fontSize: 14, textAlign: "left", margin: 3 }}
                     >
                       {user.phone ?? ""}
                     </Text>
-}
+                    }
                   </View>
                 </TouchableOpacity>
 
@@ -359,13 +359,13 @@ export default function ProfileScreen({ navigation }) {
                     >
                       {"รหัสประจำตัวนักศึกษา"}
                     </Text>
-                    
-                    {!loading &&  <Text
+
+                    {!loading && <Text
                       style={{ fontSize: 14, textAlign: "left", margin: 3 }}
                     >
                       {user.job.studentId ?? ""}
                     </Text>
-}
+                    }
                   </View>
                 </TouchableOpacity>
 
@@ -405,15 +405,241 @@ export default function ProfileScreen({ navigation }) {
                     >
                       {"มหาวิทยาลัย"}
                     </Text>
-                    
-                    {!loading &&  <Text
+
+                    {!loading && <Text
                       style={{ fontSize: 14, textAlign: "left", margin: 3 }}
                     >
                       {user.information.location ?? ""}
                     </Text>
-}
+                    }
                   </View>
                 </TouchableOpacity>
+                <TouchableOpacity
+                  style={{
+                    backgroundColor: "#FFFFFF",
+                    width: "100%",
+                    justifyContent: "space-evenly",
+                    alignItems: "center",
+                    flexDirection: "row",
+                    marginTop: 10,
+                  }}
+                >
+                  <View
+                    style={{
+                      alignItems: "center",
+                      justifyContent: "center",
+                      marginLeft: 20,
+                      marginRight: 10,
+                    }}
+                  >
+                    <Ionicons
+                      style={{ textAlign: "center", padding: 15 }}
+                      name={"briefcase-outline"}
+                      size={30}
+                      color="black"
+                    />
+                  </View>
+                  <View style={{ flex: 1 }}>
+                    <Text
+                      style={{
+                        color: "#AAA4A4",
+                        fontSize: 14,
+                        textAlign: "left",
+                        margin: 3,
+                      }}
+                    >
+                      {"มหาวิทยาลัยที่จบการศึกษา"}
+                    </Text>
+
+                    {!loading && <Text
+                      style={{ fontSize: 14, textAlign: "left", margin: 3 }}
+                    >
+                      {user.information.location ?? ""}
+                    </Text>
+                    }
+                  </View>
+                </TouchableOpacity>
+                <TouchableOpacity
+                  style={{
+                    backgroundColor: "#FFFFFF",
+                    width: "100%",
+                    justifyContent: "space-evenly",
+                    alignItems: "center",
+                    flexDirection: "row",
+                    marginTop: 10,
+                  }}
+                >
+                  <View
+                    style={{
+                      alignItems: "center",
+                      justifyContent: "center",
+                      marginLeft: 20,
+                      marginRight: 10,
+                    }}
+                  >
+                    <Ionicons
+                      style={{ textAlign: "center", padding: 15 }}
+                      name={"location-outline"}
+                      size={30}
+                      color="black"
+                    />
+                  </View>
+                  <View style={{ flex: 1 }}>
+                    <Text
+                      style={{
+                        color: "#AAA4A4",
+                        fontSize: 14,
+                        textAlign: "left",
+                        margin: 3,
+                      }}
+                    >
+                      {"ประเทศที่จบการศึกษา"}
+                    </Text>
+
+                    {!loading && <Text
+                      style={{ fontSize: 14, textAlign: "left", margin: 3 }}
+                    >
+                      {user.information.location ?? ""}
+                    </Text>
+                    }
+                  </View>
+                </TouchableOpacity>
+                <TouchableOpacity
+                  style={{
+                    backgroundColor: "#FFFFFF",
+                    width: "100%",
+                    justifyContent: "space-evenly",
+                    alignItems: "center",
+                    flexDirection: "row",
+                    marginTop: 10,
+                  }}
+                >
+                  <View
+                    style={{
+                      alignItems: "center",
+                      justifyContent: "center",
+                      marginLeft: 20,
+                      marginRight: 10,
+                    }}
+                  >
+                    <Ionicons
+                      style={{ textAlign: "center", padding: 15 }}
+                      name={"briefcase-outline"}
+                      size={30}
+                      color="black"
+                    />
+                  </View>
+                  <View style={{ flex: 1 }}>
+                    <Text
+                      style={{
+                        color: "#AAA4A4",
+                        fontSize: 14,
+                        textAlign: "left",
+                        margin: 3,
+                      }}
+                    >
+                      {"อาชีพ"}
+                    </Text>
+
+                    {!loading && <Text
+                      style={{ fontSize: 14, textAlign: "left", margin: 3 }}
+                    >
+                      {user.information.location ?? ""}
+                    </Text>
+                    }
+                  </View>
+                </TouchableOpacity>
+                <TouchableOpacity
+                  style={{
+                    backgroundColor: "#FFFFFF",
+                    width: "100%",
+                    justifyContent: "space-evenly",
+                    alignItems: "center",
+                    flexDirection: "row",
+                    marginTop: 10,
+                  }}
+                >
+                  <View
+                    style={{
+                      alignItems: "center",
+                      justifyContent: "center",
+                      marginLeft: 20,
+                      marginRight: 10,
+                    }}
+                  >
+                    <Ionicons
+                      style={{ textAlign: "center", padding: 15 }}
+                      name={"location-outline"}
+                      size={30}
+                      color="black"
+                    />
+                  </View>
+                  <View style={{ flex: 1 }}>
+                    <Text
+                      style={{
+                        color: "#AAA4A4",
+                        fontSize: 14,
+                        textAlign: "left",
+                        margin: 3,
+                      }}
+                    >
+                      {"สถานที่ทำงาน"}
+                    </Text>
+
+                    {!loading && <Text
+                      style={{ fontSize: 14, textAlign: "left", margin: 3 }}
+                    >
+                      {user.information.location ?? ""}
+                    </Text>
+                    }
+                  </View>
+                </TouchableOpacity>
+                <TouchableOpacity
+                  style={{
+                    backgroundColor: "#FFFFFF",
+                    width: "100%",
+                    justifyContent: "space-evenly",
+                    alignItems: "center",
+                    flexDirection: "row",
+                    marginTop: 10,
+                  }}
+                >
+                  <View
+                    style={{
+                      alignItems: "center",
+                      justifyContent: "center",
+                      marginLeft: 20,
+                      marginRight: 10,
+                    }}
+                  >
+                    <Ionicons
+                      style={{ textAlign: "center", padding: 15 }}
+                      name={"call-outline"}
+                      size={30}
+                      color="black"
+                    />
+                  </View>
+                  <View style={{ flex: 1 }}>
+                    <Text
+                      style={{
+                        color: "#AAA4A4",
+                        fontSize: 14,
+                        textAlign: "left",
+                        margin: 3,
+                      }}
+                    >
+                      {"หมายเลขติดต่อที่ทำงาน"}
+                    </Text>
+
+                    {!loading && <Text
+                      style={{ fontSize: 14, textAlign: "left", margin: 3 }}
+                    >
+                      {user.information.location ?? ""}
+                    </Text>
+                    }
+                  </View>
+                </TouchableOpacity>
+              </View>
             </View>
           )}
         </View>
@@ -432,8 +658,8 @@ const styles = StyleSheet.create({
     alignItems: "center",
     flexDirection: "row",
     backgroundColor: "#81ADC8",
-    width: "70%",
-    height: "7%",
+    width: 315,
+    height: 50,
     borderRadius: 50,
     marginTop: 15,
   },
