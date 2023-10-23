@@ -113,7 +113,7 @@ const MainPageScreen = ({ navigation }) => {
         </Card>
         <Button
               onPress={() =>fetchOriginalPost()}
-              title={"รีเฟรส"}
+              title={"รีเฟรช"}
               buttonStyle={{
                 marginTop: 20,
                 borderRadius: 8,
