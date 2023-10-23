@@ -1,4 +1,4 @@
-import { Injectable } from "@nestjs/common";
+import { Injectable, NotFoundException } from "@nestjs/common";
 import { InjectModel } from "@nestjs/mongoose";
 import { Model } from "mongoose";
 import { PostAdvisor } from "./post-advisor.model";
@@ -25,6 +25,22 @@ export class PostAdvisorService {
 
   async delPostById(id: string) {
     return await this.postAdvisorModel.deleteOne({ _id: Object(id) });
+  }
+
+  async addCommentToPost(postId: string, commentData: any) {
+    try {
+      const post = await this.postAdvisorModel.findById(postId);
+  
+      if (!post) {
+        throw new NotFoundException("ไม่พบโพสต์ที่ต้องการเพิ่มความคิดเห็น");
+      }
+      post.comments.push(commentData);
+  
+      return await post.save();
+    } catch (error) {
+      console.error(error); // ลองบันทึกข้อผิดพลาดที่เกิดขึ้น
+      throw error;
+    }
   }
 
   async updatePost(

@@ -33,6 +33,16 @@ export class PostAdvisorController {
     return user;
   }
 
+  @Post('/addComment/:postId')
+  async addComment(@Param('postId') postId: string, @Body() commentData: any) {
+    try {
+      const updatedPost = await this.PostAdvisorService.addCommentToPost(postId, commentData);
+      return updatedPost;
+    } catch (error) {
+      throw new NotFoundException("ไม่พบโพสต์ที่ต้องการเพิ่มความคิดเห็น");
+    }
+  }
+
   @Put(":id")
   async updatePost(
     @Param("id") id: string,
