@@ -25,7 +25,7 @@ export const ProductConfirmCardNotification = ({
   action
 }: ProductConfirmCardNotificationProps) => {
   const handleSubmit = () =>{
-    navigation.navigate("detail", { data: id });
+    navigation.navigate("detail", { data: postId });
   }
 
   const handleChangeStatus = async() =>{

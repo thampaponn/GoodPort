@@ -86,7 +86,9 @@ const AddPortScreen = ({ navigation }) => {
   }, []);
 
   const pickDocuments = async () => {
-    let result = await DocumentPicker.getDocumentAsync();
+    let result = await DocumentPicker.getDocumentAsync({
+      type: 'application/pdf',
+    });
 
     if (!result.canceled) {
       setFile(result.assets[0].uri);
