@@ -3,7 +3,9 @@ import { View, Image, TouchableOpacity } from "react-native";
 
 export const ProjectHeader = ({ navigation, user }) => {
   return (
+
     <View style={{ width: "100%", paddingTop: 70 }}>
+
       <View
         style={{
           flexDirection: "row",
