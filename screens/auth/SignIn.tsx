@@ -43,8 +43,8 @@ const SignIn = ({ navigation }) => {
   };
 
   return (
-    <View style={{ flex: 1, alignItems: "center" }}>
-      <View style={{ alignItems: "center", padding: 20, marginTop: 40 }}>
+    <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
+      <View style={{ alignItems: "center", padding: 20 }}>
         <Dialog isVisible={isModalVisible} onBackdropPress={toggleModal}>
           <Dialog.Title title="รหัสผ่านไม่ถูกต้อง" />
           <Text style={{}}>กรุณาลองใหม่อีกครั้ง</Text>
@@ -56,7 +56,7 @@ const SignIn = ({ navigation }) => {
         <Image
           style={{
             marginTop: 20,
-            marginBottom: 10,
+            marginBottom: 70,
             height: 66,
             width: width * 0.8,
           }}
@@ -68,6 +68,7 @@ const SignIn = ({ navigation }) => {
             padding: 5,
             fontSize: 26,
             fontWeight: "800",
+            marginBottom: 15
           }}
         >
           เข้าสู่ระบบ
