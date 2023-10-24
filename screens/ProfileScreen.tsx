@@ -17,6 +17,7 @@ import Constants from "expo-constants";
 import axios from "axios";
 import { ProjectHeader } from "../components/ProjectHeader";
 import { UserRole } from "../types/role";
+import { PostCategory } from "../types/postCategory";
 
 export default function ProfileScreen({ navigation, route }) {
   const [select, setSelect] = useState<boolean>(true);
@@ -48,45 +49,6 @@ export default function ProfileScreen({ navigation, route }) {
     };
     retrieveToken();
   }, []);
-
-  const selectorArray = [
-    {
-      icon: "book-outline",
-      category: "หมวดการเรียน",
-    },
-    {
-      icon: "medal-outline",
-      category: "หมวดกีฬา",
-    },
-    {
-      icon: "school-outline",
-      category: "หมวดสหกิจ",
-    },
-    {
-      icon: "people-outline",
-      category: "หมวดจิตอาสา",
-    },
-    {
-      icon: "ellipsis-horizontal",
-      category: "หมวดอื่นๆ",
-    },
-  ];
-
-  const iconMapping = {
-    "book-outline": "book-outline",
-    "medal-outline": "medal-outline",
-    "school-outline": "school-outline",
-    "people-outline": "people-outline",
-    "ellipsis-horizontal": "ellipsis-horizontal",
-  };
-
-  const infoIcon = {
-    "person-outline": "person-outline",
-    "mail-outline": "mail-outline",
-    "phone-portrait-sharp": "phone-portrait-sharp",
-    "briefcase-outline": "briefcase-outline",
-    "location-outline": "location-outline",
-  };
 
   return (
     <ScrollView style={{ flex: 1, backgroundColor: "#FFFFFF" }}>
@@ -142,7 +104,15 @@ export default function ProfileScreen({ navigation, route }) {
                 setSelect(true);
               }}
             >
-              <Text style={{ fontSize: 16, color: select ? "#000000" : "#FFFFFF", fontWeight: "600" }}>เนื้อหา</Text>
+              <Text
+                style={{
+                  fontSize: 16,
+                  color: select ? "#000000" : "#FFFFFF",
+                  fontWeight: "600",
+                }}
+              >
+                เนื้อหา
+              </Text>
             </TouchableOpacity>
             <TouchableOpacity
               style={{
@@ -157,14 +127,27 @@ export default function ProfileScreen({ navigation, route }) {
                 setSelect(false);
               }}
             >
-              <Text style={{ fontSize: 16, color: select ? "#FFFFFF" : "#000000", fontWeight: "600" }}>ข้อมูลส่วนตัว</Text>
+              <Text
+                style={{
+                  fontSize: 16,
+                  color: select ? "#FFFFFF" : "#000000",
+                  fontWeight: "600",
+                }}
+              >
+                ข้อมูลส่วนตัว
+              </Text>
             </TouchableOpacity>
           </View>
           {select ? (
             !loading && user.role != UserRole.Advisor ? (
               <View style={{ width: "100%", marginTop: 10 }}>
                 <TouchableOpacity
-                  onPress={() => navigation.navigate("category")}
+                  onPress={() =>
+                    navigation.navigate("category", {
+                      data: user,
+                      category: PostCategory.learning,
+                    })
+                  }
                   style={{
                     backgroundColor: "#FFFFFF",
                     width: "100%",
@@ -203,6 +186,12 @@ export default function ProfileScreen({ navigation, route }) {
                 </TouchableOpacity>
 
                 <TouchableOpacity
+                  onPress={() =>
+                    navigation.navigate("category", {
+                      data: user,
+                      category: PostCategory.activity,
+                    })
+                  }
                   style={{
                     backgroundColor: "#FFFFFF",
                     width: "100%",
@@ -241,6 +230,12 @@ export default function ProfileScreen({ navigation, route }) {
                 </TouchableOpacity>
 
                 <TouchableOpacity
+                  onPress={() =>
+                    navigation.navigate("category", {
+                      data: user,
+                      category: PostCategory.internship,
+                    })
+                  }
                   style={{
                     backgroundColor: "#FFFFFF",
                     width: "100%",
@@ -279,6 +274,12 @@ export default function ProfileScreen({ navigation, route }) {
                 </TouchableOpacity>
 
                 <TouchableOpacity
+                  onPress={() =>
+                    navigation.navigate("category", {
+                      data: user,
+                      category: PostCategory.volunteer,
+                    })
+                  }
                   style={{
                     backgroundColor: "#FFFFFF",
                     width: "100%",
@@ -317,6 +318,12 @@ export default function ProfileScreen({ navigation, route }) {
                 </TouchableOpacity>
 
                 <TouchableOpacity
+                  onPress={() =>
+                    navigation.navigate("category", {
+                      data: user,
+                      category: PostCategory.other,
+                    })
+                  }
                   style={{
                     backgroundColor: "#FFFFFF",
                     width: "100%",

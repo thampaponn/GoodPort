@@ -23,6 +23,18 @@ export class PostAdvisorService {
     return await this.postAdvisorModel.findById(id);
   }
 
+  async getPostByUserId(userId: string): Promise<PostAdvisor[]> {
+    const posts = await this.postAdvisorModel
+      .find({ "owner.userId": userId })
+      .exec();
+
+    if (!posts) {
+      throw new NotFoundException("Posts not found");
+    }
+
+    return posts;
+  }
+
   async delPostById(id: string) {
     return await this.postAdvisorModel.deleteOne({ _id: Object(id) });
   }
@@ -30,12 +42,12 @@ export class PostAdvisorService {
   async addCommentToPost(postId: string, commentData: any) {
     try {
       const post = await this.postAdvisorModel.findById(postId);
-  
+
       if (!post) {
         throw new NotFoundException("ไม่พบโพสต์ที่ต้องการเพิ่มความคิดเห็น");
       }
       post.comments.push(commentData);
-  
+
       return await post.save();
     } catch (error) {
       console.error(error);

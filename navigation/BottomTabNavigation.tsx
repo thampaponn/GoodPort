@@ -10,6 +10,7 @@ import { Ionicons } from "@expo/vector-icons";
 import CommentScreen from "../screens/CommentScreen";
 import ProductCategory from "../screens/ProductCategory";
 import ProfilePublic from "../screens/ProfilePublic";
+import EditAdvisorPost from "../screens/edit/EditAdvisorPost";
 
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
@@ -25,6 +26,7 @@ const HomeStack = () => {
       <Stack.Screen name="productmain" component={MainPageScreen} />
       <Stack.Screen name="detail" component={ProductDetail} />
       <Stack.Screen name="comment" component={CommentScreen} />
+      <Stack.Screen name="postAdvisorEdit" component={EditAdvisorPost} />
     </Stack.Navigator>
   );
 };
