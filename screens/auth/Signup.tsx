@@ -790,7 +790,7 @@ const SignUp = ({ navigation }) => {
               style={{
                 marginTop: 20,
                 justifyContent: "center",
-                backgroundColor: "##75CAFF",
+                backgroundColor: "#75CAFF",
                 width: 320,
                 height: 42,
                 borderRadius: 10,
