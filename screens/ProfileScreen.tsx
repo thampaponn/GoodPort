@@ -124,7 +124,7 @@ export default function ProfileScreen({ navigation, route }) {
               <Text style={{ fontSize: 18, marginBottom: 10 }}>
                 {user.fname + " " + user.lname}
               </Text>
-              <Chip color={"success"} title={user.role} />
+              <Chip color={"#86D789"} title={user.role} />
             </View>
           )}
 
@@ -872,8 +872,19 @@ export default function ProfileScreen({ navigation, route }) {
             </View>
           )}
         </View>
-        <TouchableOpacity style={{justifyContent: "center", alignItems: "center", backgroundColor: "#EC785E", padding: 15, margin: 30, borderRadius: 10}}>
-          <Text style={{color: "#FFFFFF", fontWeight: "600", fontSize: 18}}>ออกจากระบบ</Text>
+        <TouchableOpacity
+          style={{
+            justifyContent: "center",
+            alignItems: "center",
+            backgroundColor: "#EC785E",
+            padding: 15,
+            margin: 30,
+            borderRadius: 10,
+          }}
+        >
+          <Text style={{ color: "#FFFFFF", fontWeight: "600", fontSize: 18 }}>
+            ออกจากระบบ
+          </Text>
         </TouchableOpacity>
       </SafeAreaView>
     </ScrollView>

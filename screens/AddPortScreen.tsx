@@ -492,15 +492,18 @@ const AddPortScreen = ({ navigation }) => {
                 pickImage();
               }}
               title={"อัพโหลดรูป"}
+              titleStyle={{ color: "black" }}
               buttonStyle={{
                 marginTop: 20,
                 borderRadius: 8,
-                backgroundColor: "#81ADC8",
+                backgroundColor: "white",
+                borderWidth: 1,
+                borderColor: "black",
               }}
               icon={
                 <Icon
                   name="cloud-upload"
-                  color={"white"}
+                  color={"black"}
                   style={{ marginRight: 10, color: "white" }}
                 />
               }
@@ -540,15 +543,18 @@ const AddPortScreen = ({ navigation }) => {
                   pickDocuments();
                 }}
                 title={"อัพโหลดไฟล์"}
+                titleStyle={{ color: "black" }}
                 buttonStyle={{
                   marginTop: 20,
                   borderRadius: 8,
-                  backgroundColor: "#81ADC8",
+                  backgroundColor: "white",
+                  borderWidth: 1,
+                  borderColor: "black",
                 }}
                 icon={
                   <Icon
                     name="cloud-upload"
-                    color={"white"}
+                    color={"black"}
                     style={{ marginRight: 10, color: "white" }}
                   />
                 }
@@ -573,7 +579,7 @@ const AddPortScreen = ({ navigation }) => {
                 marginLeft: 10,
                 fontSize: 16,
                 alignItems: "center",
-                marginTop: 10,
+                marginTop: 30,
               }}
             >
               อาจารย์ที่ปรึกษา (ไม่มีให้ใส่ ไม่มี )
@@ -613,7 +619,9 @@ const AddPortScreen = ({ navigation }) => {
               buttonStyle={{
                 marginTop: 20,
                 borderRadius: 8,
-                backgroundColor: "#81ADE8",
+                backgroundColor: "#75CAFF",
+                borderWidth: 1,
+                borderColor: "#ECF2EC",
               }}
             />
           </Card>
@@ -621,7 +629,7 @@ const AddPortScreen = ({ navigation }) => {
       )}
       {!loading2 && !loading && me.role === UserRole.Advisor && (
         <ScrollView>
-          <AddProductAdvisor />
+          <AddProductAdvisor user={me} navigation={navigation} />
         </ScrollView>
       )}
     </SafeAreaView>

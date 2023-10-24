@@ -27,7 +27,7 @@ export const PostAdvisorSchema = new mongoose.Schema({
 export interface PostAdvisor extends mongoose.Document {
   id: string;
   detail: string;
-  image: string[];
+  image: string;
   createAt: Date;
   editAt: Date;
   owner: {
