@@ -114,7 +114,25 @@ const ProductDetail = ({ route }) => {
               {product.nameTh}
             </Card.Title>
           )}
-
+          <View
+            style={{ display: "flex", flexDirection: "row", marginTop: 15, marginBottom: 15 }}
+          >
+            {!loading &&
+              product.advisor.userId &&
+              product.status === PostStatus.accepted && (
+                  <Icon
+                    name="verified"
+                    color={"#86D789"}
+                    containerStyle={{ flex: 1, alignItems: "flex-start" }}
+                    size={35}
+                  />
+              )}
+            <Button
+              containerStyle={{ width: "25%", borderRadius: 12 }}
+              color={"#3444A8"}
+              title={"แก้ไข"}
+            />
+          </View>
           <View
             style={{
               display: "flex",
@@ -127,26 +145,7 @@ const ProductDetail = ({ route }) => {
               <Chip title={product.category} type="outline" size="sm" />
             )}
           </View>
-          <View
-            style={{ display: "flex", flexDirection: "row", marginTop: 15 }}
-          >
-            {!loading &&
-              product.advisor.userId &&
-              product.status === PostStatus.accepted && (
-                <Icon
-                  name="verified"
-                  color={"#86D789"}
-                  containerStyle={{ flex: 1, alignItems: "flex-start" }}
-                  size={35}
-                />
-              )}
 
-            <Button
-              containerStyle={{ width: "40%", borderRadius: 12 }}
-              color={"#81ADC8"}
-              title={"edit"}
-            />
-          </View>
 
           <View
             style={{ display: "flex", flexDirection: "row", marginTop: 15 }}
@@ -247,108 +246,6 @@ const ProductDetail = ({ route }) => {
           </View>
         </Card>
       </ScrollView>
-      {select ? (
-        <View>
-          <View
-            style={{
-              flex: 1,
-              backgroundColor: "white",
-              position: "absolute",
-              bottom: 0,
-              left: 0,
-              right: 0,
-              justifyContent: "center",
-              alignItems: "center",
-              borderTopLeftRadius: 35,
-              borderTopRightRadius: 35,
-            }}
-          >
-            <View
-              style={{
-                backgroundColor: "white",
-                width: "100%",
-                height: "10%",
-                justifyContent: "center",
-                borderBottomWidth: 1,
-                borderTopLeftRadius: 35,
-                borderTopRightRadius: 35,
-              }}
-            >
-              <Text style={{ textAlign: "center" }}>ความคิดเห็น</Text>
-            </View>
-            <ScrollView
-              contentContainerStyle={{
-                alignItems: "center",
-                paddingBottom: 70,
-              }}
-            >
-              {infoArray.map((info, index) => (
-                <View
-                  key={index}
-                  style={{
-                    width: "95%",
-                    justifyContent: "space-evenly",
-                    alignItems: "center",
-                    flexDirection: "row",
-                    borderColor: "#AEAEAE",
-                    borderWidth: 2,
-                    borderRadius: 5,
-                    marginTop: 10,
-                  }}
-                >
-                  <View
-                    style={{
-                      alignItems: "center",
-                      justifyContent: "center",
-                      marginLeft: 20,
-                      marginRight: 10,
-                    }}
-                  >
-                    <Ionicons
-                      style={{ textAlign: "center", padding: 15 }}
-                      name={"person"}
-                      size={30}
-                      color="black"
-                    />
-                  </View>
-                  <View style={{ flex: 1 }}>
-                    <Text
-                      style={{
-                        fontSize: 14,
-                        textAlign: "left",
-                        margin: 3,
-                        fontWeight: "bold",
-                      }}
-                    >
-                      {info.name}
-                    </Text>
-                    <Text
-                      style={{ fontSize: 14, textAlign: "left", margin: 3 }}
-                    >
-                      {info.comment}
-                    </Text>
-                  </View>
-                </View>
-              ))}
-            </ScrollView>
-          </View>
-        </View>
-      ) : (
-        <View></View>
-      )}
-      <View style={styles.textInputContainer}>
-        <TouchableOpacity>
-          <TextInput style={styles.textInput} placeholder="Aa" />
-        </TouchableOpacity>
-        <TouchableOpacity onPress={() => checkSelect()}>
-          <Ionicons
-            style={{ textAlign: "center", marginLeft: 18 }}
-            name="send"
-            size={30}
-            color="black"
-          />
-        </TouchableOpacity>
-      </View>
     </View>
   );
 };

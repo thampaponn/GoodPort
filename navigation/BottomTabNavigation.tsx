@@ -56,6 +56,7 @@ const BottomTabNavigation = () => {
       <Tab.Screen
         options={{
           tabBarLabel: "Home",
+          tabBarActiveTintColor: "#34448A",
           tabBarIcon: ({ color, size }) => (
             <Ionicons name="home" size={size} color={color} />
           ),
@@ -63,6 +64,7 @@ const BottomTabNavigation = () => {
       <Tab.Screen
         options={{
           tabBarLabel: "Upload",
+          tabBarActiveTintColor: "#34448A",
           tabBarIcon: ({ color, size }) => (
             <Ionicons name="add-circle" size={size} color={color} />
           ),
@@ -70,6 +72,7 @@ const BottomTabNavigation = () => {
       <Tab.Screen
         options={{
           tabBarLabel: "Notifications",
+          tabBarActiveTintColor: "#34448A",
           tabBarIcon: ({ color, size }) => (
             <Ionicons name="notifications" size={size} color={color} />
           ),
@@ -77,6 +80,7 @@ const BottomTabNavigation = () => {
       <Tab.Screen
         options={{
           tabBarLabel: "Profile",
+          tabBarActiveTintColor: "#34448A",
           tabBarIcon: ({ color, size }) => (
             <Ionicons name="person-circle" size={size} color={color} />
           ),

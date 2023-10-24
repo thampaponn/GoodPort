@@ -131,7 +131,7 @@ export default function ProfileScreen({ navigation, route }) {
           <View style={styles.selector}>
             <TouchableOpacity
               style={{
-                backgroundColor: select ? "#F8F2DC" : "#81ADC8",
+                backgroundColor: select ? "#FFD257" : "#34448A",
                 width: 150,
                 height: 40,
                 alignItems: "center",
@@ -142,11 +142,11 @@ export default function ProfileScreen({ navigation, route }) {
                 setSelect(true);
               }}
             >
-              <Text style={{ fontSize: 16 }}>เนื้อหา</Text>
+              <Text style={{ fontSize: 16, color: select ? "#000000" : "#FFFFFF", fontWeight: "600" }}>เนื้อหา</Text>
             </TouchableOpacity>
             <TouchableOpacity
               style={{
-                backgroundColor: select ? "#81ADC8" : "#F8F2DC",
+                backgroundColor: select ? "#34448A" : "#FFD257",
                 width: 150,
                 height: 40,
                 alignItems: "center",
@@ -157,7 +157,7 @@ export default function ProfileScreen({ navigation, route }) {
                 setSelect(false);
               }}
             >
-              <Text style={{ fontSize: 16 }}>ข้อมูลส่วนตัว</Text>
+              <Text style={{ fontSize: 16, color: select ? "#FFFFFF" : "#000000", fontWeight: "600" }}>ข้อมูลส่วนตัว</Text>
             </TouchableOpacity>
           </View>
           {select ? (
@@ -900,7 +900,7 @@ const styles = StyleSheet.create({
     justifyContent: "space-evenly",
     alignItems: "center",
     flexDirection: "row",
-    backgroundColor: "#81ADC8",
+    backgroundColor: "#34448A",
     width: 315,
     height: 50,
     borderRadius: 50,
