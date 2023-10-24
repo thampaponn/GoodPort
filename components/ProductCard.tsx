@@ -29,7 +29,7 @@ export const ProductCard = ({
 }: ProductCardProps) => {
   const navigation: any = useNavigation();
   const handleSubmit = () => {
-    navigation.navigate("รายละเอียดของโปรเจกต์", { data: id });
+    navigation.navigate("detail", { data: id });
   };
   return (
     <Card containerStyle={{ borderRadius: 20, padding: 25 }}>

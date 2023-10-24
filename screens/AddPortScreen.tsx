@@ -582,7 +582,7 @@ const AddPortScreen = ({ navigation }) => {
                 marginTop: 30,
               }}
             >
-              อาจารย์ที่ปรึกษา (ไม่มีให้ใส่ ไม่มี )
+              อาจารย์ที่ปรึกษา (หากไม่มีกรุณาเลือก ไม่มี)
             </Text>
             <View
               style={{

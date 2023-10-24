@@ -24,7 +24,7 @@ const HomeStack = () => {
       }}
     >
       <Stack.Screen name="Home" component={MainPageScreen} options={{ headerShown: false }} />
-      <Stack.Screen name="รายละเอียดของโปรเจกต์" component={ProductDetail} />
+      <Stack.Screen name="detail" component={ProductDetail} options={{ headerShown: true, headerTitle: "รายละเอียดของโปรเจกต์" }} />
       <Stack.Screen name="comment" component={CommentScreen} />
       <Stack.Screen name="postAdvisorEdit" component={EditAdvisorPost} />
     </Stack.Navigator>
@@ -42,7 +42,7 @@ const ProfileStack = () => {
       <Stack.Screen name="Profile" component={ProfileScreen} />
       <Stack.Screen name="Search" component={SearchMenu} />
       <Stack.Screen name="profilePublic" component={ProfilePublic} />
-      <Stack.Screen name="category" component={ProductCategory} />
+      <Stack.Screen name="category" component={ProductCategory} options={{ headerShown: true, headerTitle: "หมวดหมู่โปรเจกต์" }} />
     </Stack.Navigator>
   );
 };

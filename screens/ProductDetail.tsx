@@ -85,6 +85,7 @@ const ProductDetail = ({ route }) => {
   ];
   return (
     <View>
+      
       <ScrollView style={{ height: "100%", backgroundColor: "#F4F4F4" }}>
         <Card
           containerStyle={{ borderRadius: 15, padding: 30, marginBottom: 70 }}
