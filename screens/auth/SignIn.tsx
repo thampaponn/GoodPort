@@ -110,7 +110,7 @@ const SignIn = ({ navigation }) => {
             style={{
               marginTop: 42,
               justifyContent: "center",
-              backgroundColor: "#81ADC8",
+              backgroundColor: "#75CAFF",
               width: "100%",
               height: 42,
               borderRadius: 10,

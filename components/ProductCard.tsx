@@ -95,10 +95,13 @@ export const ProductCard = ({
       <Button
         onPress={() => handleSubmit()}
         title={"แสดงรายละเอียด"}
+
         buttonStyle={{
           marginTop: 20,
           borderRadius: 8,
-          backgroundColor: "#81ADC8",
+          backgroundColor: "#75CAFF",
+          borderWidth:1,
+          borderColor:"#ECF2EC"
         }}
       />
     </Card>

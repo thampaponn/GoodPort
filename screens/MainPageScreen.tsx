@@ -6,18 +6,30 @@ import { ProductCard } from "../components/ProductCard";
 import { post } from "../types/post";
 import { PostCategory } from "../types/postCategory";
 import Constants from "expo-constants";
+import { ProductAdvisorCard } from "../components/ProductAdvisorCard";
 
 type CategoryData = { [key: string]: boolean };
 
 const MainPageScreen = ({ navigation }) => {
   const [originalPost, setOriginalPost] = useState<post[]>([]);
   const [searchKeyword, setSearchKeyword] = useState<string>("");
+  const [toggle, setToggle] = useState<boolean>(true);
+  const [loading, setLoading] = useState<boolean>(true);
+  const [postAdvisor, setPostAdvisor] = useState<any>(null);
 
   const fetchOriginalPost = useCallback(async () => {
     try {
-      const response = await axios.get(`${Constants.expoConfig.extra.API_URL}/post/last-7-days`);
+      const response = await axios.get(
+        `${Constants.expoConfig.extra.API_URL}/post/last-7-days`
+      );
       setOriginalPost(response.data);
+      const res = await axios.get(
+        `${Constants.expoConfig.extra.API_URL}/post-advisor/`
+      );
+      setPostAdvisor(res.data);
+      setLoading(false);
     } catch (error) {
+      setLoading(false);
       console.error(error);
     }
   }, []);
@@ -56,15 +68,15 @@ const MainPageScreen = ({ navigation }) => {
   const filteredPosts: post[] = areAllDataFalse
     ? originalPost
     : originalPost.filter((post: post) => {
-      const postCategory: PostCategory = post.category;
-      const categoryData: CategoryData = objFilterData.find(
-        (categoryObj) => categoryObj[postCategory] !== undefined
-      );
-      const isTitleMatched = post.nameTh
-        .toLowerCase()
-        .includes(searchKeyword.toLowerCase());
-      return categoryData && categoryData[postCategory] && isTitleMatched;
-    });
+        const postCategory: PostCategory = post.category;
+        const categoryData: CategoryData = objFilterData.find(
+          (categoryObj) => categoryObj[postCategory] !== undefined
+        );
+        const isTitleMatched = post.nameTh
+          .toLowerCase()
+          .includes(searchKeyword.toLowerCase());
+        return categoryData && categoryData[postCategory] && isTitleMatched;
+      });
 
   return (
     <View style={{ backgroundColor: "#FFFFFF", height: "100%" }}>
@@ -72,7 +84,7 @@ const MainPageScreen = ({ navigation }) => {
         <Card
           containerStyle={{ borderRadius: 20, marginTop: 10, paddingBottom: 0 }}
         >
-          <Text style={{ fontSize: 18, fontWeight: "600", marginLeft: 10 }}>
+          <Text style={{ fontSize: 25, fontWeight: "600", marginLeft: 10 }}>
             ประเภทโครงงาน
           </Text>
           <View style={{ marginTop: 5 }}>
@@ -102,7 +114,7 @@ const MainPageScreen = ({ navigation }) => {
                 borderColor: "#AEAEAE",
                 borderWidth: 1,
                 marginTop: 10,
-                paddingHorizontal: 15
+                paddingHorizontal: 15,
               }}
               disabled={areAllDataFalse}
               placeholder={"กรุณากรอกคำค้นหา"}
@@ -111,22 +123,31 @@ const MainPageScreen = ({ navigation }) => {
             />
           </View>
         </Card>
-        <View style={{ flexDirection: "row", width: "100%", justifyContent: "center", alignItems: "center" }}>
+        <View
+          style={{
+            flexDirection: "row",
+            justifyContent: "space-between",
+            alignItems: "center",
+            marginHorizontal: 30,
+          }}
+        >
           <Button
-            onPress={() => fetchOriginalPost()}
-            title={"Alert"}
+            titleStyle={{ color: "black" }}
+            onPress={() => setToggle(!toggle)}
+            title={"อาจารย์"}
             buttonStyle={{
               marginTop: 20,
               borderRadius: 8,
-              backgroundColor: "#81ADE8",
-              width: "70%",
-              alignSelf: "center",
+              backgroundColor: "white",
+              width: 150,
+              borderWidth: 1,
+              borderColor: "black",
             }}
             icon={
               <Icon
-                name="notifications"
-                color={"white"}
-                style={{ marginRight: 10, color: "white" }}
+                name="keyboard-arrow-down"
+                color={"black"}
+                style={{ marginRight: 10, color: "black" }}
               />
             }
           />
@@ -136,9 +157,8 @@ const MainPageScreen = ({ navigation }) => {
             buttonStyle={{
               marginTop: 20,
               borderRadius: 8,
-              backgroundColor: "#81ADC8",
-              width: "80%",
-              alignSelf: "center"
+              backgroundColor: "#3C424D",
+              width: 150,
             }}
             icon={
               <Icon
@@ -151,66 +171,48 @@ const MainPageScreen = ({ navigation }) => {
         </View>
 
         <View style={{ marginBottom: 20 }}>
-          {filteredPosts.map((post: post, index: number) => (
-            <ProductCard
-              key={index}
-              image={post.image || ""}
-              name={post.nameTh}
-              category={post.category}
-              owner={post.owner}
-              advisor={post.advisor}
-              id={post._id}
-            />
-          ))}
-        </View>
-        <View style={{ marginBottom: 20 }}>
-          {filteredPosts.map((post: post, index: number) => (
-            <ProductCard
-              key={index}
-              image={post.image || ""}
-              name={post.nameTh}
-              category={post.category}
-              owner={post.owner}
-              advisor={post.advisor}
-              id={post._id}
-            />
-          ))}
-        </View>
-
-
-        <View style={{ justifyContent: "center", borderRadius: 20, borderWidth: 2, borderColor: "#D4D4D4", margin: 15 }}>
-          <View style={{ flexDirection: "row", alignItems: "center", borderBottomWidth: 2, borderColor: "#D4D4D4" }}>
-            <Image
-              style={{
-                margin: 15,
-                height: 50,
-                width: 50,
-                borderRadius: 100,
-              }}
-              source={require("../assets/placeholder.png")}
-            />
-            <View>
-              <Text style={{ marginBottom: 5 }}>Nutaya Nitiapaitham</Text>
-              <Chip title="yee" type="outline" size="sm" />
-            </View>
-          </View>
-          <View style={{ margin: 15 }}>
-            <Text>รับสมัครแฮกเกอร์</Text>
-            <View style={{ justifyContent: "center", alignItems: "center" }}>
-              <Image
-                style={{
-                  margin: 15,
-                  height: 150,
-                  width: 150,
-                  borderRadius: 100,
-                }}
-                source={require("../assets/placeholder.png")}
+          {toggle &&
+            filteredPosts.map((post: post, index: number) => (
+              <ProductCard
+                key={index}
+                image={post.image || ""}
+                name={post.nameTh}
+                category={post.category}
+                owner={post.owner}
+                advisor={post.advisor}
+                id={post._id}
               />
-            </View>
-            <Text style={{ textAlign: "right", color: "#AEAEAE" }}>created 1 Jan 2020</Text>
-          </View>
+            ))}
         </View>
-
+        {toggle && (
+          <View style={{ marginBottom: 20 }}>
+            {filteredPosts.map((post: post, index: number) => (
+              <ProductCard
+                key={index}
+                image={post.image || ""}
+                name={post.nameTh}
+                category={post.category}
+                owner={post.owner}
+                advisor={post.advisor}
+                id={post._id}
+              />
+            ))}
+          </View>
+        )}
+        {!toggle && !loading && (
+          <View>
+            {postAdvisor.map((post: any, index: number) => (
+              <ProductAdvisorCard
+                key={index}
+                profileImage={post.owner.image}
+                name={post.owner.fname + " " + post.owner.lname}
+                detail={post.detail}
+                imagePost={post.image}
+                createAt={post.createAt}
+              />
+            ))}
+          </View>
+        )}
       </ScrollView>
     </View>
   );

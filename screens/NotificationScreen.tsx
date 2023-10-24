@@ -7,7 +7,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import jwtDecode from "jwt-decode";
 import Constants from "expo-constants";
 import axios from "axios";
-import { Button } from "@rneui/base";
+
 
 export default function NotificationScreen({ navigation }) {
   const [expanded, setExpanded] = useState<boolean>(true);
@@ -59,7 +59,7 @@ export default function NotificationScreen({ navigation }) {
   }, [retrieveToken]);
 
   return (
-    <SafeAreaView style={{ backgroundColor: "#FFFFFF" }}>
+    <SafeAreaView style={{ backgroundColor: "#FFFFFF", height:"100%" }}>
       <ListItem.Accordion
         containerStyle={{ borderWidth: 1 }}
         content={

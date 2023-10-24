@@ -16,7 +16,7 @@ export class PostAdvisorService {
   }
 
   async getAllPost() {
-    return await this.postAdvisorModel.find().exec();
+    return await this.postAdvisorModel.find().sort({ createAt: -1 }).exec();
   }
 
   async getPostById(id: string) {
@@ -38,7 +38,7 @@ export class PostAdvisorService {
   
       return await post.save();
     } catch (error) {
-      console.error(error); // ลองบันทึกข้อผิดพลาดที่เกิดขึ้น
+      console.error(error);
       throw error;
     }
   }

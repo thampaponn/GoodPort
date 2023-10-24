@@ -22,21 +22,21 @@ export const ProductConfirmCardNotification = ({
   advisor,
   id,
   postId,
-  action
+  action,
 }: ProductConfirmCardNotificationProps) => {
-  const handleSubmit = () =>{
+  const handleSubmit = () => {
     navigation.navigate("detail", { data: postId });
-  }
+  };
 
-  const handleChangeStatus = async() =>{
+  const handleChangeStatus = async () => {
     await axios.post(
       `${Constants.expoConfig.extra.API_URL}/alert/updateDetailToAccepted/${id}/${postId}`
     );
     await axios.post(
       `${Constants.expoConfig.extra.API_URL}/post/updateStatusToAccepted/${postId}`
     );
-    action()
-  }
+    action();
+  };
   return (
     <Card containerStyle={{ borderRadius: 8, marginTop: 5 }}>
       <Text
@@ -81,8 +81,14 @@ export const ProductConfirmCardNotification = ({
       </View>
       <View>
         <Button
-          color={"#AEAEAE"}
-          containerStyle={{ borderRadius: 8, marginTop: 10 }}
+          color={"white"}
+          titleStyle={{ color: "black" }}
+          containerStyle={{
+            borderRadius: 8,
+            marginTop: 10,
+            borderWidth: 1,
+            borderColor: "#C5D2C6",
+          }}
           onPress={() => handleSubmit()}
         >
           แสดงรายละเอียด
@@ -90,13 +96,14 @@ export const ProductConfirmCardNotification = ({
       </View>
       <View style={{ display: "flex", flexDirection: "row" }}>
         <Button
+        titleStyle={{color:"#FFFFFF"}}
           color={"#86D789"}
           containerStyle={{
             borderRadius: 8,
             marginTop: 10,
             width: "100%",
-          }}
 
+          }}
           onPress={() => handleChangeStatus()}
         >
           ยืนยัน
