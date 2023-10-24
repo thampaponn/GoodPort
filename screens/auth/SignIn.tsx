@@ -9,6 +9,7 @@ import {
   Image,
   TextInput,
   useWindowDimensions,
+  StatusBar
 } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import Constants from 'expo-constants';
@@ -43,8 +44,10 @@ const SignIn = ({ navigation }) => {
   };
 
   return (
-    <View style={{ flex: 1, alignItems: "center" }}>
-      <View style={{ alignItems: "center", padding: 20, marginTop: 40 }}>
+    <View style={{
+      flex: 1, alignItems: "center", justifyContent: "center", backgroundColor: "#FFFFFF"
+    }}>
+      <View style={{ alignItems: "center", padding: 20 }}>
         <Dialog isVisible={isModalVisible} onBackdropPress={toggleModal}>
           <Dialog.Title title="รหัสผ่านไม่ถูกต้อง" />
           <Text style={{}}>กรุณาลองใหม่อีกครั้ง</Text>
@@ -55,19 +58,21 @@ const SignIn = ({ navigation }) => {
 
         <Image
           style={{
-            marginTop: 20,
-            marginBottom: 10,
-            height: 66,
-            width: width * 0.8,
+            height: 150,
+            width: width * 1,
+            marginLeft: 20,
+            marginTop: 40
           }}
-          source={require("../../assets/Logo2.png")}
+          source={require("../../assets/Logo3.png")}
         />
         <Text
           style={{
             alignItems: "center",
             padding: 5,
-            fontSize: 26,
+            fontSize: 30,
             fontWeight: "800",
+            marginBottom: 15,
+            color: "#3444A8"
           }}
         >
           เข้าสู่ระบบ
@@ -110,19 +115,20 @@ const SignIn = ({ navigation }) => {
             style={{
               marginTop: 42,
               justifyContent: "center",
-              backgroundColor: "#75CAFF",
+              backgroundColor: "#34448A",
               width: "100%",
-              height: 42,
+              height: 45,
               borderRadius: 10,
             }}
             onPress={handleSubmit}
           >
             <Text
               style={{
-                fontSize: 20,
+                fontSize: 18,
                 color: "#FFFFFF",
                 lineHeight: 30,
                 textAlign: "center",
+                fontWeight: "600"
               }}
             >
               {"เข้าสู่ระบบ"}
@@ -146,7 +152,7 @@ const SignIn = ({ navigation }) => {
             <Text
               style={{
                 fontSize: 14,
-
+                color: "#34448A",
                 paddingVertical: 5,
               }}
             >

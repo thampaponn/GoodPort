@@ -124,8 +124,8 @@ const SignUp = ({ navigation }) => {
         <View style={styles.screen}>
           <View style={styles.centeredContainer}>
             <Image
-              style={{ marginBottom: 10, height: 66, width: width * 0.8 }}
-              source={require("../../assets/Logo2.png")}
+              style={{ marginLeft: 20, height: 125, width: width * 0.9 }}
+              source={require("../../assets/Logo3.png")}
             />
             <Text style={styles.signUpText}>สมัครสมาชิก</Text>
           </View>
@@ -575,15 +575,21 @@ const SignUp = ({ navigation }) => {
                   pickImage();
                 }}
                 title={"อัพโหลด"}
+                titleStyle={{ color: "black", fontWeight: "600" }}
                 buttonStyle={{
                   marginTop: 20,
-                  borderRadius: 8,
-                  backgroundColor: "#81ADC8",
+                  borderRadius: 10,
+                  backgroundColor: "#FFFFFF",
+                  height: 45,
+                  width: 320,
+                  alignSelf: "center",
+                  borderWidth: 1,
+                  borderColor: "#090909",
                 }}
                 icon={
                   <Icon
                     name="cloud-upload"
-                    color={"white"}
+                    color={"black"}
                     style={{ marginRight: 10, color: "white" }}
                   />
                 }
@@ -790,9 +796,9 @@ const SignUp = ({ navigation }) => {
               style={{
                 marginTop: 20,
                 justifyContent: "center",
-                backgroundColor: "##75CAFF",
+                backgroundColor: "#34448A",
                 width: 320,
-                height: 42,
+                height: 45,
                 borderRadius: 10,
               }}
             >
@@ -802,6 +808,7 @@ const SignUp = ({ navigation }) => {
                   color: "#FFFFFF",
                   lineHeight: 30,
                   textAlign: "center",
+                  fontWeight: "600"
                 }}
               >
                 {"สมัครสมาชิก"}
@@ -813,14 +820,14 @@ const SignUp = ({ navigation }) => {
             style={{
               flexDirection: "row",
               alignItems: "center",
-              marginTop: 15,
+              marginTop: 20,
               justifyContent: "center",
               paddingBottom: 50,
             }}
           >
             <Text style={styles.fontSm}>สมัครสมาชิกแล้ว? </Text>
             <TouchableOpacity onPress={() => navigation.navigate("signin")}>
-              <Text style={styles.fontSm}>เข้าสู่ระบบ</Text>
+              <Text style={{ color: "#3444A8", fontSize: 14 }}>เข้าสู่ระบบ</Text>
             </TouchableOpacity>
           </View>
         </View>
@@ -833,13 +840,14 @@ const styles = StyleSheet.create({
   screen: {
     flex: 1,
     alignItems: "center",
+    backgroundColor: "#FFFFFF"
   },
   fontSm: {
     fontSize: 14,
   },
   card: {
     paddingVertical: 20,
-    marginTop: 20,
+    backgroundColor: "#FFFFFF"
   },
   buttonContainer: {
     justifyContent: "flex-end",
@@ -872,7 +880,7 @@ const styles = StyleSheet.create({
   signUpText: {
     fontSize: 24,
     fontWeight: "800",
-    marginTop: 20,
+    color: "#3444A8"
   },
 });
 

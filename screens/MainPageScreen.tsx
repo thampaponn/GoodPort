@@ -68,15 +68,15 @@ const MainPageScreen = ({ navigation }) => {
   const filteredPosts: post[] = areAllDataFalse
     ? originalPost
     : originalPost.filter((post: post) => {
-        const postCategory: PostCategory = post.category;
-        const categoryData: CategoryData = objFilterData.find(
-          (categoryObj) => categoryObj[postCategory] !== undefined
-        );
-        const isTitleMatched = post.nameTh
-          .toLowerCase()
-          .includes(searchKeyword.toLowerCase());
-        return categoryData && categoryData[postCategory] && isTitleMatched;
-      });
+      const postCategory: PostCategory = post.category;
+      const categoryData: CategoryData = objFilterData.find(
+        (categoryObj) => categoryObj[postCategory] !== undefined
+      );
+      const isTitleMatched = post.nameTh
+        .toLowerCase()
+        .includes(searchKeyword.toLowerCase());
+      return categoryData && categoryData[postCategory] && isTitleMatched;
+    });
 
   return (
     <View style={{ backgroundColor: "#FFFFFF", height: "100%" }}>
@@ -108,13 +108,16 @@ const MainPageScreen = ({ navigation }) => {
               </View>
             ))}
             <Input
-              containerStyle={{}}
+              inputContainerStyle={{
+                borderColor: 'transparent', // Set border color to transparent
+              }}
               style={{
                 borderRadius: 5,
                 borderColor: "#AEAEAE",
                 borderWidth: 1,
                 marginTop: 10,
                 paddingHorizontal: 15,
+
               }}
               disabled={areAllDataFalse}
               placeholder={"กรุณากรอกคำค้นหา"}

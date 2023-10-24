@@ -3,7 +3,7 @@ import { View, Image, TouchableOpacity } from "react-native";
 
 export const ProjectHeader = ({ navigation, user }) => {
   return (
-    <View style={{ width: "100%", paddingTop: 70 }}>
+    <View style={{ width: "100%", paddingTop: 60 }}>
       <View
         style={{
           flexDirection: "row",
@@ -12,11 +12,11 @@ export const ProjectHeader = ({ navigation, user }) => {
         }}
       >
         <Image
-          style={{ width: 250, height: 50, marginLeft: 70 }}
-          source={require("../assets/Logo2.png")}
+          style={{ width: 250, height: 95, marginLeft: 65, justifyContent: "center", alignSelf: "center" }}
+          source={require("../assets/Logo3.png")}
         />
         <TouchableOpacity
-          style={{marginRight: 15}}
+          style={{ marginRight: 15, marginBottom: 35 }}
           onPress={() => navigation.navigate("Search", { data: user })}
         >
           <Icon name="search" size={35} />

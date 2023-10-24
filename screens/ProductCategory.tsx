@@ -6,14 +6,12 @@ const ProductCategory = () => {
   return (
     <View style={{ backgroundColor: "white", height: "100%" }}>
       <SafeAreaView>
-        <Card
-          containerStyle={{ borderRadius: 8, padding: 0, paddingVertical: 10 }}
-        >
           <Card
             containerStyle={{
               paddingHorizontal: 10,
               padding: 0,
               marginVertical: 0,
+              borderRadius: 10
             }}
           >
             <View
@@ -98,8 +96,7 @@ const ProductCategory = () => {
             </View>
           </View>
           
-        </Card>
-        <View style={{ justifyContent: "center", borderRadius: 20, borderWidth: 2, borderColor: "#D4D4D4", margin: 15 }}>
+        <View style={{ justifyContent: "center", borderRadius: 20, borderWidth: 2, borderColor: "#D4D4D4", marginHorizontal: 15 }}>
           <View style={{ flexDirection: "row", alignItems: "center", borderBottomWidth: 2, borderColor: "#D4D4D4" }}>
             <Image
               style={{
