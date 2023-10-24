@@ -5,10 +5,7 @@ import {
   Text,
   ScrollView,
   StyleSheet,
-  TextInput,
-  TouchableOpacity,
 } from "react-native";
-import { Ionicons } from "@expo/vector-icons";
 import { useState } from "react";
 import Constants from "expo-constants";
 import axios from "axios";

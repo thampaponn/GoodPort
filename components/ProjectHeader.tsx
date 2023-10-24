@@ -12,7 +12,7 @@ export const ProjectHeader = ({ navigation, user }) => {
         }}
       >
         <Image
-          style={{ width: 250, height: 95, marginLeft: 65, justifyContent: "center", alignSelf: "center" }}
+          style={{ width: 250, height: 95, marginLeft: 75, justifyContent: "center", alignSelf: "center" }}
           source={require("../assets/Logo3.png")}
         />
         <TouchableOpacity
