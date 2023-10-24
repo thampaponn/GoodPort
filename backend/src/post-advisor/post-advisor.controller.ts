@@ -43,6 +43,16 @@ export class PostAdvisorController {
     }
   }
 
+  @Get('getByUserId/:userId')
+  async getPostsByUserId(@Param('userId') userId: string) {
+    try {
+      const posts = await this.PostAdvisorService.getPostByUserId(userId);
+      return posts;
+    } catch (e) {
+      throw new NotFoundException('Posts not found');
+    }
+  }
+
   @Put(":id")
   async updatePost(
     @Param("id") id: string,

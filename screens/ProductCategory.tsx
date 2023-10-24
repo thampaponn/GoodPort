@@ -2,7 +2,9 @@ import { Card, Chip } from "@rneui/themed";
 import { View, Text, TouchableOpacity, Image } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
-const ProductCategory = () => {
+const ProductCategory = ({route}) => {
+  const {data, category} = route.params;
+  console.log("data =>",data, "category =>", category)
   return (
     <View style={{ backgroundColor: "white", height: "100%" }}>
       <SafeAreaView>
