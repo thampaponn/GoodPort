@@ -908,7 +908,7 @@ export default function ProfileScreen({ navigation, route }) {
           }}
         >
           <Text style={{ color: "black", fontWeight: "600", fontSize: 18 }}>
-            แก้ไข
+            แก้ไขโปรไฟล์
           </Text>
         </TouchableOpacity>
         <TouchableOpacity
@@ -923,9 +923,11 @@ export default function ProfileScreen({ navigation, route }) {
             marginTop: 10
           }}
         >
-          <Text style={{ color: "#FFFFFF", fontWeight: "600", fontSize: 18 }}>
-            ออกจากระบบ
-          </Text>
+          <TouchableOpacity onPress={() => (navigation.navigate("signin"))}>
+            <Text style={{ color: "#FFFFFF", fontWeight: "600", fontSize: 18 }}>
+              ออกจากระบบ
+            </Text>
+          </TouchableOpacity>
         </TouchableOpacity>
       </SafeAreaView>
     </ScrollView>
