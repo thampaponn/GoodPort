@@ -8,11 +8,12 @@ import {
   StyleSheet,
   ScrollView,
 } from "react-native";
+import { debounce } from "lodash";
 import { Ionicons } from "@expo/vector-icons";
 import { Userjwt } from "../types/userjwt";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import jwtDecode from "jwt-decode";
-import { Chip, Dialog } from "@rneui/themed";
+import { Chip, Dialog, Icon } from "@rneui/themed";
 import Constants from "expo-constants";
 import axios from "axios";
 import { ProjectHeader } from "../components/ProjectHeader";
@@ -24,36 +25,38 @@ export default function ProfileScreen({ navigation, route }) {
   const [user, setUser] = useState<any>(null);
   const [loading, setLoading] = useState<boolean>(true);
 
-  const logout = async() =>{
-    const token = await AsyncStorage.setItem("token","");
-    
-  }
+  const logout = async () => {
+    const token = await AsyncStorage.setItem("token", "");
+  };
+
+  const retrieveToken = async () => {
+    try {
+      const token = await AsyncStorage.getItem("token");
+      const decoded: { sub: Userjwt } = jwtDecode(token);
+      const user = decoded.sub;
+      axios
+        .post(`${Constants.expoConfig.extra.API_URL}/user/${user._id}`)
+        .then((response) => {
+          setUser(response.data);
+          setLoading(false);
+        })
+        .catch((error) => {
+          console.error(error);
+          setLoading(false);
+        });
+    } catch (error) {
+      setLoading(false);
+      navigation.navigate("signin");
+      console.log("เกิดข้อผิดพลาดในการดึง token:", error);
+    }
+  };
+
+  const debouncedRetrieveToken = debounce(retrieveToken, 3000);
 
   useEffect(() => {
-    const retrieveToken = async () => {
-      try {
-        const token = await AsyncStorage.getItem("token");
-        const decoded: { sub: Userjwt } = jwtDecode(token);
-        const user = decoded.sub;
+    debouncedRetrieveToken();
+  }, []); // TO DO รอไปทำงานจริงค่อยใส่ user เข้าไป
 
-        axios
-          .post(`${Constants.expoConfig.extra.API_URL}/user/${user._id}`)
-          .then((response) => {
-            setUser(response.data);
-            setLoading(false);
-          })
-          .catch((error) => {
-            console.error(error);
-            setLoading(false);
-          });
-      } catch (error) {
-        setLoading(false);
-        navigation.navigate("signin");
-        console.log("เกิดข้อผิดพลาดในการดึง token:", error);
-      }
-    };
-    retrieveToken();
-  }, []);
 
   return (
     <ScrollView style={{ flex: 1, backgroundColor: "#FFFFFF" }}>
@@ -63,35 +66,46 @@ export default function ProfileScreen({ navigation, route }) {
       </Dialog>
       <SafeAreaView>
         <View style={styles.container}>
-          {!loading && user.image.profileImage ? (
-            <Image
-              style={{
-                marginTop: 15,
-                marginBottom: 10,
-                height: 180,
-                width: 180,
-                borderRadius: 100,
-              }}
-              source={{ uri: user.image.profileImage }}
-            />
-          ) : (
-            <Image
-              style={{
-                marginTop: 15,
-                marginBottom: 10,
-                height: 180,
-                width: 180,
-                borderRadius: 100,
-              }}
-              source={require("../assets/placeholder.png")}
-            />
-          )}
+          <View>
+            {!loading && user.image.profileImage ? (
+              <Image
+                style={{
+                  marginTop: 15,
+                  marginBottom: 10,
+                  height: 180,
+                  width: 180,
+                  borderRadius: 100,
+                }}
+                source={{ uri: user.image.profileImage }}
+              />
+            ) : (
+              <Image
+                style={{
+                  marginTop: 15,
+                  marginBottom: 10,
+                  height: 180,
+                  width: 180,
+                  borderRadius: 100,
+                }}
+                source={require("../assets/placeholder.png")}
+              />
+            )}
+          </View>
           {!loading && (
             <View>
               <Text style={{ fontSize: 18, marginBottom: 10 }}>
                 {user.fname + " " + user.lname}
               </Text>
-              <Chip color={"#86D789"} title={user.role} />
+
+              <View
+                style={{
+                  display: "flex",
+                  flexDirection: "row",
+                  alignItems: "center",
+                }}
+              >
+                <Chip color={"#86D789"} title={user.role} />
+              </View>
             </View>
           )}
 
@@ -369,7 +383,9 @@ export default function ProfileScreen({ navigation, route }) {
             ) : (
               <View style={{ width: "100%", marginTop: 10 }}>
                 <TouchableOpacity
-                  onPress={() => navigation.navigate("categoryAdvisor", {data:user})}
+                  onPress={() =>
+                    navigation.navigate("categoryAdvisor", { data: user })
+                  }
                   style={{
                     backgroundColor: "#FFFFFF",
                     width: "100%",
@@ -884,13 +900,31 @@ export default function ProfileScreen({ navigation, route }) {
             </View>
           )}
         </View>
-        <TouchableOpacity onPress={() => logout()}
+        <TouchableOpacity
+          onPress={() => navigation.navigate("editProfile", { user: user })}
+          style={{
+            justifyContent: "center",
+            alignItems: "center",
+            backgroundColor: "#FFFFFF",
+            padding: 15,
+            margin: 10,
+            marginHorizontal: 30,
+            borderRadius: 10,
+            borderWidth: 1,
+          }}
+        >
+          <Text style={{ color: "black", fontWeight: "600", fontSize: 18 }}>
+            แก้ไข
+          </Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          onPress={() => logout()}
           style={{
             justifyContent: "center",
             alignItems: "center",
             backgroundColor: "#EC785E",
             padding: 15,
-            margin: 30,
+            marginHorizontal: 30,
             borderRadius: 10,
           }}
         >

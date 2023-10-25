@@ -13,6 +13,7 @@ import ProfilePublic from "../screens/ProfilePublic";
 import EditAdvisorPost from "../screens/edit/EditAdvisorPost";
 import SignIn from "../screens/auth/SignIn";
 import ProductAdvisorCategory from "../screens/ProductAdvisorCategory";
+import EditProfile from "../screens/edit/EditProfile";
 
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
@@ -42,6 +43,7 @@ const ProfileStack = () => {
       }}
     >
       <Stack.Screen name="Profile" component={ProfileScreen} />
+      <Stack.Screen name="editProfile" component={EditProfile} />
       <Stack.Screen name="Search" component={SearchMenu} />
       <Stack.Screen name="profilePublic" component={ProfilePublic} />
       <Stack.Screen name="category" component={ProductCategory} options={{ headerShown: true, headerTitle: "หมวดหมู่โปรเจกต์" }} />
