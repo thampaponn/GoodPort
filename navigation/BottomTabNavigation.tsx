@@ -43,7 +43,7 @@ const ProfileStack = () => {
       }}
     >
       <Stack.Screen name="Profile" component={ProfileScreen} />
-      <Stack.Screen name="editProfile" component={EditProfile} />
+      <Stack.Screen name="editProfile" component={EditProfile} options={{ headerShown: true, headerTitle: "แก้ไขโปรไฟล์" }} />
       <Stack.Screen name="Search" component={SearchMenu} />
       <Stack.Screen name="profilePublic" component={ProfilePublic} />
       <Stack.Screen name="editPostAdivsor" component={EditAdvisorPost} />
