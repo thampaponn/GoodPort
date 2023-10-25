@@ -224,6 +224,8 @@ const MainPageScreen = ({ navigation }) => {
                 detail={post.detail}
                 imagePost={post.image}
                 createAt={post.createAt}
+                product={post}
+                navigation={navigation}
               />
             ))}
           </View>

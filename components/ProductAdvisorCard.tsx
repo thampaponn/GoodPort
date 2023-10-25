@@ -1,4 +1,4 @@
-import { Chip } from "@rneui/themed";
+import { Button, Chip } from "@rneui/themed";
 import { View, Image, Text } from "react-native";
 
 export const ProductAdvisorCard = ({
@@ -7,6 +7,8 @@ export const ProductAdvisorCard = ({
   detail,
   imagePost,
   createAt,
+  product,
+  navigation
 }) => {
   return (
     <View
@@ -80,6 +82,19 @@ export const ProductAdvisorCard = ({
           )}
         </View>
         <Text style={{ textAlign: "right", color: "#AEAEAE" }}>{createAt}</Text>
+        <Button
+            onPress={ () => navigation.navigate("advisorDetail" ,{data: product})}
+            title={"ดูรายละเอียด"}
+            titleStyle={{ color: "black" }}
+            buttonStyle={{
+              marginTop: 20,
+              borderRadius: 8,
+              backgroundColor: "white",
+              borderWidth: 1,
+              borderColor: "black",
+            }}
+            
+          />
       </View>
     </View>
   );

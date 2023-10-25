@@ -14,6 +14,7 @@ import EditAdvisorPost from "../screens/edit/EditAdvisorPost";
 import SignIn from "../screens/auth/SignIn";
 import ProductAdvisorCategory from "../screens/ProductAdvisorCategory";
 import EditProfile from "../screens/edit/EditProfile";
+import ProductAdvisorDetail from "../screens/ProductAdvisorDetail";
 
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
@@ -30,6 +31,7 @@ const HomeStack = () => {
       <Stack.Screen name="detail" component={ProductDetail} options={{ headerShown: true, headerTitle: "รายละเอียดของโปรเจกต์" }} />
       <Stack.Screen name="comment" component={CommentScreen} />
       <Stack.Screen name="postAdvisorEdit" component={EditAdvisorPost} />
+      <Stack.Screen name="advisorDetail" component={ProductAdvisorDetail} />
     </Stack.Navigator>
   );
 };
