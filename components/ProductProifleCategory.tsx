@@ -7,6 +7,7 @@ export const ProductProfileCategory = ({ data }) => {
       containerStyle={{
         paddingHorizontal: 10,
         padding: 0,
+        margin:0,
         marginVertical: 0,
         borderRadius: 10,
       }}

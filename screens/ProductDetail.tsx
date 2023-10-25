@@ -1,11 +1,6 @@
 import { Button, Card, Chip, Icon } from "@rneui/themed";
 import React, { useCallback, useEffect } from "react";
-import {
-  View,
-  Text,
-  ScrollView,
-  StyleSheet,
-} from "react-native";
+import { View, Text, ScrollView, StyleSheet } from "react-native";
 import { useState } from "react";
 import Constants from "expo-constants";
 import axios from "axios";
@@ -36,7 +31,7 @@ const ProductDetail = ({ route }) => {
       console.error("ไม่สามารถเปิด URL นี้ได้");
     }
   };
-  const { data } = route.params;
+  const { data, user } = route.params;
   const fetchPost = useCallback(async () => {
     try {
       const response = await axios.post(
@@ -63,7 +58,6 @@ const ProductDetail = ({ route }) => {
 
   return (
     <View>
-      
       <ScrollView style={{ height: "100%", backgroundColor: "#F4F4F4" }}>
         <Card
           containerStyle={{ borderRadius: 15, padding: 30, marginBottom: 70 }}
@@ -91,23 +85,30 @@ const ProductDetail = ({ route }) => {
             </Card.Title>
           )}
           <View
-            style={{ display: "flex", flexDirection: "row", marginTop: 15, marginBottom: 15 }}
+            style={{
+              display: "flex",
+              flexDirection: "row",
+              marginTop: 15,
+              marginBottom: 15,
+            }}
           >
             {!loading &&
               product.advisor.userId &&
               product.status === PostStatus.accepted && (
-                  <Icon
-                    name="verified"
-                    color={"#86D789"}
-                    containerStyle={{ flex: 1, alignItems: "flex-start" }}
-                    size={35}
-                  />
+                <Icon
+                  name="verified"
+                  color={"#86D789"}
+                  containerStyle={{ flex: 1, alignItems: "flex-start" }}
+                  size={35}
+                />
               )}
-            <Button
-              containerStyle={{ width: "25%", borderRadius: 12 }}
-              color={"#3444A8"}
-              title={"แก้ไข"}
-            />
+            {!loading && user === product.owner.userId &&
+              <Button
+                containerStyle={{ width: "25%", borderRadius: 12 }}
+                color={"#3444A8"}
+                title={"แก้ไข"}
+              />
+            }
           </View>
           <View
             style={{
@@ -121,7 +122,6 @@ const ProductDetail = ({ route }) => {
               <Chip title={product.category} type="outline" size="sm" />
             )}
           </View>
-
 
           <View
             style={{ display: "flex", flexDirection: "row", marginTop: 15 }}
