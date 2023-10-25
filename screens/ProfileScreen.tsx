@@ -92,21 +92,15 @@ export default function ProfileScreen({ navigation, route }) {
             )}
           </View>
           {!loading && (
-            <View>
+            <View style={{ flex: 1, justifyContent: "center" }}>
               <Text style={{ fontSize: 18, marginBottom: 10 }}>
                 {user.fname + " " + user.lname}
               </Text>
-
-              <View
-                style={{
-                  display: "flex",
-                  flexDirection: "row",
-                  alignItems: "center",
-                }}
-              >
+              <View style={{ alignItems: "center" }}>
                 <Chip color={"#86D789"} title={user.role} />
               </View>
             </View>
+
           )}
 
           <View style={styles.selector}>
@@ -926,6 +920,7 @@ export default function ProfileScreen({ navigation, route }) {
             padding: 15,
             marginHorizontal: 30,
             borderRadius: 10,
+            marginTop: 10
           }}
         >
           <Text style={{ color: "#FFFFFF", fontWeight: "600", fontSize: 18 }}>
