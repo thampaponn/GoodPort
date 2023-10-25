@@ -7,6 +7,7 @@ import { post } from "../types/post";
 import { PostCategory } from "../types/postCategory";
 import Constants from "expo-constants";
 import { ProductAdvisorCard } from "../components/ProductAdvisorCard";
+import Header from "../components/Header";
 
 type CategoryData = { [key: string]: boolean };
 
@@ -80,6 +81,7 @@ const MainPageScreen = ({ navigation }) => {
 
   return (
     <View style={{ backgroundColor: "#FFFFFF", height: "100%" }}>
+      <Header />
       <ScrollView>
         <Card
           containerStyle={{ borderRadius: 20, marginTop: 10, paddingBottom: 0 }}

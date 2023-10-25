@@ -5,10 +5,7 @@ import {
   Text,
   ScrollView,
   StyleSheet,
-  TextInput,
-  TouchableOpacity,
 } from "react-native";
-import { Ionicons } from "@expo/vector-icons";
 import { useState } from "react";
 import Constants from "expo-constants";
 import axios from "axios";
@@ -88,6 +85,7 @@ const ProductDetail = ({ route }) => {
   ];
   return (
     <View>
+      
       <ScrollView style={{ height: "100%", backgroundColor: "#F4F4F4" }}>
         <Card
           containerStyle={{ borderRadius: 15, padding: 30, marginBottom: 70 }}

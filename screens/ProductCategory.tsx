@@ -1,13 +1,14 @@
 import { Card, Chip } from "@rneui/themed";
-import { View, Text, TouchableOpacity, Image } from "react-native";
+import { View, Text, TouchableOpacity, Image, ScrollView } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
-const ProductCategory = ({route}) => {
-  const {data, category} = route.params;
-  console.log("data =>",data, "category =>", category)
+const ProductCategory = ({ route }) => {
+  const { data, category } = route.params;
+  console.log("data =>", data, "category =>", category)
   return (
     <View style={{ backgroundColor: "white", height: "100%" }}>
       <SafeAreaView>
+        <ScrollView>
           <Card
             containerStyle={{
               paddingHorizontal: 10,
@@ -97,40 +98,40 @@ const ProductCategory = ({route}) => {
               </View>
             </View>
           </View>
-          
-        <View style={{ justifyContent: "center", borderRadius: 20, borderWidth: 2, borderColor: "#D4D4D4", marginHorizontal: 15 }}>
-          <View style={{ flexDirection: "row", alignItems: "center", borderBottomWidth: 2, borderColor: "#D4D4D4" }}>
-            <Image
-              style={{
-                margin: 15,
-                height: 50,
-                width: 50,
-                borderRadius: 100,
-              }}
-              source={require("../assets/placeholder.png")}
-            />
-            <View>
-              <Text style={{ marginBottom: 5 }}>Nutaya Nitiapaitham</Text>
-              <Chip title="yee" type="outline" size="sm" />
-            </View>
-          </View>
-          <View style={{ margin: 15 }}>
-            <Text>รับสมัครแฮกเกอร์</Text>
-            <View style={{ justifyContent: "center", alignItems: "center" }}>
+
+          <View style={{ justifyContent: "center", borderRadius: 20, borderWidth: 2, borderColor: "#D4D4D4", marginHorizontal: 15 }}>
+            <View style={{ flexDirection: "row", alignItems: "center", borderBottomWidth: 2, borderColor: "#D4D4D4" }}>
               <Image
                 style={{
                   margin: 15,
-                  height: 150,
-                  width: 150,
+                  height: 50,
+                  width: 50,
                   borderRadius: 100,
                 }}
                 source={require("../assets/placeholder.png")}
               />
+              <View>
+                <Text style={{ marginBottom: 5 }}>Nutaya Nitiapaitham</Text>
+                <Chip title="yee" type="outline" size="sm" />
+              </View>
             </View>
-            <Text style={{ textAlign: "right", color: "#AEAEAE" }}>created 1 Jan 2020</Text>
+            <View style={{ margin: 15 }}>
+              <Text>รับสมัครแฮกเกอร์</Text>
+              <View style={{ justifyContent: "center", alignItems: "center" }}>
+                <Image
+                  style={{
+                    margin: 15,
+                    height: 150,
+                    width: 150,
+                    borderRadius: 100,
+                  }}
+                  source={require("../assets/placeholder.png")}
+                />
+              </View>
+              <Text style={{ textAlign: "right", color: "#AEAEAE" }}>created 1 Jan 2020</Text>
+            </View>
           </View>
-        </View>
-
+        </ScrollView>
       </SafeAreaView>
     </View>
   );

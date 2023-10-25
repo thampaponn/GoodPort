@@ -18,13 +18,13 @@ const Stack = createNativeStackNavigator();
 const HomeStack = () => {
   return (
     <Stack.Navigator
-      initialRouteName="productmain"
+      initialRouteName="Home"
       screenOptions={{
         headerShown: true,
       }}
     >
-      <Stack.Screen name="productmain" component={MainPageScreen} />
-      <Stack.Screen name="detail" component={ProductDetail} />
+      <Stack.Screen name="Home" component={MainPageScreen} options={{ headerShown: false }} />
+      <Stack.Screen name="detail" component={ProductDetail} options={{ headerShown: true, headerTitle: "รายละเอียดของโปรเจกต์" }} />
       <Stack.Screen name="comment" component={CommentScreen} />
       <Stack.Screen name="postAdvisorEdit" component={EditAdvisorPost} />
     </Stack.Navigator>
@@ -42,7 +42,7 @@ const ProfileStack = () => {
       <Stack.Screen name="Profile" component={ProfileScreen} />
       <Stack.Screen name="Search" component={SearchMenu} />
       <Stack.Screen name="profilePublic" component={ProfilePublic} />
-      <Stack.Screen name="category" component={ProductCategory} />
+      <Stack.Screen name="category" component={ProductCategory} options={{ headerShown: true, headerTitle: "หมวดหมู่โปรเจกต์" }} />
     </Stack.Navigator>
   );
 };
@@ -62,7 +62,7 @@ const BottomTabNavigation = () => {
           tabBarIcon: ({ color, size }) => (
             <Ionicons name="home" size={size} color={color} />
           ),
-        }} name="Home" component={HomeStack} />
+        }} name="homemain" component={HomeStack} />
       <Tab.Screen
         options={{
           tabBarLabel: "Upload",
