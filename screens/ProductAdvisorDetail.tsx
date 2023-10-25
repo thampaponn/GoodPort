@@ -93,21 +93,22 @@ const ProductAdvisorDetail = ({ route }) => {
                 />
               )}
             </Card>
-            <Text
-              style={{
-                fontSize: 16,
-                textAlign: "center",
-                marginTop: 20,
-                fontWeight: "800",
-              }}
-            >
-              ความคิดเห็น
-            </Text>
+            <View style={{borderWidth: 1, margin: 10, borderRadius: 20, height: 40, justifyContent: "center"}}>
+              <Text
+                style={{
+                  fontSize: 16,
+                  textAlign: "center",
+                  fontWeight: "800",
+                }}
+              >
+                ความคิดเห็น
+              </Text>
+            </View>
             <ScrollView style={{ height: 300 }}>
               {product.comments.map((comment, index) => (
                 <Card key={index} containerStyle={{ borderRadius: 8 }}>
                   <View>
-                    <Text style={{ marginBottom: 5, fontWeight: "800" }}>
+                    <Text style={{ marginBottom: 8, fontWeight: "800" }}>
                       {comment.fname + " " + comment.lname}
                     </Text>
                     <View
@@ -128,12 +129,14 @@ const ProductAdvisorDetail = ({ route }) => {
                 borderRadius: 5,
                 borderColor: "#AEAEAE",
                 borderWidth: 1,
-                marginTop: 6,
+                marginTop: 20,
                 paddingHorizontal: 10,
+                marginHorizontal: 6
               }}
               inputContainerStyle={{ borderBottomWidth: 0 }}
               onChangeText={setComment}
               value={comment}
+              placeholder="ความคิดเห็น..."
             />
             <Button
               onPress={() => handleSubmit()}
@@ -145,6 +148,7 @@ const ProductAdvisorDetail = ({ route }) => {
                 borderWidth: 1,
                 borderColor: "#ECF2EC",
                 height: 45,
+                marginHorizontal: 15
               }}
             />
           </Card>
