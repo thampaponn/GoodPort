@@ -123,30 +123,30 @@ const ProductDetail = ({ route }) => {
             )}
           </View>
 
-          <View
-            style={{ display: "flex", flexDirection: "row", marginTop: 15 }}
-          >
-            <Text style={{ fontSize: 16 }}>วัตถุประสงค์ : </Text>
+          <View style={{ display: "flex", marginTop: 15 }}>
+            <Text style={{ fontSize: 16, fontWeight: "800" }}>
+              วัตถุประสงค์{" "}
+            </Text>
             {!loading && (
               <Text style={{ fontSize: 16 }}>
                 {product.objective ? product.objective : "ไม่มี"}
               </Text>
             )}
           </View>
-          <View
-            style={{ display: "flex", flexDirection: "row", marginTop: 15 }}
-          >
-            <Text style={{ fontSize: 16 }}>ที่มาของโครงงาน : </Text>
+          <View style={{ display: "flex", marginTop: 15 }}>
+            <Text style={{ fontSize: 16, fontWeight: "800" }}>
+              ที่มาของโครงงาน{" "}
+            </Text>
             {!loading && (
               <Text style={{ fontSize: 16 }}>
                 {product.source ? product.source : "ไม่มี"}
               </Text>
             )}
           </View>
-          <View
-            style={{ display: "flex", flexDirection: "row", marginTop: 15 }}
-          >
-            <Text style={{ fontSize: 16 }}>รายละเอียดโครงงาน : </Text>
+          <View style={{ display: "flex", marginTop: 15 }}>
+            <Text style={{ fontSize: 16, fontWeight: "800" }}>
+              รายละเอียดโครงงาน{" "}
+            </Text>
             {!loading && (
               <Text style={{ fontSize: 16 }}>
                 {product.detail ? product.detail : "ไม่มี"}

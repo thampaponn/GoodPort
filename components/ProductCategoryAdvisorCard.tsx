@@ -1,4 +1,4 @@
-import { Chip } from "@rneui/themed";
+import { Chip, Icon } from "@rneui/themed";
 import React from "react";
 import { View, Image, Text, TouchableOpacity } from "react-native";
 
@@ -57,7 +57,6 @@ export const ProductCategoryAdvisorCard = ({
         </View>
         {me._id === product.owner.userId && (
           <TouchableOpacity
-            style={{ marginLeft: 120 }}
             onPress={() =>
               navigation.navigate("editPostAdivsor", {
                 user: me,
@@ -65,7 +64,11 @@ export const ProductCategoryAdvisorCard = ({
               })
             }
           >
-            <Text>แก้ไข</Text>
+            <Icon
+              name="edit"
+              color={"black"}
+              style={{ marginRight: 10, color: "black" }}
+            />
           </TouchableOpacity>
         )}
       </View>
