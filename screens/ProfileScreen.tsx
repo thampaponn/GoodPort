@@ -908,7 +908,7 @@ export default function ProfileScreen({ navigation, route }) {
           }}
         >
           <Text style={{ color: "black", fontWeight: "600", fontSize: 18 }}>
-            แก้ไข
+            แก้ไขโปรไฟล์
           </Text>
         </TouchableOpacity>
         <TouchableOpacity
