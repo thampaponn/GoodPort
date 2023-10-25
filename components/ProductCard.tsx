@@ -17,6 +17,7 @@ type ProductCardProps = {
   category: string;
   owner: owner;
   advisor?: advisor;
+  me:string;
 };
 
 export const ProductCard = ({
@@ -26,10 +27,11 @@ export const ProductCard = ({
   category,
   owner,
   advisor,
+  me,
 }: ProductCardProps) => {
   const navigation: any = useNavigation();
   const handleSubmit = () => {
-    navigation.navigate("detail", { data: id });
+    navigation.navigate("detail", { data: id, user: me });
   };
   return (
     <Card containerStyle={{ borderRadius: 20, padding: 25 }}>

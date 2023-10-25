@@ -1,7 +1,7 @@
 import React from "react";
 import { View, Text, TouchableOpacity } from "react-native";
 
-export const ProductCategoryPostCard = ({ product, navigation }) => {
+export const ProductCategoryPostCard = ({ product, navigation, user, me }) => {
   return (
     <View style={{ margin: 15 }}>
       <View
@@ -40,7 +40,9 @@ export const ProductCategoryPostCard = ({ product, navigation }) => {
 
         <View style={{ alignItems: "center", marginTop: 5 }}>
           <TouchableOpacity
-            onPress={() => navigation.navigate("detail", { data: product._id })}
+            onPress={() =>
+              navigation.navigate("detail", { data: product._id, user: me })
+            }
             style={{
               borderRadius: 5,
               borderColor: "#D9D9D9",

@@ -191,21 +191,28 @@ const MainPageScreen = ({ navigation }) => {
             }
           />
         </View>
-
-        <View style={{ marginBottom: 20 }}>
-          {toggle &&
-            filteredPosts.map((post: post, index: number) => (
-              <ProductCard
-                key={index}
-                image={post.image || ""}
-                name={post.nameTh}
-                category={post.category}
-                owner={post.owner}
-                advisor={post.advisor}
-                id={post._id}
-              />
-            ))}
-        </View>
+        {!loading && (
+          <View style={{ marginBottom: 20 }}>
+            {toggle &&
+              filteredPosts.map((post: post, index: number) => (
+                <ProductCard
+                  key={index}
+                  image={post.image || ""}
+                  name={post.nameTh}
+                  category={post.category}
+                  owner={post.owner}
+                  advisor={post.advisor}
+                  id={post._id}
+                  me={me._id}
+                />
+              ))}
+          </View>
+        )}
+        {filteredPosts.length === 0 && (
+          <Card>
+            <Text style={{ textAlign: "center" }}>ไม่พบเนื้อหา</Text>
+          </Card>
+        )}
 
         {!toggle && !loading && (
           <View>
@@ -220,6 +227,11 @@ const MainPageScreen = ({ navigation }) => {
               />
             ))}
           </View>
+        )}
+        {!loading && postAdvisor.length === 0 && (
+          <Card>
+            <Text style={{ textAlign: "center" }}>ไม่พบเนื้อหา</Text>
+          </Card>
         )}
       </ScrollView>
     </View>
