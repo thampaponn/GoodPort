@@ -86,7 +86,6 @@ const EditProfile = ({ navigation, route }) => {
         profileImage: checked ? filename : user.image.profileImage,
       },
     };
-    console.log(reqBody);
     await axios.put(
       `${Constants.expoConfig.extra.API_URL}/user/${user._id}`,
       reqBody

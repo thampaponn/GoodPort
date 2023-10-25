@@ -85,7 +85,7 @@ const EditAdvisorPost = ({ route, navigation }) => {
     }
     const bodyReq = {
       ...data,
-      image: filename,
+      image: checked ? filename : product.image,
     };
     await axios.put(
       `${Constants.expoConfig.extra.API_URL}/post-advisor/${product._id}`,

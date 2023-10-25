@@ -38,8 +38,6 @@ const ProductCategory = ({ navigation, route }) => {
     retrieveToken();
   }, []);
 
-  console.log(data._id);
-
   return (
     <View style={{ backgroundColor: "white", height: "100%" }}>
       <ScrollView>

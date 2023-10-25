@@ -14,6 +14,7 @@ import EditAdvisorPost from "../screens/edit/EditAdvisorPost";
 import SignIn from "../screens/auth/SignIn";
 import ProductAdvisorCategory from "../screens/ProductAdvisorCategory";
 import EditProfile from "../screens/edit/EditProfile";
+import EditPost from "../screens/edit/EditPost";
 
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
@@ -26,8 +27,17 @@ const HomeStack = () => {
         headerShown: true,
       }}
     >
-      <Stack.Screen name="Home" component={MainPageScreen} options={{ headerShown: false }} />
-      <Stack.Screen name="detail" component={ProductDetail} options={{ headerShown: true, headerTitle: "รายละเอียดของโปรเจกต์" }} />
+      <Stack.Screen
+        name="Home"
+        component={MainPageScreen}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen name="editPost" component={EditPost} />
+      <Stack.Screen
+        name="detail"
+        component={ProductDetail}
+        options={{ headerShown: true, headerTitle: "รายละเอียดของโปรเจกต์" }}
+      />
       <Stack.Screen name="comment" component={CommentScreen} />
       <Stack.Screen name="postAdvisorEdit" component={EditAdvisorPost} />
     </Stack.Navigator>
@@ -47,7 +57,11 @@ const ProfileStack = () => {
       <Stack.Screen name="Search" component={SearchMenu} />
       <Stack.Screen name="profilePublic" component={ProfilePublic} />
       <Stack.Screen name="editPostAdivsor" component={EditAdvisorPost} />
-      <Stack.Screen name="category" component={ProductCategory} options={{ headerShown: true, headerTitle: "หมวดหมู่โปรเจกต์" }} />
+      <Stack.Screen
+        name="category"
+        component={ProductCategory}
+        options={{ headerShown: true, headerTitle: "หมวดหมู่โปรเจกต์" }}
+      />
       <Stack.Screen name="categoryAdvisor" component={ProductAdvisorCategory} />
       <Stack.Screen name="logout" component={SignIn} />
     </Stack.Navigator>
@@ -69,7 +83,10 @@ const BottomTabNavigation = () => {
           tabBarIcon: ({ color, size }) => (
             <Ionicons name="home" size={size} color={color} />
           ),
-        }} name="homemain" component={HomeStack} />
+        }}
+        name="homemain"
+        component={HomeStack}
+      />
       <Tab.Screen
         options={{
           tabBarLabel: "Upload",
@@ -77,7 +94,10 @@ const BottomTabNavigation = () => {
           tabBarIcon: ({ color, size }) => (
             <Ionicons name="add-circle" size={size} color={color} />
           ),
-        }} name="Add" component={AddPortScreen} />
+        }}
+        name="Add"
+        component={AddPortScreen}
+      />
       <Tab.Screen
         options={{
           tabBarLabel: "Notifications",
@@ -85,7 +105,10 @@ const BottomTabNavigation = () => {
           tabBarIcon: ({ color, size }) => (
             <Ionicons name="notifications" size={size} color={color} />
           ),
-        }} name="Notification" component={NotificationScreen} />
+        }}
+        name="Notification"
+        component={NotificationScreen}
+      />
       <Tab.Screen
         options={{
           tabBarLabel: "Profile",
@@ -93,7 +116,9 @@ const BottomTabNavigation = () => {
           tabBarIcon: ({ color, size }) => (
             <Ionicons name="person-circle" size={size} color={color} />
           ),
-        }} name="profilestack" component={ProfileStack}
+        }}
+        name="profilestack"
+        component={ProfileStack}
       />
     </Tab.Navigator>
   );

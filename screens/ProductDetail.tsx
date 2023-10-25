@@ -7,7 +7,7 @@ import axios from "axios";
 import { PostStatus } from "../types/postStatus";
 import * as Linking from "expo-linking";
 
-const ProductDetail = ({ route }) => {
+const ProductDetail = ({ navigation, route }) => {
   const [select, setSelect] = useState<boolean>(false);
   const [product, setProduct] = useState<any>(null);
   const [loading, setLoading] = useState<boolean>(true);
@@ -50,12 +50,11 @@ const ProductDetail = ({ route }) => {
       console.error(error);
       setLoading(false);
     }
-  }, []);
+  }, []); // TO DO product
 
   useEffect(() => {
     fetchPost();
   }, [fetchPost]);
-
   return (
     <View>
       <ScrollView style={{ height: "100%", backgroundColor: "#F4F4F4" }}>
@@ -102,14 +101,18 @@ const ProductDetail = ({ route }) => {
                   size={35}
                 />
               )}
-            {!loading && user === product.owner.userId &&
+            {!loading && user === product.owner.userId && (
               <Button
+                onPress={() =>
+                  navigation.navigate("editPost", { data: product })
+                }
                 containerStyle={{ width: "25%", borderRadius: 12 }}
                 color={"#3444A8"}
                 title={"แก้ไข"}
               />
-            }
+            )}
           </View>
+
           <View
             style={{
               display: "flex",
