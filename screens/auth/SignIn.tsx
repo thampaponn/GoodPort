@@ -9,7 +9,6 @@ import {
   Image,
   TextInput,
   useWindowDimensions,
-  StatusBar
 } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import Constants from 'expo-constants';
@@ -42,6 +41,8 @@ const SignIn = ({ navigation }) => {
       const token = response.data.access_token;
       await AsyncStorage.setItem("token", token);
       navigation.navigate("main");
+      setUsername("");
+      setPassword("");
     } catch (error) {
       toggleModal();
     } finally {
