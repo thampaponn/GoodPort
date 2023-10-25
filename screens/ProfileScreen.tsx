@@ -920,6 +920,7 @@ export default function ProfileScreen({ navigation, route }) {
             padding: 15,
             marginHorizontal: 30,
             borderRadius: 10,
+            marginTop: 10
           }}
         >
           <Text style={{ color: "#FFFFFF", fontWeight: "600", fontSize: 18 }}>

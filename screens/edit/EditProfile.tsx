@@ -1,7 +1,7 @@
 import { Button, Card, Dialog, Icon, Input } from "@rneui/themed";
 import React, { useState } from "react";
 import { Controller, SubmitHandler, useForm } from "react-hook-form";
-import { View, Text, Image, ScrollView } from "react-native";
+import { View, Text, Image, ScrollView, SafeAreaView } from "react-native";
 import { User } from "../../types/user";
 import * as ImagePicker from "expo-image-picker";
 import * as FileSystem from "expo-file-system";
@@ -94,180 +94,183 @@ const EditProfile = ({ navigation, route }) => {
     navigation.navigate("Profile");
   };
   return (
-    <ScrollView style={{ backgroundColor: "white", height: "100%" }}>
-      <Dialog isVisible={uploading}>
-        <Dialog.Loading />
-      </Dialog>
-      <Card containerStyle={{ borderRadius: 8 }}>
-        <Text style={{ marginLeft: 10, fontSize: 16, alignItems: "center" }}>
-          ชื่อ
-        </Text>
-        <Controller
-          name="fname"
-          control={control}
-          render={({ field }) => (
-            <Input
-              style={{
-                borderRadius: 5,
-                borderColor: "#AEAEAE",
-                borderWidth: 1,
-                marginTop: 6,
-                paddingHorizontal: 15,
-              }}
-              inputContainerStyle={{ borderBottomWidth: 0 }}
-              onBlur={field.onBlur}
-              onChangeText={field.onChange}
-              value={field.value}
-            />
-          )}
-        />
-        {errors.fname && (
-          <Text style={{ color: "red", marginHorizontal: 10 }}>
-            {errors.fname.message}
+    <SafeAreaView style={{backgroundColor: "#FFFFFF"}}>
+      <ScrollView style={{ backgroundColor: "white", height: "100%" }}>
+        <Dialog isVisible={uploading}>
+          <Dialog.Loading />
+        </Dialog>
+        <Card containerStyle={{ borderRadius: 8 }}>
+          <Text style={{ marginLeft: 10, fontSize: 16, alignItems: "center" }}>
+            ชื่อ
           </Text>
-        )}
-
-        <Text style={{ marginLeft: 10, fontSize: 16, alignItems: "center" }}>
-          นามสกุล
-        </Text>
-        <Controller
-          name="lname"
-          control={control}
-          render={({ field }) => (
-            <Input
-              style={{
-                borderRadius: 5,
-                borderColor: "#AEAEAE",
-                borderWidth: 1,
-                marginTop: 6,
-                paddingHorizontal: 15,
-              }}
-              inputContainerStyle={{ borderBottomWidth: 0 }}
-              onBlur={field.onBlur}
-              onChangeText={field.onChange}
-              value={field.value}
-            />
-          )}
-        />
-        {errors.lname && (
-          <Text style={{ color: "red", marginHorizontal: 10 }}>
-            {errors.lname.message}
-          </Text>
-        )}
-        <Text style={{ marginLeft: 10, fontSize: 16, alignItems: "center" }}>
-          หมายเลขโทรศัพท์
-        </Text>
-        <Controller
-          name="phone"
-          control={control}
-          render={({ field }) => (
-            <Input
-              style={{
-                borderRadius: 5,
-                borderColor: "#AEAEAE",
-                borderWidth: 1,
-                marginTop: 6,
-                paddingHorizontal: 15,
-              }}
-              inputContainerStyle={{ borderBottomWidth: 0 }}
-              onBlur={field.onBlur}
-              onChangeText={field.onChange}
-              value={field.value}
-            />
-          )}
-        />
-        {errors.phone && (
-          <Text style={{ color: "red", marginHorizontal: 10 }}>
-            {errors.phone.message}
-          </Text>
-        )}
-        <Text style={{ marginLeft: 10, fontSize: 16, alignItems: "center" }}>
-          อีเมลล์
-        </Text>
-        <Controller
-          name="email"
-          control={control}
-          render={({ field }) => (
-            <Input
-              style={{
-                borderRadius: 5,
-                borderColor: "#AEAEAE",
-                borderWidth: 1,
-                marginTop: 6,
-                paddingHorizontal: 15,
-              }}
-              inputContainerStyle={{ borderBottomWidth: 0 }}
-              onBlur={field.onBlur}
-              onChangeText={field.onChange}
-              value={field.value}
-            />
-          )}
-        />
-        {errors.phone && (
-          <Text style={{ color: "red", marginHorizontal: 10 }}>
-            {errors.phone.message}
-          </Text>
-        )}
-        <Button
-          onPress={() => {
-            pickImage();
-          }}
-          title={"อัพโหลดรูป"}
-          titleStyle={{ color: "black" }}
-          buttonStyle={{
-            marginTop: 20,
-            borderRadius: 8,
-            backgroundColor: "white",
-            borderWidth: 1,
-            borderColor: "black",
-          }}
-          icon={
-            <Icon
-              name="cloud-upload"
-              color={"black"}
-              style={{ marginRight: 10, color: "white" }}
-            />
-          }
-        />
-        <View style={{ width: "100%", paddingHorizontal: 30, marginTop: 20 }}>
-          {image && (
-            <View>
-              <Image
-                source={{ uri: image }}
-                style={{ width: 250, height: 250 }}
-              />
-              <Text
-                onPress={() => setImage(null)}
+          <Controller
+            name="fname"
+            control={control}
+            render={({ field }) => (
+              <Input
                 style={{
-                  position: "absolute",
-                  right: 0,
-                  paddingHorizontal: 5,
-                  backgroundColor: "#BE2C35",
-                  color: "white",
-                  borderRadius: 100,
+                  borderRadius: 5,
+                  borderColor: "#AEAEAE",
+                  borderWidth: 1,
+                  marginTop: 6,
+                  paddingHorizontal: 15,
                 }}
-              >
-                X
-              </Text>
-            </View>
+                inputContainerStyle={{ borderBottomWidth: 0 }}
+                onBlur={field.onBlur}
+                onChangeText={field.onChange}
+                value={field.value}
+              />
+            )}
+          />
+          {errors.fname && (
+            <Text style={{ color: "red", marginHorizontal: 10 }}>
+              {errors.fname.message}
+            </Text>
           )}
-        </View>
 
-        <Button
-          onPress={handleSubmit(onSubmit)}
-          title={"Submit"}
-          titleStyle={{ fontSize: 18, fontWeight: "600" }}
-          buttonStyle={{
-            marginTop: 20,
-            borderRadius: 8,
-            backgroundColor: "#3444A8",
-            borderWidth: 1,
-            borderColor: "#ECF2EC",
-            height: 45,
-          }}
-        />
-      </Card>
-    </ScrollView>
+          <Text style={{ marginLeft: 10, fontSize: 16, alignItems: "center" }}>
+            นามสกุล
+          </Text>
+          <Controller
+            name="lname"
+            control={control}
+            render={({ field }) => (
+              <Input
+                style={{
+                  borderRadius: 5,
+                  borderColor: "#AEAEAE",
+                  borderWidth: 1,
+                  marginTop: 6,
+                  paddingHorizontal: 15,
+                }}
+                inputContainerStyle={{ borderBottomWidth: 0 }}
+                onBlur={field.onBlur}
+                onChangeText={field.onChange}
+                value={field.value}
+              />
+            )}
+          />
+          {errors.lname && (
+            <Text style={{ color: "red", marginHorizontal: 10 }}>
+              {errors.lname.message}
+            </Text>
+          )}
+          <Text style={{ marginLeft: 10, fontSize: 16, alignItems: "center" }}>
+            หมายเลขโทรศัพท์
+          </Text>
+          <Controller
+            name="phone"
+            control={control}
+            render={({ field }) => (
+              <Input
+                style={{
+                  borderRadius: 5,
+                  borderColor: "#AEAEAE",
+                  borderWidth: 1,
+                  marginTop: 6,
+                  paddingHorizontal: 15,
+                }}
+                inputContainerStyle={{ borderBottomWidth: 0 }}
+                onBlur={field.onBlur}
+                onChangeText={field.onChange}
+                value={field.value}
+              />
+            )}
+          />
+          {errors.phone && (
+            <Text style={{ color: "red", marginHorizontal: 10 }}>
+              {errors.phone.message}
+            </Text>
+          )}
+          <Text style={{ marginLeft: 10, fontSize: 16, alignItems: "center" }}>
+            อีเมลล์
+          </Text>
+          <Controller
+            name="email"
+            control={control}
+            render={({ field }) => (
+              <Input
+                style={{
+                  borderRadius: 5,
+                  borderColor: "#AEAEAE",
+                  borderWidth: 1,
+                  marginTop: 6,
+                  paddingHorizontal: 15,
+                }}
+                inputContainerStyle={{ borderBottomWidth: 0 }}
+                onBlur={field.onBlur}
+                onChangeText={field.onChange}
+                value={field.value}
+              />
+            )}
+          />
+          {errors.phone && (
+            <Text style={{ color: "red", marginHorizontal: 10 }}>
+              {errors.phone.message}
+            </Text>
+          )}
+          <Button
+            onPress={() => {
+              pickImage();
+            }}
+            title={"อัพโหลดรูป"}
+            titleStyle={{ color: "black" }}
+            buttonStyle={{
+              marginTop: 20,
+              borderRadius: 8,
+              backgroundColor: "white",
+              borderWidth: 1,
+              borderColor: "black",
+              height: 45
+            }}
+            icon={
+              <Icon
+                name="cloud-upload"
+                color={"black"}
+                style={{ marginRight: 10, color: "white" }}
+              />
+            }
+          />
+          <View style={{ width: "100%", paddingHorizontal: 30, marginTop: 20 }}>
+            {image && (
+              <View>
+                <Image
+                  source={{ uri: image }}
+                  style={{ width: 250, height: 250 }}
+                />
+                <Text
+                  onPress={() => setImage(null)}
+                  style={{
+                    position: "absolute",
+                    right: 0,
+                    paddingHorizontal: 5,
+                    backgroundColor: "#BE2C35",
+                    color: "white",
+                    borderRadius: 100,
+                  }}
+                >
+                  X
+                </Text>
+              </View>
+            )}
+          </View>
+
+          <Button
+            onPress={handleSubmit(onSubmit)}
+            title={"Submit"}
+            titleStyle={{ fontSize: 18, fontWeight: "600" }}
+            buttonStyle={{
+              marginTop: 20,
+              borderRadius: 8,
+              backgroundColor: "#3444A8",
+              borderWidth: 1,
+              borderColor: "#ECF2EC",
+              height: 45,
+            }}
+          />
+        </Card>
+      </ScrollView>
+    </SafeAreaView>
   );
 };
 
