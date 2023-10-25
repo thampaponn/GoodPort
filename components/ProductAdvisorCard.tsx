@@ -85,13 +85,14 @@ export const ProductAdvisorCard = ({
         <Button
             onPress={ () => navigation.navigate("advisorDetail" ,{data: product})}
             title={"ดูรายละเอียด"}
-            titleStyle={{ color: "black" }}
+            titleStyle={{ color: "black", fontWeight: "600" }}
             buttonStyle={{
               marginTop: 20,
               borderRadius: 8,
               backgroundColor: "white",
               borderWidth: 1,
               borderColor: "black",
+              height: 45
             }}
             
           />

@@ -30,8 +30,8 @@ const HomeStack = () => {
       <Stack.Screen name="Home" component={MainPageScreen} options={{ headerShown: false }} />
       <Stack.Screen name="detail" component={ProductDetail} options={{ headerShown: true, headerTitle: "รายละเอียดของโปรเจกต์" }} />
       <Stack.Screen name="comment" component={CommentScreen} />
-      <Stack.Screen name="postAdvisorEdit" component={EditAdvisorPost} />
-      <Stack.Screen name="advisorDetail" component={ProductAdvisorDetail} />
+      <Stack.Screen name="postAdvisorEdit" component={EditAdvisorPost} options={{ headerShown: true, headerTitle: "แก้ไขรายละเอียดประกาศ" }}  />
+      <Stack.Screen name="advisorDetail" component={ProductAdvisorDetail} options={{ headerShown: true, headerTitle: "รายละเอียดของประกาศ" }} />
     </Stack.Navigator>
   );
 };
