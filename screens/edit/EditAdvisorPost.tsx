@@ -11,10 +11,12 @@ import Constants from "expo-constants";
 import axios from "axios";
 import { zPostAdvisor } from "../../types/zod/postAdvisor";
 
-const EditAdvisorPost = ({ user, navigation }: any) => {
+const EditAdvisorPost = ({ route, navigation }) => {
+  const { user, product } = route.params;
   const [filename, setFilename] = useState<string>("");
-  const [image, setImage] = useState<any>(null);
+  const [image, setImage] = useState<any>(product.image ?? null);
   const [uploading, setUploading] = useState<boolean>(false);
+  const [checked, setChecked] = useState<boolean>(false);
 
   const {
     control,
@@ -23,15 +25,7 @@ const EditAdvisorPost = ({ user, navigation }: any) => {
     setValue,
   } = useForm<postAdvisor>({
     resolver: zodResolver(zPostAdvisor),
-    defaultValues: {
-      owner: {
-        userId: user._id,
-        image: user.image.profileImage ?? "",
-        fname: user.fname,
-        lname: user.lname,
-        email: user.email,
-      },
-    },
+    defaultValues: product,
   });
 
   const pickImage = async () => {
@@ -44,6 +38,7 @@ const EditAdvisorPost = ({ user, navigation }: any) => {
 
     if (!result.canceled) {
       setImage(result.assets[0].uri);
+      setChecked(true);
     }
     setFilename(
       `https://firebasestorage.googleapis.com/v0/b/goodport-cb0e6.appspot.com/o/${result.assets[0].uri.substring(
@@ -56,7 +51,7 @@ const EditAdvisorPost = ({ user, navigation }: any) => {
     setUploading(true);
 
     try {
-      if (!image) {
+      if (!image || !checked) {
         return;
       }
       const { uri } = await FileSystem.getInfoAsync(image);
@@ -92,13 +87,11 @@ const EditAdvisorPost = ({ user, navigation }: any) => {
       ...data,
       image: filename,
     };
-    await axios.post(
-      `${Constants.expoConfig.extra.API_URL}/post-advisor`,
+    await axios.put(
+      `${Constants.expoConfig.extra.API_URL}/post-advisor/${product._id}`,
       bodyReq
     );
-    navigation.navigate("productmain");
-    setFilename("");
-    setValue("detail", "")
+    navigation.navigate("Home");
   };
   return (
     <View>
@@ -126,8 +119,6 @@ const EditAdvisorPost = ({ user, navigation }: any) => {
                   marginTop: 6,
                   paddingHorizontal: 10,
                 }}
-                multiline={true}
-                numberOfLines={4}
                 inputContainerStyle={{ borderBottomWidth: 0 }}
                 onBlur={field.onBlur}
                 onChangeText={field.onChange}
@@ -162,34 +153,34 @@ const EditAdvisorPost = ({ user, navigation }: any) => {
           <Text style={{ textAlign: "right", marginTop: 20, marginRight: 10 }}>
             รูปขนาดไม่เกิน 10 MB
           </Text>
-          <View style={{ flex: 1, alignItems: "center", marginTop: 20 }}>
-            {image && (
-              <View>
-                <Image
-                  source={{ uri: image }}
-                  style={{ width: 200, height: 200 }}
-                />
-                <Text
-                  onPress={() => setImage(null)}
-                  style={{
-                    position: "absolute",
-                    right: 0,
-                    paddingHorizontal: 5,
-                    backgroundColor: "#BE2C35",
-                    color: "white",
-                    borderRadius: 100,
-                  }}
-                >
-                  X
-                </Text>
-              </View>
-            )}
-          </View>
+
+          {image && (
+            <View style={{ marginTop: 20 }}>
+              <Image
+                source={{ uri: image }}
+                style={{ width: 200, height: 200, marginLeft: 50 }}
+              />
+              <Text
+                onPress={() => setImage(null)}
+                style={{
+                  position: "absolute",
+                  right: 50,
+                  paddingHorizontal: 5,
+                  backgroundColor: "#BE2C35",
+                  color: "white",
+                  borderRadius: 100,
+                }}
+              >
+                X
+              </Text>
+            </View>
+          )}
+
           <Button
             onPress={handleSubmit(onSubmit)}
             title={"Submit"}
             buttonStyle={{
-              marginTop: 20,
+              marginTop: 25,
               borderRadius: 8,
               backgroundColor: "#75CAFF",
               borderWidth: 1,

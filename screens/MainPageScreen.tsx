@@ -94,7 +94,6 @@ const MainPageScreen = ({ navigation }) => {
         return categoryData && categoryData[postCategory] && isTitleMatched;
       });
 
-
   return (
     <View style={{ backgroundColor: "#FFFFFF", height: "100%" }}>
       <Header />
@@ -207,21 +206,7 @@ const MainPageScreen = ({ navigation }) => {
               />
             ))}
         </View>
-        {toggle && (
-          <View style={{ marginBottom: 20 }}>
-            {filteredPosts.map((post: post, index: number) => (
-              <ProductCard
-                key={index}
-                image={post.image || ""}
-                name={post.nameTh}
-                category={post.category}
-                owner={post.owner}
-                advisor={post.advisor}
-                id={post._id}
-              />
-            ))}
-          </View>
-        )}
+
         {!toggle && !loading && (
           <View>
             {postAdvisor.map((post: any, index: number) => (

@@ -378,7 +378,7 @@ export default function ProfileScreen({ navigation, route }) {
               <View style={{ width: "100%", marginTop: 10 }}>
                 <TouchableOpacity
                   onPress={() =>
-                    navigation.navigate("categoryAdvisor", { data: user })
+                    navigation.navigate("categoryAdvisor", { data: user, navigation: navigation })
                   }
                   style={{
                     backgroundColor: "#FFFFFF",

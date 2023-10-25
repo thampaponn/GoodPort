@@ -61,28 +61,6 @@ const ProductDetail = ({ route }) => {
     fetchPost();
   }, [fetchPost]);
 
-  const infoArray = [
-    {
-      name: "ธนาธิป เกย์โบ๊ต",
-      comment: "อยากเป็นเกย์ครับ",
-    },
-    {
-      name: "ธนาธิป เกย์โบ๊ต",
-      comment: "อยากเป็นเกย์ครับ",
-    },
-    {
-      name: "ธนาธิป เกย์โบ๊ต",
-      comment: "อยากเป็นเกย์ครับ",
-    },
-    {
-      name: "ธนาธิป เกย์โบ๊ต",
-      comment: "อยากเป็นเกย์ครับ",
-    },
-    {
-      name: "ธนาธิป เกย์โบ๊ต",
-      comment: "อยากเป็นเกย์ครับ",
-    },
-  ];
   return (
     <View>
       
