@@ -263,7 +263,7 @@ const AddPortScreen = ({ navigation }) => {
       setValue("detail", "");
       setValue("source", "");
       Alert.alert("โพสต์สำเร็จ");
-      navigation.navigate("productmain");
+      navigation.navigate("Home");
     } catch (error) {
       console.error(error);
     }
@@ -603,27 +603,29 @@ const AddPortScreen = ({ navigation }) => {
                 {loading ? (
                   <Picker.Item label="Loading..." value={null} />
                 ) : (
-                  userConfirm.map((user: any) => (
-                    <Picker.Item
-                      label={user.fname + " " + user.lname}
-                      value={user._id}
-                      key={user._id}
-                    />
-                  ))
+                  userConfirm
+                    .filter((user) => user._id != me._id)
+                    .map((user: any) => (
+                      <Picker.Item
+                        label={user.fname + " " + user.lname}
+                        value={user._id}
+                        key={user._id}
+                      />
+                    ))
                 )}
               </Picker>
             </View>
             <Button
               onPress={handleSubmit(onSubmit)}
               title={"Submit"}
-              titleStyle={{fontSize: 18, fontWeight: "600"}}
+              titleStyle={{ fontSize: 18, fontWeight: "600" }}
               buttonStyle={{
                 marginTop: 20,
                 borderRadius: 8,
                 backgroundColor: "#3444A8",
                 borderWidth: 1,
                 borderColor: "#ECF2EC",
-                height: 45
+                height: 45,
               }}
             />
           </Card>

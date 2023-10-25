@@ -11,6 +11,8 @@ import CommentScreen from "../screens/CommentScreen";
 import ProductCategory from "../screens/ProductCategory";
 import ProfilePublic from "../screens/ProfilePublic";
 import EditAdvisorPost from "../screens/edit/EditAdvisorPost";
+import SignIn from "../screens/auth/SignIn";
+import ProductAdvisorCategory from "../screens/ProductAdvisorCategory";
 
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
@@ -43,6 +45,8 @@ const ProfileStack = () => {
       <Stack.Screen name="Search" component={SearchMenu} />
       <Stack.Screen name="profilePublic" component={ProfilePublic} />
       <Stack.Screen name="category" component={ProductCategory} options={{ headerShown: true, headerTitle: "หมวดหมู่โปรเจกต์" }} />
+      <Stack.Screen name="categoryAdvisor" component={ProductAdvisorCategory} />
+      <Stack.Screen name="logout" component={SignIn} />
     </Stack.Navigator>
   );
 };

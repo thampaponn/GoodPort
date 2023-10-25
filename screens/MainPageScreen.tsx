@@ -8,6 +8,10 @@ import { PostCategory } from "../types/postCategory";
 import Constants from "expo-constants";
 import { ProductAdvisorCard } from "../components/ProductAdvisorCard";
 import Header from "../components/Header";
+import { Userjwt } from "../types/userjwt";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import jwtDecode from "jwt-decode";
+import { UserRole } from "../types/role";
 
 type CategoryData = { [key: string]: boolean };
 
@@ -17,9 +21,20 @@ const MainPageScreen = ({ navigation }) => {
   const [toggle, setToggle] = useState<boolean>(true);
   const [loading, setLoading] = useState<boolean>(true);
   const [postAdvisor, setPostAdvisor] = useState<any>(null);
+  const [me, setMe] = useState<any>(null);
 
   const fetchOriginalPost = useCallback(async () => {
     try {
+      const token = await AsyncStorage.getItem("token");
+      const decoded: { sub: Userjwt } = jwtDecode(token);
+      const user = decoded.sub;
+
+      const userData = await axios.post(
+        `${Constants.expoConfig.extra.API_URL}/user/${decoded.sub._id}`
+      );
+
+      setMe(userData.data);
+
       const response = await axios.get(
         `${Constants.expoConfig.extra.API_URL}/post/last-7-days`
       );
@@ -69,15 +84,16 @@ const MainPageScreen = ({ navigation }) => {
   const filteredPosts: post[] = areAllDataFalse
     ? originalPost
     : originalPost.filter((post: post) => {
-      const postCategory: PostCategory = post.category;
-      const categoryData: CategoryData = objFilterData.find(
-        (categoryObj) => categoryObj[postCategory] !== undefined
-      );
-      const isTitleMatched = post.nameTh
-        .toLowerCase()
-        .includes(searchKeyword.toLowerCase());
-      return categoryData && categoryData[postCategory] && isTitleMatched;
-    });
+        const postCategory: PostCategory = post.category;
+        const categoryData: CategoryData = objFilterData.find(
+          (categoryObj) => categoryObj[postCategory] !== undefined
+        );
+        const isTitleMatched = post.nameTh
+          .toLowerCase()
+          .includes(searchKeyword.toLowerCase());
+        return categoryData && categoryData[postCategory] && isTitleMatched;
+      });
+
 
   return (
     <View style={{ backgroundColor: "#FFFFFF", height: "100%" }}>
@@ -111,7 +127,7 @@ const MainPageScreen = ({ navigation }) => {
             ))}
             <Input
               inputContainerStyle={{
-                borderColor: 'transparent', // Set border color to transparent
+                borderColor: "transparent",
               }}
               style={{
                 borderRadius: 5,
@@ -119,7 +135,6 @@ const MainPageScreen = ({ navigation }) => {
                 borderWidth: 1,
                 marginTop: 10,
                 paddingHorizontal: 15,
-
               }}
               disabled={areAllDataFalse}
               placeholder={"กรุณากรอกคำค้นหา"}
@@ -136,26 +151,29 @@ const MainPageScreen = ({ navigation }) => {
             marginHorizontal: 30,
           }}
         >
-          <Button
-            titleStyle={{ color: "black" }}
-            onPress={() => setToggle(!toggle)}
-            title={"อาจารย์"}
-            buttonStyle={{
-              marginTop: 20,
-              borderRadius: 8,
-              backgroundColor: "white",
-              width: 150,
-              borderWidth: 1,
-              borderColor: "black",
-            }}
-            icon={
-              <Icon
-                name="keyboard-arrow-down"
-                color={"black"}
-                style={{ marginRight: 10, color: "black" }}
-              />
-            }
-          />
+          {!loading && me.role !== UserRole.Visitor && (
+            <Button
+              titleStyle={{ color: "black" }}
+              onPress={() => setToggle(!toggle)}
+              title={toggle ? "อาจารย์" : "ผลงาน"}
+              buttonStyle={{
+                marginTop: 20,
+                borderRadius: 8,
+                backgroundColor: "white",
+                width: 150,
+                borderWidth: 1,
+                borderColor: "black",
+              }}
+              icon={
+                <Icon
+                  name="keyboard-arrow-down"
+                  color={"black"}
+                  style={{ marginRight: 10, color: "black" }}
+                />
+              }
+            />
+          )}
+
           <Button
             onPress={() => fetchOriginalPost()}
             title={"รีเฟรช"}
