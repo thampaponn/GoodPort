@@ -11,6 +11,7 @@ import {
 import { Ionicons } from "@expo/vector-icons";
 import { Chip } from "@rneui/themed";
 import { UserRole } from "../types/role";
+import { PostCategory } from "../types/postCategory";
 
 export default function ProfilePublic({ navigation, route }) {
   const [select, setSelect] = useState<boolean>(true);
@@ -88,7 +89,7 @@ export default function ProfilePublic({ navigation, route }) {
             user.role != UserRole.Advisor ? (
               <View style={{ width: "100%", marginTop: 10 }}>
                 <TouchableOpacity
-                  onPress={() => navigation.navigate("category")}
+                  onPress={() => navigation.navigate("category", {data:data, category:PostCategory.learning})}
                   style={{
                     backgroundColor: "#FFFFFF",
                     width: "100%",
@@ -126,7 +127,7 @@ export default function ProfilePublic({ navigation, route }) {
                   />
                 </TouchableOpacity>
 
-                <TouchableOpacity
+                <TouchableOpacity onPress={() => navigation.navigate("category", {data:data, category:PostCategory.activity})}
                   style={{
                     backgroundColor: "#FFFFFF",
                     width: "100%",
@@ -164,7 +165,7 @@ export default function ProfilePublic({ navigation, route }) {
                   />
                 </TouchableOpacity>
 
-                <TouchableOpacity
+                <TouchableOpacity onPress={() => navigation.navigate("category", {data:data, category:PostCategory.internship})}
                   style={{
                     backgroundColor: "#FFFFFF",
                     width: "100%",
@@ -202,7 +203,7 @@ export default function ProfilePublic({ navigation, route }) {
                   />
                 </TouchableOpacity>
 
-                <TouchableOpacity
+                <TouchableOpacity onPress={() => navigation.navigate("category", {data:data, category:PostCategory.volunteer})}
                   style={{
                     backgroundColor: "#FFFFFF",
                     width: "100%",
@@ -240,7 +241,7 @@ export default function ProfilePublic({ navigation, route }) {
                   />
                 </TouchableOpacity>
 
-                <TouchableOpacity
+                <TouchableOpacity onPress={() => navigation.navigate("category", {data:data, category:PostCategory.other})}
                   style={{
                     backgroundColor: "#FFFFFF",
                     width: "100%",
@@ -281,7 +282,7 @@ export default function ProfilePublic({ navigation, route }) {
             ) : (
               <View style={{ width: "100%", marginTop: 10 }}>
                 <TouchableOpacity
-                  onPress={() => navigation.navigate("category")}
+                  onPress={() => navigation.navigate("categoryAdvisor", { data: user })}
                   style={{
                     backgroundColor: "#FFFFFF",
                     width: "100%",

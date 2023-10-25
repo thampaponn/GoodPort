@@ -10,7 +10,6 @@ const ProductAdvisorCategory = ({ route }) => {
   const { data } = route.params;
   const [productAll, setProductAll] = useState<any>(null);
   const [loading, setLoading] = useState<boolean>(true);
-  console.log(data);
   useEffect(() => {
     const retrieveToken = async () => {
       try {
