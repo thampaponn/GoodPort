@@ -13,7 +13,7 @@ export default function App() {
         }}>
       <Stack.Screen name="signin" component={SignIn}/>
       <Stack.Screen name="signup" component={SignUp}/>
-      <Stack.Screen name="main" component={BottomTabNavigation}/>
+      <Stack.Screen name="main" component={BottomTabNavigation} options={{gestureEnabled: false}}/>
     </Stack.Navigator>
   </NavigationContainer>
   )
