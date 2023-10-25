@@ -6,7 +6,7 @@ import { ProductProfileCategory } from "../components/ProductProifleCategory";
 import Constants from "expo-constants";
 import { ProductCategoryAdvisorCard } from "../components/ProductCategoryAdvisorCard";
 
-const ProductAdvisorCategory = ({ route }) => {
+const ProductAdvisorCategory = ({ route, navigation }) => {
   const { data } = route.params;
   const [productAll, setProductAll] = useState<any>(null);
   const [loading, setLoading] = useState<boolean>(true);
@@ -37,6 +37,7 @@ const ProductAdvisorCategory = ({ route }) => {
               <View style={{paddingTop:10}}>
                 {productAll.map((product: any, index: number) => (
                   <ProductCategoryAdvisorCard
+                  navigation={navigation}
                     key={index}
                     product={product}
                     user={data}

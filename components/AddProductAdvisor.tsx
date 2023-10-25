@@ -96,9 +96,9 @@ const AddProductAdvisor = ({ user, navigation }: any) => {
       `${Constants.expoConfig.extra.API_URL}/post-advisor`,
       bodyReq
     );
-    navigation.navigate("productmain");
+    navigation.navigate("Home");
     setFilename("");
-    setValue("detail", "")
+    setValue("detail", "");
   };
   return (
     <View>
@@ -126,8 +126,6 @@ const AddProductAdvisor = ({ user, navigation }: any) => {
                   marginTop: 6,
                   paddingHorizontal: 10,
                 }}
-                multiline={true}
-                numberOfLines={4}
                 inputContainerStyle={{ borderBottomWidth: 0 }}
                 onBlur={field.onBlur}
                 onChangeText={field.onChange}
