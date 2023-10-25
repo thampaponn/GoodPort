@@ -46,11 +46,13 @@ export default function ProfilePublic({ navigation, route }) {
             />
           )}
 
-          <View>
+          <View style={{ flex: 1, justifyContent: "center" }}>
             <Text style={{ fontSize: 18, marginBottom: 10 }}>
               {user.fname + " " + user.lname}
             </Text>
-            <Chip color={"success"} title={user.role} />
+            <View style={{ alignItems: "center" }}>
+              <Chip color={"success"} title={user.role} />
+            </View>
           </View>
 
           <View style={styles.selector}>

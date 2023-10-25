@@ -45,7 +45,7 @@ const ProfileStack = () => {
       <Stack.Screen name="Profile" component={ProfileScreen} />
       <Stack.Screen name="editProfile" component={EditProfile} options={{ headerShown: true, headerTitle: "แก้ไขโปรไฟล์" }} />
       <Stack.Screen name="Search" component={SearchMenu} />
-      <Stack.Screen name="profilePublic" component={ProfilePublic} options={{ headerShown: true, headerTitle: "โปรไฟล์อาจารย์" }} />
+      <Stack.Screen name="profilePublic" component={ProfilePublic} options={{ headerShown: true, headerTitle: "รายละเอียด" }} />
       <Stack.Screen name="editPostAdivsor" component={EditAdvisorPost} />
       <Stack.Screen name="category" component={ProductCategory} options={{ headerShown: true, headerTitle: "หมวดหมู่โปรเจกต์" }} />
       <Stack.Screen name="categoryAdvisor" component={ProductAdvisorCategory} />
