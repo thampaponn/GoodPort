@@ -11,9 +11,9 @@ export class PostController {
     return createPost;
   }
 
-  @Get('category/:category')
-  async getPostsByCategory(@Param('category') category: string) {
-    return this.PostService.getPostsByCategory(category);
+  @Get('category/:category/:id')
+  async getPostsByCategory(@Param('category') category: string, @Param('id') id: string) {
+    return this.PostService.getPostsByCategory(category, id);
   }
 
   @Get()

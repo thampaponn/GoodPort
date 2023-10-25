@@ -20,6 +20,12 @@ const SignIn = ({ navigation }) => {
   const [isModalVisible, setModalVisible] = useState<boolean>(false);
   const [isLoading, setLoading] = useState<boolean>(false);
 
+  const signIn = () =>{
+    navigation.navigate("signup")
+    setUsername("");
+    setPassword("");
+  }
+
   const toggleModal = () => {
     setModalVisible(!isModalVisible);
   };
@@ -148,7 +154,7 @@ const SignIn = ({ navigation }) => {
           >
             ยังไม่มีบัญชีผู้ใช้ ?{" "}
           </Text>
-          <TouchableOpacity onPress={() => navigation.navigate("signup")}>
+          <TouchableOpacity onPress={() => signIn()}>
             <Text
               style={{
                 fontSize: 14,

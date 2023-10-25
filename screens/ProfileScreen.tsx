@@ -24,6 +24,11 @@ export default function ProfileScreen({ navigation, route }) {
   const [user, setUser] = useState<any>(null);
   const [loading, setLoading] = useState<boolean>(true);
 
+  const logout = async() =>{
+    const token = await AsyncStorage.setItem("token","");
+    
+  }
+
   useEffect(() => {
     const retrieveToken = async () => {
       try {
@@ -364,7 +369,7 @@ export default function ProfileScreen({ navigation, route }) {
             ) : (
               <View style={{ width: "100%", marginTop: 10 }}>
                 <TouchableOpacity
-                  onPress={() => navigation.navigate("category")}
+                  onPress={() => navigation.navigate("categoryAdvisor", {data:user})}
                   style={{
                     backgroundColor: "#FFFFFF",
                     width: "100%",
@@ -879,7 +884,7 @@ export default function ProfileScreen({ navigation, route }) {
             </View>
           )}
         </View>
-        <TouchableOpacity
+        <TouchableOpacity onPress={() => logout()}
           style={{
             justifyContent: "center",
             alignItems: "center",

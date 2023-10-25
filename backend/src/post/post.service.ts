@@ -45,11 +45,11 @@ export class PostService {
     return post;
   }
 
-  async getPostsByCategory(category: string) {
-    return await this.postModel
-      .find({ category: category })
-      .sort({ createdAt: -1 })
+  async getPostsByCategory(category: string, id:string) {
+    const ans = await this.postModel
+      .find({ 'owner.userId': id , category: category})
       .exec();
+      return ans
   }
 
   async delPostById(id: string) {
