@@ -47,7 +47,7 @@ const ProductAdvisorDetail = ({ route }) => {
       setLoading(false);
       console.error(error);
     }
-  }, []); //TO DO product
+  }, [product]); //TO DO product
 
   useEffect(() => {
     fetchOriginalPost();

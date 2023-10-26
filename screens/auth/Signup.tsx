@@ -14,7 +14,7 @@ import { useState } from "react";
 import { Picker } from "@react-native-picker/picker";
 import { useForm, Controller, SubmitHandler } from "react-hook-form";
 import { User } from "../../types/user";
-import { Input, Button, Icon } from "@rneui/themed";
+import { Input, Button, Icon, Dialog } from "@rneui/themed";
 import { typeOfRegisterScreen } from "../../hook/typeOfRegisterScreen";
 import * as ImagePicker from "expo-image-picker";
 import * as FileSystem from "expo-file-system";
@@ -111,7 +111,7 @@ const SignUp = ({ navigation }) => {
       const ref = firebase.storage().ref().child(filename);
       await ref.put(blob);
       setUploading(false);
-      Alert.alert("Photo Uploaded");
+      Alert.alert("success");
       setImage(null);
     } catch (error) {
       console.error(error);
@@ -121,6 +121,9 @@ const SignUp = ({ navigation }) => {
   return (
     <ScrollView style={styles.card}>
       <SafeAreaView>
+        <Dialog isVisible={uploading}>
+          <Dialog.Loading />
+        </Dialog>
         <View style={styles.screen}>
           <View style={styles.centeredContainer}>
             <Image
@@ -808,7 +811,7 @@ const SignUp = ({ navigation }) => {
                   color: "#FFFFFF",
                   lineHeight: 30,
                   textAlign: "center",
-                  fontWeight: "600"
+                  fontWeight: "600",
                 }}
               >
                 {"สมัครสมาชิก"}
@@ -827,7 +830,9 @@ const SignUp = ({ navigation }) => {
           >
             <Text style={styles.fontSm}>สมัครสมาชิกแล้ว? </Text>
             <TouchableOpacity onPress={() => navigation.navigate("signin")}>
-              <Text style={{ color: "#3444A8", fontSize: 14 }}>เข้าสู่ระบบ</Text>
+              <Text style={{ color: "#3444A8", fontSize: 14 }}>
+                เข้าสู่ระบบ
+              </Text>
             </TouchableOpacity>
           </View>
         </View>
@@ -840,14 +845,14 @@ const styles = StyleSheet.create({
   screen: {
     flex: 1,
     alignItems: "center",
-    backgroundColor: "#FFFFFF"
+    backgroundColor: "#FFFFFF",
   },
   fontSm: {
     fontSize: 14,
   },
   card: {
     paddingVertical: 20,
-    backgroundColor: "#FFFFFF"
+    backgroundColor: "#FFFFFF",
   },
   buttonContainer: {
     justifyContent: "flex-end",
@@ -880,7 +885,7 @@ const styles = StyleSheet.create({
   signUpText: {
     fontSize: 24,
     fontWeight: "800",
-    color: "#3444A8"
+    color: "#3444A8",
   },
 });
 

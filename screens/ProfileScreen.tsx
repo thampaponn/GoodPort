@@ -51,11 +51,11 @@ export default function ProfileScreen({ navigation, route }) {
     }
   };
 
-  const debouncedRetrieveToken = debounce(retrieveToken, 3000);
+  const debouncedRetrieveToken = debounce(retrieveToken, 1000);
 
   useEffect(() => {
     debouncedRetrieveToken();
-  }, []); // TO DO รอไปทำงานจริงค่อยใส่ user เข้าไป
+  }, [user]); // TO DO รอไปทำงานจริงค่อยใส่ user เข้าไป
 
 
   return (
