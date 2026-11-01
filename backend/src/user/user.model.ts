@@ -43,6 +43,14 @@ export const UserSchema = new mongoose.Schema({
   createdAt: { type: Date, default: Date.now },
 });
 
+// Never send the password hash back in API responses.
+UserSchema.set('toJSON', {
+  transform: (_doc, user) => {
+    delete user.password;
+    return user;
+  },
+});
+
 export class User extends mongoose.Document {
   id: string;
   fname: string;
